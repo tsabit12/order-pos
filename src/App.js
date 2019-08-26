@@ -1,26 +1,22 @@
 import React from 'react';
-import logo from './logo.svg';
-import './App.css';
+import PropTypes from "prop-types";
+import LoginPage from "./components/pages/LoginPage";
+import DashboardPage from "./components/pages/DashboardPage";
+import UserRoute from "./routes/UserRoute";
+import GuestRoute from "./routes/GuestRoute";
 
-function App() {
-  return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
-  );
+const App = ({ location }) =>
+  <div>
+    <GuestRoute location={location} path="/" exact component={LoginPage} />
+    <UserRoute location={location} path="/dashboard" exact component={DashboardPage} />
+  </div>;  
+
+
+App.propTypes = {
+  location: PropTypes.shape({ 
+    pathname: PropTypes.string.isRequired
+  }).isRequired
 }
+
 
 export default App;
