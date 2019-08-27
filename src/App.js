@@ -6,6 +6,7 @@ import OrderPage from "./components/pages/OrderPage";
 import LacakPage from "./components/pages/LacakPage";
 import AddPostingPage from "./components/pages/AddPostingPage";
 import HandoverPage from "./components/pages/HandoverPage";
+import RealTransactionPage from "./components/pages/RealTransactionPage";
 import UserRoute from "./routes/UserRoute";
 import GuestRoute from "./routes/GuestRoute";
 
@@ -17,6 +18,7 @@ const App = ({ location }) =>
     <UserRoute location={location} path="/addposting" exact component={AddPostingPage} />
     <UserRoute location={location} path="/lacak" exact component={LacakPage} />
     <UserRoute location={location} path="/handover" exact component={HandoverPage} />
+    <UserRoute location={location} path="/transaction" exact component={RealTransactionPage} />
   </div>;  
 
 

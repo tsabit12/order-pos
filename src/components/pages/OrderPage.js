@@ -1,5 +1,5 @@
 import React from "react";
-import { Segment, Header, Divider, Input, Message } from "semantic-ui-react";
+import { Segment, Header, Divider, Input, Message, Form } from "semantic-ui-react";
 import Navbar from "../menu/Navbar";
 import OrderForm from "../forms/OrderForm";
 import axios from "axios";
@@ -42,23 +42,26 @@ class OrderPage extends React.Component {
 		return(
 			<Navbar>
 			 <Segment.Group raised>
-			    <Segment loading={loading}>
+			    <Segment>
 			    	<Header as='h3' floated="left">Halaman Order</Header>
 			    	<Header floated="right" as="h5">
-			    		<Input 
-			    			action={{
-					        	icon: 'search', 
-					        	color: 'red',
-					        	onClick: () => this.handleClick(),
-					    	}} 
-					    	defaultValue={this.state.value}
-  							onChange={this.handleInputChange}
-    						placeholder='Cari id purchase order...'
-    					/>
+			    		<Form loading={loading}>
+				    		<Form.Field>
+					    		<Form.Input 
+					    			action={{
+							        	icon: 'search', 
+							        	color: 'red',
+							        	onClick: () => this.handleClick(),
+							    	}} 
+							    	defaultValue={this.state.value}
+		  							onChange={this.handleInputChange}
+		    						placeholder='Cari id purchase order...'
+		    					/>
+	    					</Form.Field>
+    					</Form>
 			    	</Header>
 			    	<Divider clearing />
-			    </Segment>
-			    <Segment>
+			    	
 			    	{ errors.global && <Message negative>
 						<Message.Header>Maaf!</Message.Header>
 						<p>{errors.global}</p>
