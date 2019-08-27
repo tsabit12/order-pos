@@ -11,6 +11,7 @@ const NavbarDekstop = ({ isAuthenticated, logout }) => (
 			<Image size="mini" src="https://react.semantic-ui.com/logo.png" />
 		</Menu.Item>
 		<Menu.Item as={Link} to="/dashboard" title="dashboard">Dashboard</Menu.Item>
+		<Menu.Item as={Link} to="/order" title="Add Posting">Order</Menu.Item>
 		<Menu.Item as={Link} to="/addposting" title="Add Posting">Add Posting</Menu.Item>
 		<Menu.Menu position="right">
 		<Menu.Item as="a" title="Add Posting" onClick={() => logout() }>Logout</Menu.Item>
