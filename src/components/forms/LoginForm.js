@@ -1,6 +1,7 @@
 import React from "react";
 import PropTypes from "prop-types";
-import { Message, Form, Button } from "semantic-ui-react";
+import { Message, Form, Button, Icon } from "semantic-ui-react";
+import { Link } from "react-router-dom";
 
 class LoginForm extends React.Component {
 	state = {
@@ -45,7 +46,7 @@ class LoginForm extends React.Component {
 				<Message
 			      attached
 			      positive
-			      header='Login Page'
+			      header='Halaman Login'
 			      content='Silahkan login terlebih dahulu'
 			    />
 			    <Form className='attached fluid segment' onSubmit={this.onSubmit} loading={loading}>
@@ -75,7 +76,11 @@ class LoginForm extends React.Component {
 				          error={errors.password}
 				        />
 			        </Form.Field>
-			      <Button color='blue'>Login</Button>
+			      <Button color='blue' type='submit'>Login</Button>
+		      	  <Button as={Link} to="/signup" color='red' icon labelPosition='right'>
+  				  	Daftar
+			      	<Icon name='right arrow' />
+			   	  </Button>
 			    </Form>
 			</React.Fragment>
 		);

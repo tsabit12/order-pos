@@ -7,12 +7,14 @@ import LacakPage from "./components/pages/LacakPage";
 import ReqPickupPage from "./components/pages/ReqPickupPage";
 import RealTransactionPage from "./components/pages/RealTransactionPage";
 import EntriPoPage from "./components/pages/EntriPoPage";
+import SignupPage from "./components/pages/SignupPage";
 import UserRoute from "./routes/UserRoute";
 import GuestRoute from "./routes/GuestRoute";
 
 const App = ({ location }) =>
   <div>
     <GuestRoute location={location} path="/" exact component={LoginPage} />
+    <GuestRoute location={location} path="/signup" exact component={SignupPage} />
     <UserRoute location={location} path="/dashboard" exact component={DashboardPage} />
     <UserRoute location={location} path="/order" exact component={OrderPage} />
     <UserRoute location={location} path="/lacak" exact component={LacakPage} />

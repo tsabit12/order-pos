@@ -3,7 +3,12 @@ import axios from "axios";
 export default {
 	user: {
 		login: (credentials) => 
-			axios.post('/auth/login', { credentials }).then(res => res.data.user)
+			axios.post('/auth/login', { credentials }).then(res => res.data.user),
+		signup: (data) => 
+			axios.post('/register', { 
+				username: data.username,
+				nopend: data.nopend
+			}).then(res => res.data.user)
 	},
 	order: {
 		hand_over: () =>

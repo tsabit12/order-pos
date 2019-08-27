@@ -44,7 +44,7 @@ class ReqPickupPage extends React.Component{
 	handleChange = (e, { value }) => this.setState({ value })
 
 	render(){
-		const { errors, open, data } = this.state;
+		const { errors, open } = this.state;
 		const { datakantor } = this.props;
 		
 		return(
