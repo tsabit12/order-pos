@@ -1,6 +1,6 @@
 import React from "react";
 import Navbar from "../menu/Navbar";
-import { Segment, Header, Divider, Input, Form, Message } from "semantic-ui-react";
+import { Segment, Header, Divider, Input, Form, Message, Card } from "semantic-ui-react";
 import InlineError from "../InlineError";
 import ListTrace from "../list/ListTrace";
 import axios from "axios";
@@ -18,11 +18,11 @@ class LacakPage extends React.Component {
 		this.setState({ errors, loading: true });
 		const { barcode } = this.state;
 		axios.post('/lacak', { barcode })
-			.then(res => res.data.data)
+			.then(res => res.data.result)
 			.then(data => {
-				this.setState({ errors: {}, trace: [data] })
+				this.setState({ errors: {}, trace: data, loading: false });
 			})
-			.catch(err => this.setState({ errors: err.response.data.errors, loading: false }))
+			.catch(err => this.setState({ errors: err.response.data.errors, loading: false, trace: [] }))
 	}
 
 	handleInputChange = (e) => this.setState({ barcode: e.target.value })
@@ -39,7 +39,7 @@ class LacakPage extends React.Component {
 
 	render(){
 		const { errors, barcode, trace } = this.state;
-		console.log(trace);
+
 		return(
 			<Navbar>
 				 <Segment.Group raised>
@@ -67,7 +67,7 @@ class LacakPage extends React.Component {
 								<Message.Header>Maaf!</Message.Header>
 								<p>{errors.global}</p>
 							</Message> }
-							{ trace.length === 0 ? <p>Masukan kode barcode pada kolom pencarian di atas</p> : trace.map(data => <ListTrace key={data.officeCode} listdata={data} />) }
+							{ trace.length === 0 ? <p>Masukan kode barcode pada kolom pencarian di atas</p> : <div className="ui container"><Segment><Card.Group centered> {trace.map((data, i) => <ListTrace key={i} listdata={data} />)} </Card.Group></Segment></div> }
 						 </Segment>
 				</Segment.Group>
 			</Navbar>
