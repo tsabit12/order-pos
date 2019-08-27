@@ -1,13 +1,13 @@
 import React from "react";
 import Navbar from "../menu/Navbar";
 import PropTypes from "prop-types";
-import ListHandOver from "../list/ListHandOver";
+import ListReqPickup from "../list/ListReqPickup";
 import { connect } from "react-redux";
-import { fetchHandOver, pickup } from "../../actions/handover";
+import { fetchPickup, pickup } from "../../actions/handover";
 import { Segment, Header, Icon, Divider, Dimmer, Loader, Message, Modal, Form, Button } from "semantic-ui-react";
 
 
-class HandoverPage extends React.Component{
+class ReqPickupPage extends React.Component{
 	state = {
 		loading: false,
 		errors: {},
@@ -18,7 +18,7 @@ class HandoverPage extends React.Component{
 	}
 
 	componentDidMount() {
-	    this.props.fetchHandOver();
+	    this.props.fetchPickup();
 	}
 
 	submit = (data) => {
@@ -84,23 +84,23 @@ class HandoverPage extends React.Component{
 						<p>{errors.global}</p>
 					</Message> }
 					<Header as='h2'>
-					    <Icon name='american sign language interpreting' />
-					    <Header.Content>Hand Over Pickup</Header.Content>
+					    <Icon name='envelope' />
+					    <Header.Content>Request Pickup</Header.Content>
 					</Header>
 					<Divider/>
 					<Dimmer active={this.state.loading} inverted>
 				        <Loader inverted size='medium'>Loading</Loader>
 				    </Dimmer>
-					<ListHandOver updateOrder={this.submit} />
+					<ListReqPickup updateOrder={this.submit} />
 				</Segment>
 			</Navbar>
 		);
 	}
 }
 
-HandoverPage.propTypes = {
-	fetchHandOver: PropTypes.func.isRequired,
+ReqPickupPage.propTypes = {
+	fetchPickup: PropTypes.func.isRequired,
 	pickup: PropTypes.func.isRequired
 }
 
-export default connect(null, { fetchHandOver, pickup })(HandoverPage);
+export default connect(null, { fetchPickup, pickup })(ReqPickupPage);

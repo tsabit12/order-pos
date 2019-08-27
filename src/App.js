@@ -5,7 +5,7 @@ import DashboardPage from "./components/pages/DashboardPage";
 import OrderPage from "./components/pages/OrderPage";
 import LacakPage from "./components/pages/LacakPage";
 import AddPostingPage from "./components/pages/AddPostingPage";
-import HandoverPage from "./components/pages/HandoverPage";
+import ReqPickupPage from "./components/pages/ReqPickupPage";
 import RealTransactionPage from "./components/pages/RealTransactionPage";
 import EntriPoPage from "./components/pages/EntriPoPage";
 import UserRoute from "./routes/UserRoute";
@@ -18,7 +18,7 @@ const App = ({ location }) =>
     <UserRoute location={location} path="/order" exact component={OrderPage} />
     <UserRoute location={location} path="/addposting" exact component={AddPostingPage} />
     <UserRoute location={location} path="/lacak" exact component={LacakPage} />
-    <UserRoute location={location} path="/handover" exact component={HandoverPage} />
+    <UserRoute location={location} path="/pickup" exact component={ReqPickupPage} />
     <UserRoute location={location} path="/transaction" exact component={RealTransactionPage} />
     <UserRoute location={location} path="/po" exact component={EntriPoPage} />
   </div>;  

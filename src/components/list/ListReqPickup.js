@@ -3,7 +3,7 @@ import PropTypes from "prop-types";
 import { connect } from "react-redux";
 import { Button, Checkbox, Icon, Table, Modal } from 'semantic-ui-react';
 
-class ListHandOver extends React.Component {
+class ListReqPickup extends React.Component {
 	state = {
 		data: [],
 		open: false
@@ -106,7 +106,7 @@ class ListHandOver extends React.Component {
 	}
 }
 
-ListHandOver.propTypes = {
+ListReqPickup.propTypes = {
 	listdata: PropTypes.array.isRequired,
 	updateOrder: PropTypes.func.isRequired
 }
@@ -117,4 +117,4 @@ function mapStateToProps(state) {
 	}
 }
 
-export default connect(mapStateToProps)(ListHandOver);
+export default connect(mapStateToProps)(ListReqPickup);
