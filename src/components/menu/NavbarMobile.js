@@ -17,8 +17,10 @@ const NavbarMobile = ({ children, onPusherClick, onToggle, visible, logout }) =>
 			vertical
 			visible={visible}>
 			<Menu.Item as={Link} to="/dashboard" title="dashboard">Dashboard</Menu.Item>
-			<Menu.Item as={Link} to="/order" title="Add Posting">Order</Menu.Item>
-			<Menu.Item as={Link} to="/addposting" title="tambah hafalan">Add Posting</Menu.Item>
+			<Menu.Item as={Link} to="/order">Order</Menu.Item>
+			<Menu.Item as={Link} to="/lacak">Lacak</Menu.Item>
+			<Menu.Item as={Link} to="/addposting">Add Posting</Menu.Item>
+			<Menu.Item as={Link} to="/handover">Hand Over Pickup</Menu.Item>
 		</Sidebar>
 		<Sidebar.Pusher
 			dimmed={visible}
