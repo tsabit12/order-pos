@@ -1,8 +1,9 @@
-import { PO_ADDED } from "../types";
+import { PO_ADDED, KANTOR_FETCHED } from "../types";
 
 const initialState = {
 	entripo: [],
-	order: []
+	order: [],
+	kantor: []
 }
 
 export default function order( state = initialState, action={}){
@@ -10,7 +11,14 @@ export default function order( state = initialState, action={}){
 		case PO_ADDED:
 			return {
 				entripo: [ ...state.entripo, action.data ],
-				order: []
+				order: [],
+				kantor: [ ... state.kantor ]
+			}
+		case KANTOR_FETCHED:
+			return {
+				entripo: [ ...state.entripo ],
+				order: [],
+				kantor: action.kantor
 			}
 		default: return state;
 	}

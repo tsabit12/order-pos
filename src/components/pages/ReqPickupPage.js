@@ -4,7 +4,8 @@ import PropTypes from "prop-types";
 import ListReqPickup from "../list/ListReqPickup";
 import { connect } from "react-redux";
 import { fetchPickup, pickup } from "../../actions/handover";
-import { Segment, Header, Icon, Divider, Dimmer, Loader, Message } from "semantic-ui-react";
+import { getKantor } from "../../actions/order";
+import { Segment, Header, Icon, Divider, Dimmer, Loader, Message, Modal, Button, Form, Checkbox } from "semantic-ui-react";
 
 
 class ReqPickupPage extends React.Component{
@@ -13,7 +14,8 @@ class ReqPickupPage extends React.Component{
 		errors: {},
 		open: false,
 		data: {},
-		errorsPin: {}
+		errorsPin: {},
+		value: ''
 	}
 
 	componentDidMount() {
@@ -21,27 +23,63 @@ class ReqPickupPage extends React.Component{
 	}
 
 	submit = (data) => {
-		this.setState({ loading: true });
-		const datatosend = { data: data }
-		this.props.pickup(datatosend)
-		.then(() => this.setState({ loading: false }))
-		.catch(err => this.setState({ loading: false, errors: err.response.data.errors }));
+		this.setState({ open: true, data: data, value: '' });
+		this.props.getKantor();
 	}
 
 	close = () => this.setState({ open: false })
 
-	// sumbitdata = () => {
-	// 	this.setState({ loading: true});
-	// 	this.props.pickup(datatosend)
-	// 	.then(() => this.setState({ loading: false }))
-	// 	.catch(err => this.setState({ loading: false, errors: err.response.data.errors }));
-	// }
+	sumbitdata = () => {
+		if (!this.state.value) {
+			alert("Pilih salah satu");
+		}else{
+			this.setState({ loading: true});
+			const datatosend = {data: this.state.data, kantor: this.state.value }
+			this.props.pickup(datatosend)
+			.then(() => this.setState({ open: false, loading: false }))
+			.catch(err => this.setState({ loading: false, open: false, errors: err.response.data.errors }));
+		}
+	}
+	
+	handleChange = (e, { value }) => this.setState({ value })
 
 	render(){
-		const { errors } = this.state;
+		const { errors, open, data } = this.state;
+		const { datakantor } = this.props;
 		
 		return(
 			<Navbar>
+				<Modal size="tiny" open={open}>
+		          <Modal.Header>Silahkan pilih kantor</Modal.Header>
+		          <Modal.Content>
+		            { datakantor.length === 0 ? <React.Fragment /> : 
+		            	<Form>
+		            		{datakantor.map(data => 
+		            			<Form.Field key={data.id_kantor}>
+						          <Checkbox
+						            radio
+						            label={data.nama_kantor}
+						            name='checkboxRadioGroup'
+						            value={data.id_kantor}
+						            checked={this.state.value === data.id_kantor}
+						            onChange={this.handleChange}
+						          />
+						        </Form.Field>
+		            		)}
+		            	</Form>
+		            }
+		          </Modal.Content>
+		          <Modal.Actions>
+		            <Button negative onClick={this.close}>Tutup</Button>
+		            <Button
+		              onClick={this.sumbitdata}
+		              positive
+		              icon='checkmark'
+		              labelPosition='right'
+		              content='Pickup'
+		            />
+		          </Modal.Actions>
+		        </Modal>
 				<Segment padded>
 				    { errors.global && <Message negative>
 						<Message.Header>Maaf!</Message.Header>
@@ -67,4 +105,10 @@ ReqPickupPage.propTypes = {
 	pickup: PropTypes.func.isRequired
 }
 
-export default connect(null, { fetchPickup, pickup })(ReqPickupPage);
+function mapStateToProps(state) {
+	return {
+		datakantor: state.order.kantor
+	}
+}
+
+export default connect(mapStateToProps, { fetchPickup, pickup, getKantor })(ReqPickupPage);

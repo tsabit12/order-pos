@@ -11,6 +11,8 @@ export default {
 		pickup: (data) =>
 			axios.post('/order/pickupHandover', { data }).then(res => res.data.result),
 		entri_po: (data) =>
-			axios.post('/order/entriPO', { data }).then(res => res.data.result)
+			axios.post('/order/entriPO', { data }).then(res => res.data.result),
+		get_kantor: () =>
+			axios.post('/order/getKantor').then(res => res.data.result)
 	}
 }
