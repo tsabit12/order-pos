@@ -1,5 +1,5 @@
 import React from "react";
-import { Segment, Header, Divider, Input, Message, Form } from "semantic-ui-react";
+import { Segment, Header, Divider, Message, Form } from "semantic-ui-react";
 import Navbar from "../menu/Navbar";
 import OrderForm from "../forms/OrderForm";
 import axios from "axios";
