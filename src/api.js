@@ -26,6 +26,8 @@ export default {
 				idpetugas:data.idpetugas,
 				nopickup: data.nopickup,
 				pin: data.pin
-			}).then(res => res.data.result)
+			}).then(res => res.data.result),
+		get_handover: (data) =>
+			axios.post('/order/getHandover', { data }).then(res => res.data.result)
 	}
 }
