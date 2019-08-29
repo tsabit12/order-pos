@@ -4,11 +4,12 @@ import { Link } from "react-router-dom";
 import { Menu, Image, Dropdown } from "semantic-ui-react";
 import { connect } from "react-redux";
 import  * as actions from "../../actions/auth";
+import Logo from "../../logo_sampoerna.jpg";
 
 const NavbarDekstop = ({ isAuthenticated, logout }) => (
 	<Menu fixed="top" inverted>
 		<Menu.Item>
-			<Image size="mini" src="https://react.semantic-ui.com/logo.png" />
+			<Image size="mini" src={Logo} />
 		</Menu.Item>
 		<Menu.Item as={Link} to="/dashboard" title="dashboard">Dashboard</Menu.Item>
 		<Menu.Item as={Link} to="/order" title="Add Posting">Order</Menu.Item>

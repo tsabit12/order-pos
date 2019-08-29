@@ -17,7 +17,7 @@ class LacakPage extends React.Component {
 		const errors = this.validate(this.state.barcode);
 		this.setState({ errors, loading: true });
 		const { barcode } = this.state;
-		axios.post('/lacak', { barcode })
+		axios.post('/api_sampoerna/lacak', { barcode })
 			.then(res => res.data.result)
 			.then(data => {
 				this.setState({ errors: {}, trace: data, loading: false });

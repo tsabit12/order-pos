@@ -17,7 +17,7 @@ class OrderPage extends React.Component {
 	handleClick = () => {
 		const value = this.state.value;
 		this.setState({ loading: true });
-		axios.post('/order/searchPO', { value })
+		axios.post('/api_sampoerna/order/searchPO', { value })
 			.then(res => res.data.idpo)
 			.then(idpo => {
 				this.setState({ succes: true, loading: false, errors: {} })
@@ -29,7 +29,7 @@ class OrderPage extends React.Component {
 
 	submit = (data) => {
 		const value = this.state.value;
-		axios.post('/order/fee', {value, data})
+		axios.post('/api_sampoerna/order/fee', {value, data})
 			.then(res => res.data.fee)
 			.then(fee => this.setState({ fee: fee, loading: false, errors: {}, open: true }))
 			.catch(err => {

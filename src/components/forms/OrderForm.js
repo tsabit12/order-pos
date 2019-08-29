@@ -56,7 +56,7 @@ class OrderForm extends React.Component {
 	submitFee = () => {
 		const { data } = this.state;
 		this.setState({ loading: true });
-		axios.post('/order/insertOrder', { data })
+		axios.post('/api_sampoerna/order/insertOrder', { data })
 			.then(res => res.data.result)
 			.then(result => this.setState({ loading: false }))
 			.catch(err => {

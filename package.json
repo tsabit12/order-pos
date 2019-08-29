@@ -25,6 +25,7 @@
     "test": "react-scripts test",
     "eject": "react-scripts eject"
   },
+  "homepage": "http://localhost/sampoerna_app/",
   "eslintConfig": {
     "extends": "react-app"
   },
@@ -40,5 +41,5 @@
       "last 1 safari version"
     ]
   },
-  "proxy": "http://localhost/api_sampoerna/"
+  "proxy": "http://localhost/"
 }

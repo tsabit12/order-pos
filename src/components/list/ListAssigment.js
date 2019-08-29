@@ -16,7 +16,7 @@ class ListAssigment extends React.Component{
 
 	handleClick = (data) => {
 	    this.setState({ open: true, nopickup: data });
-	    axios.post('/order/getPetugasPickup')
+	    axios.post('/api_sampoerna/order/getPetugasPickup')
 	    	.then(res => res.data.result)
 	    	.then(result => {
 	    		this.setState({ dataPetugas: result })

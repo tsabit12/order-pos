@@ -19,7 +19,7 @@ class RealTransactionPage extends React.Component {
 		if (Object.keys(errors).length === 0) {
 			const { extid } = this.state;
 			this.setState({ loading: true });
-			axios.post('/lacak/realtransaction', { extid })
+			axios.post('/api_sampoerna/lacak/realtransaction', { extid })
 				.then(res => res.data.result)
 				.then(result => {
 					this.setState({ loading: false });

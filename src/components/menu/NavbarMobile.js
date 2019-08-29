@@ -4,7 +4,7 @@ import { Link } from "react-router-dom";
 import { Sidebar, Menu, Icon, Image } from "semantic-ui-react";
 import { connect } from "react-redux";
 import  * as actions from "../../actions/auth";
-
+import Logo from "../../logo_sampoerna.jpg";
 
 const NavbarMobile = ({ children, onPusherClick, onToggle, visible, logout }) => (
 	<Sidebar.Pushable>
@@ -30,7 +30,7 @@ const NavbarMobile = ({ children, onPusherClick, onToggle, visible, logout }) =>
 			style={{ minHeight: "100vh" }}>
 			<Menu fixed="top" inverted>
 				<Menu.Item>
-					<Image size="mini" src="https://react.semantic-ui.com/logo.png" />
+					<Image size="mini" src={Logo} />
 				</Menu.Item>
 				<Menu.Item onClick={onToggle}>
 					<Icon name="sidebar"/>
