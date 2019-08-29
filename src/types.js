@@ -4,3 +4,5 @@ export const FETCH_PICKUP = 'FETCH_PICKUP';
 export const IS_PICKUP = 'IS_PICKUP';
 export const PO_ADDED = 'PO_ADDED';
 export const KANTOR_FETCHED = 'KANTOR_FETCHED';
+export const ASSIGMENT_FETCHED = 'ASSIGMENT_FETCHED';
+export const ASSIGMENT_ADDED = 'ASSIGMENT_ADDED';

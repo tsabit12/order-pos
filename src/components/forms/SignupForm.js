@@ -1,5 +1,5 @@
 import React from "react";
-import { Form, Button, Select, Message, Icon } from "semantic-ui-react";
+import { Form, Button, Select, Message } from "semantic-ui-react";
 import { connect } from "react-redux";
 import PropTypes from "prop-types";
 import { getKantor } from "../../actions/order";
@@ -96,11 +96,10 @@ class SignupForm extends React.Component {
 			        	{ errors.nopend && <InlineError text={errors.nopend} /> }
 			        </Form.Field>
 			        <Button color='blue' type='submit'>Signup</Button>
-			        <Button as={Link} to="/" color='red' icon labelPosition='right'>
-	  				  	Login
-				      	<Icon name='right arrow' />
-				   	</Button>
 			    </Form>
+			    <Message attached='bottom' warning>
+				    Kembali ke login? <Link to="/">disini</Link>
+				</Message>
 			</React.Fragment>
 		);
 	}

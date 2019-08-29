@@ -8,6 +8,7 @@ import ReqPickupPage from "./components/pages/ReqPickupPage";
 import RealTransactionPage from "./components/pages/RealTransactionPage";
 import EntriPoPage from "./components/pages/EntriPoPage";
 import SignupPage from "./components/pages/SignupPage";
+import AssigmentPage from "./components/pages/AssigmentPage";
 import UserRoute from "./routes/UserRoute";
 import GuestRoute from "./routes/GuestRoute";
 
@@ -21,6 +22,7 @@ const App = ({ location }) =>
     <UserRoute location={location} path="/pickup" exact component={ReqPickupPage} />
     <UserRoute location={location} path="/transaction" exact component={RealTransactionPage} />
     <UserRoute location={location} path="/po" exact component={EntriPoPage} />
+    <UserRoute location={location} path="/assigment" exact component={AssigmentPage} />
   </div>;  
 
 

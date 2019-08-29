@@ -18,6 +18,14 @@ export default {
 		entri_po: (data) =>
 			axios.post('/order/entriPO', { data }).then(res => res.data.result),
 		get_kantor: () =>
-			axios.post('/order/getKantor').then(res => res.data.result)
+			axios.post('/order/getKantor').then(res => res.data.result),
+		fetch_assigment: () =>
+			axios.post('/order/getAssigment').then(res => res.data.result),
+		add_assigment: (data) =>
+			axios.post('/order/postAssigment', { 
+				idpetugas:data.idpetugas,
+				nopickup: data.nopickup,
+				pin: data.pin
+			}).then(res => res.data.result)
 	}
 }

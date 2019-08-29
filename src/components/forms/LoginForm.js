@@ -1,6 +1,6 @@
 import React from "react";
 import PropTypes from "prop-types";
-import { Message, Form, Button, Icon } from "semantic-ui-react";
+import { Message, Form, Button } from "semantic-ui-react";
 import { Link } from "react-router-dom";
 
 class LoginForm extends React.Component {
@@ -77,11 +77,10 @@ class LoginForm extends React.Component {
 				        />
 			        </Form.Field>
 			      <Button color='blue' type='submit'>Login</Button>
-		      	  <Button as={Link} to="/signup" color='red' icon labelPosition='right'>
-  				  	Daftar
-			      	<Icon name='right arrow' />
-			   	  </Button>
-			    </Form>
+		     	</Form>
+		     	<Message attached='bottom' warning>
+				      Belum memiliki akun? Registrasi&nbsp;<Link to="/signup">disini</Link>
+				</Message>
 			</React.Fragment>
 		);
 	}
