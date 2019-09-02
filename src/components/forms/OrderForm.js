@@ -2,6 +2,15 @@ import React from "react";
 import { Button, Form, Message, Grid, Dimmer, Loader, Divider, Modal, Icon, Dropdown } from 'semantic-ui-react';
 import PropTypes from "prop-types";
 import axios from "axios";
+import InlineError from "../InlineError";
+
+const config = {
+	headers: {
+		'Content-Type': 'application/json',
+		'Authorization': 'Bearer 74f5dbde-b920-3504-a41a-7691bf264d36',
+		'Accept': 'application/json'
+	}
+}
 
 class OrderForm extends React.Component {
 	state = {
@@ -28,7 +37,19 @@ class OrderForm extends React.Component {
 		loading: this.props.loading,
 		errors: {},
 		fee: this.props.fee,
-		open: this.props.open
+		open: this.props.open,
+		loadingsearch: false,
+		loadingsearch2: false,
+		loadingsearch3: false,
+		options: [],
+		options2: [],
+		optionsKab: [],
+		optionsKab2: [],
+		provinceCode: '',
+		provinceCode2: '',
+		disabled: true,
+		errProv: false, //couse it bool
+		errorProv: {} //so here the text
 	}
 
 	componentWillReceiveProps = (nextProps) => {
@@ -67,7 +88,145 @@ class OrderForm extends React.Component {
 
 	tutupModal = () => this.setState({ open: false })
 
-	changeDropdown = (e, { value }) => this.setState({ data: {...this.state.data, datafee: value} });
+	changeDropdown = (e, { value }) => this.setState({ data: {...this.state.data, datafee: value} })
+	
+
+	onSearchChange = (e, data) => 	{
+		clearTimeout(this.timer);
+		this.setState({ data: {...this.state.data, senderProv: data.searchQuery} });
+		this.timer = setTimeout(this.fetchProp(this.state.data.senderProv), 1000);
+	}
+
+	onSearchChange2 = (e, data) => 	{
+		clearTimeout(this.timer);
+		this.setState({ data: {...this.state.data, receiverProv: data.searchQuery} });
+		this.timer = setTimeout(this.fetchProp2(this.state.data.receiverProv), 1000);
+	}
+
+	fetchProp = (prov) => {
+		if (!this.state.data.senderProv) return;
+		this.setState({ loadingsearch: true, loadingsearch3: true });
+		axios.post('https://api.posindonesia.co.id:8245/utilitas/1.0.1/getProvince', {
+			provinceName: prov
+		}, config)
+			.then(res => res.data.responses.response)
+			.then(result => {
+				const options = [];
+				result.forEach(result => {
+					options.push({
+						key: result.provinceCode,
+						value: result.provinceName,
+						text: result.provinceName
+					})
+				});
+				this.setState({ loadingsearch: false, options, disabled: false, errorProv: {}, errProv: false, loadingsearch3: false })
+			})
+			.catch(err => this.setState({ 
+				loadingsearch: false, 
+				errorProv: {senderProv: "Terdapat kesalahan, ketik lagi untuk refresh"}, 
+				errProv: true, 
+				loadingsearch3: false}))
+	}
+
+	fetchProp2 = (prov) => {
+		if (!this.state.data.receiverProv) return;
+		this.setState({ loadingsearch: true });
+		axios.post('https://api.posindonesia.co.id:8245/utilitas/1.0.1/getProvince', {
+			provinceName: prov
+		}, config)
+			.then(res => res.data.responses.response)
+			.then(result => {
+				const options2 = [];
+				result.forEach(result => {
+					options2.push({
+						key: result.provinceCode,
+						value: result.provinceName,
+						text: result.provinceName
+					})
+				});
+				this.setState({ loadingsearch: false, options2 })
+			})
+			.catch(err => this.setState({ loadingsearch: false }))
+	}
+
+	onChangeProv = (e, data) => {
+		const { key } = data.options.find(o => o.value === data.value);
+		this.setState({ data: {...this.state.data, senderProv: data.value, senderKab: ''}, provinceCode: key });
+	}
+
+	onChangeProv2 = (e, data) => {
+		const { key } = data.options.find(o => o.value === data.value);
+		this.setState({ data: {...this.state.data, receiverProv: data.value, receiverKab: ''}, provinceCode2: key });
+	}
+
+	onSearchChangeKab = (e, data) => {
+		clearTimeout(this.timer);
+		this.setState({ data: {...this.state.data, senderKab: data.searchQuery} });
+		this.timer = setTimeout(this.fetchKab(this.state.data.senderKab), 1000);	
+	}
+
+	onSearchChangeKab2 = (e, data) => {
+		clearTimeout(this.timer);
+		this.setState({ data: {...this.state.data, receiverKab: data.searchQuery} });
+		this.timer = setTimeout(this.fetchKab2(this.state.data.receiverKab), 1000);	
+	}
+
+	fetchKab = (city) => {
+		if (!this.state.data.senderKab) return;
+		this.setState({ loadingsearch2: true });
+		axios.post('https://api.posindonesia.co.id:8245/utilitas/1.0.1/getCity', {
+			provinceCode: this.state.provinceCode,
+			cityName: city
+		}, config)
+			.then(res => res.data.responses.response)
+			.then(result =>{
+				const optionsKab = [];
+				result.forEach(result => {
+					optionsKab.push({
+						key: result.cityCode,
+						value: result.cityName,
+						text: result.cityName
+					})
+				});
+				this.setState({ loadingsearch2: false, optionsKab  })
+			})
+			.catch(err => this.setState({ loadingsearch2: false }))
+
+	}
+
+	fetchKab2 = (city) => {
+		if (!this.state.data.receiverKab) return;
+		this.setState({ loadingsearch2: true });
+		axios.post('https://api.posindonesia.co.id:8245/utilitas/1.0.1/getCity', {
+			provinceCode: this.state.provinceCode2,
+			cityName: city
+		}, config)
+			.then(res => res.data.responses.response)
+			.then(result =>{
+				console.log(result);
+				const optionsKab2 = [];
+				result.forEach(result => {
+					optionsKab2.push({
+						key: result.cityCode,
+						value: result.cityName,
+						text: result.cityName
+					})
+				});
+				this.setState({ loadingsearch2: false, optionsKab2  })
+			})
+			.catch(err => this.setState({ loadingsearch2: false }))
+
+	}
+
+	onChangeKab = (e , data) => {
+		const { key } = data.options.find(o => o.value === data.value);
+		this.setState({ data: {...this.state.data, senderKab: data.value } });
+	}
+
+	onChangeKab2 = (e , data) => {
+		const { key } = data.options.find(o => o.value === data.value);
+		this.setState({ data: {...this.state.data, receiverKab: data.value } });
+	}
 
 	validate = (data) => {
 		const errors = {};
@@ -93,7 +252,8 @@ class OrderForm extends React.Component {
 	}
 
 	render(){
-		const { loading, data, errors, fee } = this.state;
+		const { loading, data, errors, fee, errorProv } = this.state;
+
 		return(
 			<React.Fragment>
 				<Grid stackable columns={2}>
@@ -134,28 +294,40 @@ class OrderForm extends React.Component {
 						        />
 					      </Form.Field>
 					      <Form.Group widths='equal'>
-					        <Form.Input
-					          fluid
-					          label='Provinsi'
-					          placeholder='Masukan provinsi'
-					          type='text'
-					          id="senderProv"
-					          name="senderProv"
-					          value={data.senderProv}
-					          onChange={this.onChange}
-					          error={errors.senderProv}
-					        />
-					        <Form.Input
-					          fluid
-					          label='Kabupaten'
-					          placeholder='Masukan kabupaten'
-					          type='text'
-					          id="senderKab"
-					          name="senderKab"
-					          value={data.senderKab}
-					          onChange={this.onChange}
-					          error={errors.senderKab}
-					        />
+					      	<Form.Field>
+						      	<label>Provinsi</label>
+						      	<Dropdown
+							        placeholder='Cari provinsi..'
+							        search
+							        selection
+							        fluid
+							        allowAdditions
+							        value={data.senderProv}
+					    			onSearchChange={this.onSearchChange}
+					    			options={this.state.options}
+					    			loading={this.state.loadingsearch}
+					    			onChange={this.onChangeProv}
+					    			error={this.state.errProv}
+							    />
+							    { errorProv.senderProv && <InlineError text={errorProv.senderProv} /> }
+						    </Form.Field>
+					        <Form.Field>
+						      	<label>Kabupaten</label>
+						      	<Dropdown
+							        placeholder='Cari provinsi..'
+							        search
+							        selection
+							        fluid
+							        disabled={this.state.disabled}
+							        allowAdditions
+							        value={data.senderKab}
+					    			onSearchChange={this.onSearchChangeKab}
+					    			options={this.state.optionsKab}
+					    			loading={this.state.loadingsearch2}
+					    			onChange={this.onChangeKab}
+							    />
+						    </Form.Field>
+					        
 					      </Form.Group>
 					      <Form.Group widths='equal'>
 					        <Form.Input
@@ -243,28 +415,36 @@ class OrderForm extends React.Component {
 						        />
 					      </Form.Field>
 					      <Form.Group widths='equal'>
-					        <Form.Input
-					          fluid
-					          label='Provinsi'
-					          placeholder='Masukan provinsi'
-					          type='text'
-					          id="receiverProv"
-					          name="receiverProv"
-					          value={data.receiverProv}
-					          onChange={this.onChange}
-					          error={errors.receiverProv}
-					        />
-					        <Form.Input
-					          fluid
-					          label='Kabupaten'
-					          placeholder='Masukan kabupaten'
-					          type='text'
-					          id="receiverKab"
-					          name="receiverKab"
-					          value={data.receiverKab}
-					          onChange={this.onChange}
-					          error={errors.receiverKab}
-					        />
+					      	<Form.Field>
+						      	<label>Provinsi</label>
+						      	<Dropdown
+							        placeholder='Cari provinsi..'
+							        search
+							        selection
+							        fluid
+							        allowAdditions
+							        value={data.receiverProv}
+					    			onSearchChange={this.onSearchChange2}
+					    			options={this.state.options2}
+					    			loading={this.state.loadingsearch}
+					    			onChange={this.onChangeProv2}
+							    />
+						    </Form.Field>	
+						     <Form.Field>
+						      	<label>Kabupaten</label>
+						      	<Dropdown
+							        placeholder='Cari kabupaten..'
+							        search
+							        selection
+							        fluid
+							        allowAdditions
+							        value={data.receiverKab}
+					    			onSearchChange={this.onSearchChangeKab2}
+					    			options={this.state.optionsKab2}
+					    			loading={this.state.loadingsearch2}
+					    			onChange={this.onChangeKab2}
+							    />
+						    </Form.Field>				        
 					      </Form.Group>
 					      <Form.Group widths='equal'>
 					        <Form.Input
