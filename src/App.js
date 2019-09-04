@@ -10,6 +10,7 @@ import EntriPoPage from "./components/pages/EntriPoPage";
 import SignupPage from "./components/pages/SignupPage";
 import AssigmentPage from "./components/pages/AssigmentPage";
 import HandOverPage from "./components/pages/HandOverPage";
+import PetugasPage from "./components/pages/PetugasPage";
 import UserRoute from "./routes/UserRoute";
 import GuestRoute from "./routes/GuestRoute";
 
@@ -25,6 +26,7 @@ const App = ({ location }) =>
     <UserRoute location={location} path="/po" exact component={EntriPoPage} />
     <UserRoute location={location} path="/assigment" exact component={AssigmentPage} />
     <UserRoute location={location} path="/handover" exact component={HandOverPage} />
+    <UserRoute location={location} path="/petugas" exact component={PetugasPage} />
   </div>;  
 
 

@@ -25,7 +25,7 @@
     "test": "react-scripts test",
     "eject": "react-scripts eject"
   },
-  "homepage": "http://localhost/sampoerna_app/",
+  "homepage": "http://10.32.41.90/sampoerna/",
   "eslintConfig": {
     "extends": "react-app"
   },

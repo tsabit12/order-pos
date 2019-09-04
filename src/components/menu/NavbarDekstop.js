@@ -22,6 +22,7 @@ const NavbarDekstop = ({ isAuthenticated, logout }) => (
               <Dropdown.Item as={Link} to="/pickup">Request Pickup</Dropdown.Item>
               <Dropdown.Item as={Link} to="/assigment">Assigment Pickup</Dropdown.Item>
               <Dropdown.Item as={Link} to="/handover">Handover Pickup</Dropdown.Item>
+              <Dropdown.Item as={Link} to="/petugas">User</Dropdown.Item>
               <Dropdown.Item>List Item</Dropdown.Item>
             </Dropdown.Menu>
           </Dropdown>

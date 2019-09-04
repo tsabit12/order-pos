@@ -3,10 +3,12 @@ import user from "./reducers/user";
 import handover from "./reducers/handover";
 import order from "./reducers/order";
 import gethandover from "./reducers/lasthandover";
+import petugas from "./reducers/petugas";
 
 export default combineReducers({
 	user,
 	handover,
 	order,
-	gethandover
+	gethandover,
+	petugas
 }); 

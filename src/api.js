@@ -29,5 +29,9 @@ export default {
 			}).then(res => res.data.result),
 		get_handover: (data) =>
 			axios.post('/api_sampoerna/order/getHandover', { data }).then(res => res.data.result)
+	},
+	petugas: {
+		fetc_petugas: () =>
+			axios.post('/api_sampoerna/petugas/getPetugas').then(res => res.data.petugas)
 	}
 }
