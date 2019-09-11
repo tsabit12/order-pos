@@ -1,20 +1,20 @@
 import React from "react";
 import PropTypes from "prop-types";
-import { Card, Divider } from 'semantic-ui-react';
+import { Table } from 'semantic-ui-react';
 
 const ListTrace = ({ listdata }) =>
-		<Card>
-	      <Card.Content>
-	        <Card.Header>{listdata.eventName}</Card.Header>
-	        <Card.Meta>Event date: { listdata.eventDate }</Card.Meta>
-	        <Card.Meta>Office Code: { listdata.officeCode }</Card.Meta>
-	        <Card.Meta>Office Name: { listdata.officeName }</Card.Meta>
-	        <Divider />
-	        <Card.Description>
+		<Table.Row>
+	        <Table.Cell singleLine>
+	            {listdata.eventName}
+	        </Table.Cell>
+	        <Table.Cell singleLine>{ listdata.eventDate }</Table.Cell>
+	        <Table.Cell>
+	          { listdata.officeName }
+	        </Table.Cell>
+	        <Table.Cell>
 	          {listdata.description}
-	        </Card.Description>
-	      </Card.Content>
-	    </Card>;
+	        </Table.Cell>
+	    </Table.Row>;
 
 
 ListTrace.propTypes = {

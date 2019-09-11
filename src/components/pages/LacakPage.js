@@ -1,6 +1,6 @@
 import React from "react";
 import Navbar from "../menu/Navbar";
-import { Segment, Header, Divider, Input, Form, Message, Card } from "semantic-ui-react";
+import { Segment, Header, Divider, Input, Form, Message, Table, Icon } from "semantic-ui-react";
 import InlineError from "../InlineError";
 import ListTrace from "../list/ListTrace";
 import axios from "axios";
@@ -44,7 +44,10 @@ class LacakPage extends React.Component {
 			<Navbar>
 				 <Segment.Group raised>
 					    <Segment>
-						    <Header as='h3' floated="left">Lacak Kiriman</Header>
+						    <Header as='h2' floated="left">
+						    	<Icon name="search" />
+						    	Lacak Kiriman
+						    </Header>
 						    <Header floated="right" as="h5">
 							    <Form loading={this.state.loading}>
 							    	<Form.Field error={!!errors.barcode}>
@@ -67,7 +70,20 @@ class LacakPage extends React.Component {
 								<Message.Header>Maaf!</Message.Header>
 								<p>{errors.global}</p>
 							</Message> }
-							{ trace.length === 0 ? <p>Masukan kode barcode pada kolom pencarian di atas</p> : <div className="ui container"><Segment><Card.Group centered> {trace.map((data, i) => <ListTrace key={i} listdata={data} />)} </Card.Group></Segment></div> }
+							{ trace.length === 0 ? <p>Masukan kode barcode pada kolom pencarian di atas</p> :
+								<Table celled padded>
+								    <Table.Header>
+								      <Table.Row>
+								        <Table.HeaderCell singleLine>Event Name</Table.HeaderCell>
+								        <Table.HeaderCell>Event Date</Table.HeaderCell>
+								        <Table.HeaderCell>Office Name</Table.HeaderCell>
+								        <Table.HeaderCell>Description</Table.HeaderCell>
+								      </Table.Row>
+								    </Table.Header>
+								    <Table.Body>
+										{trace.map((data, i) => <ListTrace key={i} listdata={data} />)} 
+								    </Table.Body>
+								</Table> }
 						 </Segment>
 				</Segment.Group>
 			</Navbar>
