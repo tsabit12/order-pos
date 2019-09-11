@@ -51,17 +51,17 @@ class ReqPickupPage extends React.Component{
 			<Navbar>
 				<Modal size="tiny" open={open}>
 		          <Modal.Header>Silahkan pilih kantor</Modal.Header>
-		          <Modal.Content>
+		          <Modal.Content scrolling>
 		            { datakantor.length === 0 ? <React.Fragment /> : 
 		            	<Form>
 		            		{datakantor.map(data => 
-		            			<Form.Field key={data.id_kantor}>
+		            			<Form.Field key={data.kantorid}>
 						          <Checkbox
 						            radio
-						            label={data.nama_kantor}
+						            label={data.namakantor}
 						            name='checkboxRadioGroup'
-						            value={data.id_kantor}
-						            checked={this.state.value === data.id_kantor}
+						            value={data.kantorid}
+						            checked={this.state.value === data.kantorid}
 						            onChange={this.handleChange}
 						          />
 						        </Form.Field>
