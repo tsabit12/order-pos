@@ -1,12 +1,15 @@
 import React from "react";
+import PropTypes from "prop-types";
 import { Segment, Header, Divider, Message, Form } from "semantic-ui-react";
 import Navbar from "../menu/Navbar";
 import OrderForm from "../forms/OrderForm";
 import axios from "axios";
+import { connect } from "react-redux";
 
 class OrderPage extends React.Component {
 	state = {
 		value: '',
+		username: this.props.username,
 		succes: false,
 		errors: {},
 		loading: false,
@@ -16,8 +19,9 @@ class OrderPage extends React.Component {
 
 	handleClick = () => {
 		const value = this.state.value;
+		const { username } = this.state;
 		this.setState({ loading: true });
-		axios.post('/api_sampoerna/order/searchPO', { value })
+		axios.post('/api_sampoerna/order/searchPO', { idpo: value, user: username })
 			.then(res => res.data.idpo)
 			.then(idpo => {
 				this.setState({ succes: true, loading: false, errors: {} })
@@ -75,4 +79,14 @@ class OrderPage extends React.Component {
 	}
 }
 
-export default OrderPage;
+OrderPage.propTypes = {
+	username: PropTypes.string.isRequired
+}
+
+function mapStateProps(state) {
+	return {
+		username: state.user.userid
+	}
+}
+
+export default connect(mapStateProps, null)(OrderPage);

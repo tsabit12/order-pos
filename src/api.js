@@ -7,7 +7,9 @@ export default {
 		signup: (data) => 
 			axios.post('/api_sampoerna/register', { 
 				username: data.username,
-				nopend: data.nopend
+				nopend: data.nopend,
+				password: data.password,
+				nama: data.nama
 			}).then(res => res.data.user)
 	},
 	order: {

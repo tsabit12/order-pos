@@ -11,8 +11,10 @@ import { Link } from "react-router-dom"
 class SignupForm extends React.Component {
 	state = {
 		data: {
+			nama: '',
 			username: '',
-			nopend: ''
+			nopend: '',
+			password: ''
 		},
 		loading: false,
 		errors: {}
@@ -41,8 +43,10 @@ class SignupForm extends React.Component {
 	validate = (data) => {
 		const errors = {};
 
+		if (!data.nama) errors.nama = "Harap isi nama lengkap anda";
 		if (!data.username) errors.username = "Email masih kosong, harap diisi";
 		if (!data.nopend) errors.nopend = "Kantor harap di pilih";
+		if (!data.password) errors.password = "Password tidak boleh kosong";
 		if (!Validator.isEmail(data.username)) errors.username = "Email tidak valid";
 
 		return errors;
@@ -65,6 +69,19 @@ class SignupForm extends React.Component {
 			      content='Password akan dikirim melalui email'
 			    />
 				<Form className='attached fluid segment' onSubmit={this.onSubmit} loading={loading}>
+					<Form.Field>
+				        <Form.Input
+				          fluid
+				          type="text"
+				          name="nama"
+				          id="nama"
+				          label='Nama Lengkap'
+				          value={data.nama}
+				          onChange={this.onChange}
+				          placeholder='Masukan nama lengkap'
+				          error={errors.nama}
+				        />
+			        </Form.Field>
 			    	<Form.Field>
 				        <Form.Input
 				          fluid
@@ -72,28 +89,41 @@ class SignupForm extends React.Component {
 				          name="username"
 				          id="username"
 				          label='Email'
+				          autoComplete="off"
 				          value={data.username}
 				          onChange={this.onChange}
 				          placeholder='Masukan email'
 				          error={errors.username}
 				        />
 			        </Form.Field>
-			        <Form.Field>
+			        <Form.Field error={!!errors.nopend}>
 			        	<label>Pilih Kantor</label>
 			        	<Select 
 			        		name="nopend"
 			        		placeholder='Pilih kantor' 
 			        		options={
 			        			listkantor.map(data => ({
-			        					key: data.id_kantor,
-			        					value: data.id_kantor,
-			        					text: data.nama_kantor
+			        					key: data.kantorid,
+			        					value: data.kantorid,
+			        					text: data.namakantor
 			        				})
 			        			)}
 			        		onChange={this.handleChange} 
-			        		error={errors.nopend}
 			        	/>
 			        	{ errors.nopend && <InlineError text={errors.nopend} /> }
+			        </Form.Field>
+			        <Form.Field>
+				        <Form.Input
+				          fluid
+				          type="password"
+				          name="password"
+				          id="password"
+				          label='Password'
+				          value={data.password}
+				          onChange={this.onChange}
+				          placeholder='Masukan password anda'
+				          error={errors.password}
+				        />
 			        </Form.Field>
 			        <Button color='blue' type='submit'>Signup</Button>
 			    </Form>

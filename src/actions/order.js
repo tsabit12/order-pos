@@ -1,3 +1,4 @@
+/* eslint-disable */
 import api from "../api";
 import { PO_ADDED, KANTOR_FETCHED, ASSIGMENT_FETCHED, ASSIGMENT_ADDED } from "../types";
 

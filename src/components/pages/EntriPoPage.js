@@ -13,7 +13,8 @@ class EntriPoPage extends React.Component {
 			tglStart: '',
 			tglDone: '',
 			money: '',
-			noPo: ''
+			noPo: '',
+			username: this.props.username
 		},
 		loading: false,
 		errors: {}
@@ -54,7 +55,7 @@ class EntriPoPage extends React.Component {
 				    <Segment>
 					    <Header as='h2'>
 						    <Icon name='address card outline' />
-						    <Header.Content>Halaman Entri PO</Header.Content>
+						    <Header.Content>Entri PO</Header.Content>
 						</Header>
 					    <Divider clearing />
 					     <Form loading={loading} onSubmit={this.onSubmit}>
@@ -68,6 +69,7 @@ class EntriPoPage extends React.Component {
 							    	value={data.noPo}
 							    	onChange={this.onChange}
 							    	error={errors.noPo}
+							    	autoComplete="off"
 							    />
 							    <Form.Input 
 							    	type="text"
@@ -130,12 +132,14 @@ class EntriPoPage extends React.Component {
 
 EntriPoPage.propTypes = {
 	entriPo: PropTypes.func.isRequired,
-	hasilentri: PropTypes.array.isRequired
+	hasilentri: PropTypes.array.isRequired,
+	username: PropTypes.string.isRequired
 }
 
 function mapStateToProps(state){
 	return{
-		hasilentri: state.order.entripo
+		hasilentri: state.order.entripo,
+		username: state.user.userid
 	}
 }
 

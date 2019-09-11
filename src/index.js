@@ -21,7 +21,7 @@ const store = createStore(
 
 if (localStorage.sampoernaToken) {
 	const payload 	= decode(localStorage.sampoernaToken);
-	const user 		= { token: localStorage.sampoernaToken, username: payload.username, nippos: payload.nippos };
+	const user 		= { token: localStorage.sampoernaToken, username: payload.username, nopend: payload.nopend, nama: payload.nama, userid: payload.userid, level: payload.level };
 	store.dispatch(userLoggedIn(user));
 }
 
