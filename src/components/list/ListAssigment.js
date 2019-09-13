@@ -55,6 +55,18 @@ class ListAssigment extends React.Component{
 		return errors;
 	}
 
+	download = () => {
+		const { nopickup } = this.state;
+		axios.get('/api_sampoerna/postAssigment/downloadTugas', {
+			params: { nopickup: nopickup },
+			responseType: 'arraybuffer'
+		}).then(res => {
+			let blob = new Blob([res.data], { type: 'application/pdf' }),
+		  	url = window.URL.createObjectURL(blob)
+		  	window.open(url) 
+		});
+	}
+
 	render(){
 		const { listdata } = this.props;
 		const { dataPetugas, errors, success } = this.state;
@@ -101,10 +113,11 @@ class ListAssigment extends React.Component{
 					  <i aria-hidden="true" className="check icon"></i>
 					  <div className="content">
 					    <div className="header">Assigment Sukses!</div>
-					    <p>Klik <Link to="/assigment">disini</Link> untuk cetak surat tugas.</p>
+					    <p>Klik <Link to="/assigment" onClick={this.download}>disini</Link> untuk cetak surat tugas.</p>
 					  </div>
 					</div>
 		        }
+		        
 				<Table singleLine>
 				    <Table.Header>
 				      <Table.Row>
