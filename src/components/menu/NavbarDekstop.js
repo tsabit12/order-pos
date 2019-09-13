@@ -4,7 +4,7 @@ import { Link } from "react-router-dom";
 import { Menu, Image, Dropdown } from "semantic-ui-react";
 import { connect } from "react-redux";
 import  * as actions from "../../actions/auth";
-import Logo from "../../logo_sampoerna.jpg";
+import Logo from "../../logosampoerna.png";
 
 const NavbarDekstop = ({ isAuthenticated, logout, level }) => (
 	<Menu fixed="top" inverted>
@@ -21,12 +21,12 @@ const NavbarDekstop = ({ isAuthenticated, logout, level }) => (
 		          <Dropdown.Item as={Link} to="/lacak">Lacak Kiriman</Dropdown.Item>
 		          <Dropdown.Divider />
 		          <Dropdown.Item as={Link} to="/pickup">Request Pickup</Dropdown.Item>
-		          <Dropdown.Item as={Link} to="/assigment">Assigment Pickup</Dropdown.Item>
 		        </Dropdown.Menu>
 		    </Dropdown>
 		</React.Fragment> : <React.Fragment>
 			<Menu.Item as={Link} to="/dashboard" title="dashboard">Dashboard</Menu.Item>
-			<Menu.Item as={Link} to="/handover">Handover Pickup</Menu.Item>
+			<Menu.Item as={Link} to="/assigment">Assigment</Menu.Item>
+			<Menu.Item as={Link} to="/handover">Handover</Menu.Item>
 			<Menu.Item as={Link} to="/petugas">User</Menu.Item>
 		</React.Fragment> }
 		<Menu.Menu position="right">

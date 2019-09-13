@@ -30,8 +30,8 @@ export default function ListHandOver({ listdata }){
 			      		<Table.Cell>{data.nm_penerima}</Table.Cell>
 			      		<Table.Cell>{data.tgl}</Table.Cell>
 			      		<Table.Cell>{data.nama_petugas}</Table.Cell>
-			      		<Table.Cell>{data.nama_kantor}</Table.Cell>
-			      		<Table.Cell>{data.kota}</Table.Cell>
+			      		<Table.Cell>{data.namakantor}</Table.Cell>
+			      		<Table.Cell>{data.city}</Table.Cell>
 			      </Table.Row>)}
 			    </Table.Body>
 			  </Table>

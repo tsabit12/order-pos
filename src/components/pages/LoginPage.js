@@ -12,7 +12,7 @@ class LoginPage extends React.Component{
 	render(){
 		return(
 			<Grid verticalAlign='middle' stackable columns={1} centered style={{ height: '90vh' }}>
-			    <Grid.Column width={8}>
+			    <Grid.Column width={6}>
 			        <LoginForm submit = {this.submit} /> 
 			    </Grid.Column>
 			</Grid>

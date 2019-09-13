@@ -35,7 +35,7 @@ export default function order( state = initialState, action={}){
 				entripo: [...state.entripo], 
 				order: [], 
 				kantor: [...state.kantor], 
-				assigment: action.data
+				assigment: state.assigment.filter(data => data.no_pickup !== action.result.nopickup)
 			}
 		default: return state;
 	}

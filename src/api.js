@@ -23,12 +23,12 @@ export default {
 			axios.post('/api_sampoerna/order/getKantor').then(res => res.data.result),
 		fetch_assigment: () =>
 			axios.post('/api_sampoerna/order/getAssigment').then(res => res.data.result),
-		add_assigment: (data) =>
-			axios.post('/api_sampoerna/order/postAssigment', { 
-				idpetugas:data.idpetugas,
+		add_assigment: (data, name) => 
+			axios.post('/api_sampoerna/postAssigment',  {
 				nopickup: data.nopickup,
-				pin: data.pin
-			}).then(res => res.data.result),
+				idpetugas: data.idpetugas,
+				admin: name
+			}).then(response => response.data.result),
 		get_handover: (data) =>
 			axios.post('/api_sampoerna/order/getHandover', { data }).then(res => res.data.result)
 	},

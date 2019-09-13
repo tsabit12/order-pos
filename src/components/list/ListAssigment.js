@@ -3,6 +3,7 @@ import PropTypes from "prop-types";
 import { Table, Button, Modal, Popup, Form, Select, Message, Dimmer, Loader } from "semantic-ui-react";
 import axios from "axios";
 import InlineError from "../InlineError";
+import { Link } from "react-router-dom";
 
 class ListAssigment extends React.Component{
 	state = {
@@ -11,7 +12,8 @@ class ListAssigment extends React.Component{
 		idpetugas: '',
 		dataPetugas: [],
 		errors: {},
-		lading: false
+		lading: false,
+		success: false
 	}
 
 	handleClick = (data) => {
@@ -39,8 +41,11 @@ class ListAssigment extends React.Component{
 				idpetugas: this.state.idpetugas
 			};
 			this.props.submit(data)
-				.then(() => this.setState({ open: false, loading: false, errors: {} }))
-				.catch(err => this.setState({ errors: err.response.data.errors, loading: false }))
+				.then(res => {
+					this.setState({ open: false, loading: false, errors: {}, success: true })
+				})
+				.catch(err => 
+					this.setState({ errors: err.response.data.errors, loading: false, success: false }))
 		}
 	}
 
@@ -52,7 +57,7 @@ class ListAssigment extends React.Component{
 
 	render(){
 		const { listdata } = this.props;
-		const { dataPetugas, errors } = this.state;
+		const { dataPetugas, errors, success } = this.state;
 		
 		return( 
 			<React.Fragment>
@@ -91,6 +96,15 @@ class ListAssigment extends React.Component{
 		            <Button primary onClick={this.onSubmit}>Assigment</Button>
 		          </Modal.Actions>
 		        </Modal>
+		        { success && 
+		        	<div className="ui icon message">
+					  <i aria-hidden="true" className="check icon"></i>
+					  <div className="content">
+					    <div className="header">Assigment Sukses!</div>
+					    <p>Klik <Link to="/assigment">disini</Link> untuk cetak surat tugas.</p>
+					  </div>
+					</div>
+		        }
 				<Table singleLine>
 				    <Table.Header>
 				      <Table.Row>
@@ -111,8 +125,8 @@ class ListAssigment extends React.Component{
 			  			<Table.Row key={order.no_pickup}>			      			
 					        <Table.Cell>{order.no_pickup}</Table.Cell>
 					        <Table.Cell>{order.tgl_order}</Table.Cell>
-					        <Table.Cell>{order.nama_kantor}</Table.Cell>
-					        <Table.Cell>{order.kota}</Table.Cell>
+					        <Table.Cell>{order.namakantor}</Table.Cell>
+					        <Table.Cell>{order.city}</Table.Cell>
 					        <Table.Cell>
 					        	<Popup content='Assigment' trigger={
 					        		<Button secondary icon='check' onClick={() => this.handleClick(order.no_pickup)} />

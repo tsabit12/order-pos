@@ -16,7 +16,7 @@ class AssigmentPage extends React.Component{
 		this.props.fetchAssigment();
 	}
 
-	submit = (data) => this.props.addAssigment(data);
+	submit = (data) => this.props.addAssigment(data, this.props.nama);
 
 	render(){
 		return(
@@ -43,12 +43,14 @@ class AssigmentPage extends React.Component{
 AssigmentPage.propTypes = {
 	fetchAssigment: PropTypes.func.isRequired,
 	listdata: PropTypes.array.isRequired,
-	addAssigment: PropTypes.func.isRequired
+	addAssigment: PropTypes.func.isRequired,
+	nama: PropTypes.string.isRequired
 }
 
 function mapStateToProps(state) {
 	return{
-		listdata: state.order.assigment
+		listdata: state.order.assigment,
+		nama: state.user.nama
 	}
 }
 

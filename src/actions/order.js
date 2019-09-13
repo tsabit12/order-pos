@@ -2,9 +2,9 @@
 import api from "../api";
 import { PO_ADDED, KANTOR_FETCHED, ASSIGMENT_FETCHED, ASSIGMENT_ADDED } from "../types";
 
-export const assigmentAdded = data => ({
+export const assigmentAdded = result => ({
 	type: ASSIGMENT_ADDED,
-	data
+	result
 });
 
 export const assigmentFetched = data => ({
@@ -34,6 +34,11 @@ export const fetchAssigment = () => dispatch =>
 	api.order.fetch_assigment()
 	.then(res => dispatch(assigmentFetched(res)));
 
-export const addAssigment = (data) => dispatch =>
-	api.order.add_assigment(data)
+export const addAssigment = (data, name) => dispatch =>
+	api.order.add_assigment(data, name)
 	.then(res => dispatch(assigmentAdded(res)))
+
+// let blob = new Blob([res], { type: 'application/pdf' }),
+// 	  	url = window.URL.createObjectURL(blob)
+// 	  	window.open(url) 
+
