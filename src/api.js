@@ -35,5 +35,9 @@ export default {
 	petugas: {
 		fetc_petugas: () =>
 			axios.post('/api_sampoerna/petugas/getPetugas').then(res => res.data.petugas)
+	},
+	dashboard: {
+		get_polimit: () =>
+			axios.post('/api_sampoerna/dashboard/limitPo').then(res => res.data.result)
 	}
 }
