@@ -18,7 +18,7 @@ export default {
 		pickup: (data) =>
 			axios.post('/api_sampoerna/order/pickupHandover', { data }).then(res => res.data.result),
 		entri_po: (data) =>
-			axios.post('/api_sampoerna/order/entriPO', { data }).then(res => res.data.result),
+			axios.post('/api_sampoerna/entriPo', { data }).then(res => res.data.result),
 		get_kantor: () =>
 			axios.post('/api_sampoerna/order/getKantor').then(res => res.data.result),
 		fetch_assigment: () =>
