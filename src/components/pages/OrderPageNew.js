@@ -36,7 +36,7 @@ class OrderPageNew extends React.Component {
 	onClickPO = (data) => {
 		const { nomorPo, user } = data;
 		this.setState({ loading: true, data: { ...this.state.data, nomorPo: nomorPo } });
-		axios.post('/api_sampoerna/order/searchPO', { idpo: nomorPo, user: user })
+		axios.post(`${process.env.REACT_APP_API}/order/searchPO`, { idpo: nomorPo, user: user })
 			.then(results => {
 				this.setState({ 
 					loading: false, 
@@ -62,7 +62,7 @@ class OrderPageNew extends React.Component {
 
 	submitFee = (datafee) => {
 		const { data } = this.state;
-		axios.post('/api_sampoerna/orderPost', { other: data, fee: datafee })
+		axios.post(`${process.env.REACT_APP_API}/orderPost`, { other: data, fee: datafee })
 		.then(res => {
 			this.setState({ errors: {...this.state.errors, fee: {} }, loading: false, open: false, step: 5, idorder: res.data.orderId })
 		})

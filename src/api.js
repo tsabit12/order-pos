@@ -1,11 +1,17 @@
-import axios from "axios";
+import axios from "axios"; 
+
+const config = {
+	headers: {
+        'Content-type' : 'application/json'
+	}
+}
 
 export default {
 	user: {
 		login: (credentials) => 
-			axios.post('/api_sampoerna/auth/login', { credentials }).then(res => res.data.user),
+			axios.post(`${process.env.REACT_APP_API}/auth/login`, { credentials },  config).then(res => res.data.user),
 		signup: (data) => 
-			axios.post('/api_sampoerna/register', { 
+			axios.post(`${process.env.REACT_APP_API}/register`, { 
 				username: data.username,
 				nopend: data.nopend,
 				password: data.password,
@@ -14,30 +20,49 @@ export default {
 	},
 	order: {
 		hand_over: () =>
-			axios.post('/api_sampoerna/order/fetchHandover').then(res => res.data.result),
+			axios.post(`${process.env.REACT_APP_API}/order/fetchHandover`).then(res => res.data.result),
 		pickup: (data) =>
-			axios.post('/api_sampoerna/order/pickupHandover', { data }).then(res => res.data.result),
+			axios.post(`${process.env.REACT_APP_API}/order/pickupHandover`, { data }).then(res => res.data.result),
 		entri_po: (data) =>
-			axios.post('/api_sampoerna/entriPo', { data }).then(res => res.data.result),
+			axios.post(`${process.env.REACT_APP_API}/entriPo`, { data }).then(res => res.data.result),
 		get_kantor: () =>
-			axios.post('/api_sampoerna/order/getKantor').then(res => res.data.result),
+			axios.post(`${process.env.REACT_APP_API}/order/getKantor`).then(res => res.data.result),
 		fetch_assigment: () =>
-			axios.post('/api_sampoerna/order/getAssigment').then(res => res.data.result),
+			axios.post(`${process.env.REACT_APP_API}/order/getAssigment`, config).then(res => res.data.result),
 		add_assigment: (data, name) => 
-			axios.post('/api_sampoerna/postAssigment',  {
+			axios.post(`${process.env.REACT_APP_API}/postAssigment`,  {
 				nopickup: data.nopickup,
 				idpetugas: data.idpetugas,
 				admin: name
 			}).then(response => response.data.result),
 		get_handover: (data) =>
-			axios.post('/api_sampoerna/order/getHandover', { data }).then(res => res.data.result)
+			axios.post(`${process.env.REACT_APP_API}/order/getHandover`, { data }).then(res => res.data.result)
 	},
 	petugas: {
 		fetc_petugas: () =>
-			axios.post('/api_sampoerna/petugas/getPetugas').then(res => res.data.petugas)
+			axios.post(`${process.env.REACT_APP_API}/petugas/getPetugas`).then(res => res.data.petugas)
 	},
 	dashboard: {
 		get_polimit: () =>
-			axios.post('/api_sampoerna/dashboard/limitPo').then(res => res.data.result)
+			axios.post(`${process.env.REACT_APP_API}/dashboard/limitPo`).then(res => res.data.result)
+	},
+	po: {
+		get_pobyid: (data) => 
+			axios.post(`${process.env.REACT_APP_API}/purchaseOrder/getById`, {
+				id_po : data.id_po,
+				userid: data.userid
+			}, config).then(res => res.data.result),
+		get_purchase: (data) => 
+			axios.post(`${process.env.REACT_APP_API}/purchaseOrder/fetchPo`, {
+				level: data.level,
+				userid: data.userid
+			}, config).then(res => res.data.result),
+		add_topup: (data) => 
+			axios.post(`${process.env.REACT_APP_API}/addTopUp`, {
+				jumlah: data.jumlah,
+				hasil: data.hasil,
+				id_po: data.id_po,
+				userid: data.userid
+			}, config).then(res => res.data.result)
 	}
 }

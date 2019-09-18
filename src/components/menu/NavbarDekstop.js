@@ -27,6 +27,7 @@ const NavbarDekstop = ({ isAuthenticated, logout, level }) => (
 			<Menu.Item as={Link} to="/dashboard" title="dashboard">Dashboard</Menu.Item>
 			<Menu.Item as={Link} to="/assigment">Assigment</Menu.Item>
 			<Menu.Item as={Link} to="/handover">Handover</Menu.Item>
+			<Menu.Item as={Link} to="/invoice">Invoice</Menu.Item>
 			<Menu.Item as={Link} to="/petugas">User</Menu.Item>
 		</React.Fragment> }
 		<Menu.Menu position="right">

@@ -4,20 +4,29 @@ import { connect } from "react-redux";
 import { Segment, Header, Icon, Divider, Message, Grid } from "semantic-ui-react";
 import Navbar from "../menu/Navbar";
 import ListLimit from "../list/ListLimit";
-import { getLimtPo } from "../../actions/dashboard";
+import { getPurchase } from "../../actions/purchase";
 
 class DashboardPage extends React.Component{
-
+	state = { 
+		loading: false
+	}
 	componentDidMount(){
-		this.props.getLimtPo();
+		this.setState({ loading: true });
+		const data = {
+			level: this.props.level,
+			userid: this.props.userid
+		};
+
+		this.props.getPurchase(data).then(() => this.setState({ loading: false }));
 	}
 
 	render(){
-		const { listLimit } = this.props;
+		const { listLimit, level } = this.props;
+		const { loading } = this.state;
 		return(
 			<Navbar>
 				<Grid>
-					<Grid.Column mobile={16} tablet={16} computer={12}>
+					<Grid.Column mobile={16} tablet={16} computer={listLimit.length > 0 && level === '02' ? 12 : 16}>
 						<Segment.Group raised>
 							<Segment>
 								<Header as='h2'>
@@ -33,7 +42,12 @@ class DashboardPage extends React.Component{
 							</Segment>
 						</Segment.Group>
 					</Grid.Column>
-					<ListLimit listdata={listLimit} />
+						{ listLimit.length > 0 && level === '02' ? <Grid.Column mobile={16} tablet={16} computer={4}>
+							<ListLimit 
+								listdata={listLimit} 
+								loading={loading}
+							/>
+						</Grid.Column> : <React.Fragment /> }
 				</Grid>
 			</Navbar>
 		);
@@ -42,15 +56,19 @@ class DashboardPage extends React.Component{
 
 DashboardPage.propTypes = {
 	username: PropTypes.string.isRequired,
-	getLimtPo: PropTypes.func.isRequired,
-	listLimit: PropTypes.array.isRequired
+	getPurchase: PropTypes.func.isRequired,
+	listLimit: PropTypes.array.isRequired,
+	level: PropTypes.string.isRequired,
+	userid: PropTypes.string.isRequired
 }
 
 function mapStateToProps(state) {
 	return{
 		username: state.user.nama,
-		listLimit: state.dashboard.limit
+		listLimit: state.purchase.filter(list => Math.round(list.persentase) <= 20),
+		level: state.user.level,
+		userid: state.user.userid
 	}
 }
 
-export default connect(mapStateToProps, { getLimtPo })(DashboardPage);
+export default connect(mapStateToProps, { getPurchase })(DashboardPage);

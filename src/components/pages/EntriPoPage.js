@@ -8,8 +8,6 @@ import PropTypes from "prop-types";
 import { connect } from "react-redux";
 import { entriPo } from "../../actions/order";
 import HasilEntriPo from "../list/HasilEntriPo";
-import axios from "axios";
-import { Link } from "react-router-dom";
 
 class EntriPoPage extends React.Component {
 	state = {
@@ -23,10 +21,7 @@ class EntriPoPage extends React.Component {
 			email: this.props.email
 		},
 		loading: false,
-		errors: {},
-		loadingEmail: false,
-		errorsEmail: {},
-		success: false
+		errors: {}
 	}
 
 	onChange = e => this.setState({ 
@@ -37,26 +32,12 @@ class EntriPoPage extends React.Component {
 		const errors = this.validate(this.state.data);
 		this.setState({ errors });
 		if (Object.keys(errors).length === 0) {
-			this.setState({ loading: true, loadingEmail: false })
+			this.setState({ loading: true })
 			this.props.entriPo(this.state.data)
-				.then(() => {
-					this.setState({ loading: false });
-					this.sendingEmail(this.state.data);
-				})
+				.then(() => this.setState({ loading: false }) )
 				.catch(err => this.setState({ errors: err.response.data.errors, loading: false }))
 		}
 	}
-
-	sendingEmail = (data) => {
-		this.setState({ loadingEmail: true, success: false });
-		const { email, noPo } = data;
-		axios.post('/api_sampoerna/entriPo/email', {
-			email: email,
-			nomorPo: noPo
-		})
-		.then(() => this.setState({ success: true }))
-		.catch(err => this.setState({ errorsEmail: err.response.data.global }))
-	}	
 
 	validate = (data) => {
 		const errors = {};
@@ -72,7 +53,7 @@ class EntriPoPage extends React.Component {
 	handleChange = (event, {name, value}) => this.setState({ data: { ...this.state.data, [name]: value} });
 
 	render(){
-		const { data, errors, loading, loadingEmail, success } = this.state;
+		const { data, errors, loading } = this.state;
 
 		return(
 			<Navbar>
@@ -105,6 +86,7 @@ class EntriPoPage extends React.Component {
 							    	value={data.desc}
 							    	onChange={this.onChange}
 							    	error={errors.desc}
+							    	autoComplete="off"
 							    />
 						    </Form.Group>
 						    <Form.Group widths='equal'>
@@ -151,23 +133,6 @@ class EntriPoPage extends React.Component {
 						    </Form.Group>
 						    <Button secondary>Tambah</Button>
 						 </Form>
-						 { loadingEmail &&  <Message icon>
-						 	{ !success && <React.Fragment>
-						 		<Icon name='circle notched' loading />
-							    <Message.Content>
-							      <Message.Header>Tunggu sebentar</Message.Header>
-							     Sedang mengirim PO ke email anda <strong>{ data.email }</strong>
-							    </Message.Content>
-							</React.Fragment> }
-							{ success && <React.Fragment>
-								<Icon name='check' />
-								 <Message.Content>
-							      <Message.Header>Done</Message.Header>
-							      Email sudah dikirim, klik &nbsp;
-							      <Link to="/po" onClick={() => this.sendingEmail(data)}>disini</Link> &nbsp;untuk kirim ulang PO
-							    </Message.Content>
-							</React.Fragment> }
-						  </Message> }
 
 						 { errors.global && <Message negative>
 							<Message.Header>Maaf!</Message.Header>

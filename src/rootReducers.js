@@ -5,6 +5,7 @@ import order from "./reducers/order";
 import gethandover from "./reducers/lasthandover";
 import petugas from "./reducers/petugas";
 import dashboard from "./reducers/dashboard";
+import purchase from "./reducers/purchase";
 
 export default combineReducers({
 	user,
@@ -12,5 +13,6 @@ export default combineReducers({
 	order,
 	gethandover,
 	petugas,
-	dashboard
+	dashboard,
+	purchase
 }); 

@@ -27,7 +27,7 @@
     "eject": "react-scripts eject",
     "lint": "eslint src"
   },
-  "homepage": "http://10.32.41.90/pickup/",
+  "homepage": "http://10.32.41.90/order/",
   "eslintConfig": {
     "extends": "react-app"
   },
@@ -43,7 +43,6 @@
       "last 1 safari version"
     ]
   },
-  "proxy": "http://localhost/",
   "devDependencies": {
     "eslint": "^6.3.0",
     "eslint-config-airbnb": "^15.0.1",

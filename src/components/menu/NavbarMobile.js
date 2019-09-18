@@ -27,6 +27,7 @@ const NavbarMobile = ({ children, onPusherClick, onToggle, visible, logout, leve
 				<Menu.Item as={Link} to="/dashboard">Dashboard</Menu.Item>
 				<Menu.Item as={Link} to="/assigment">Assigment Pickup</Menu.Item>
 				<Menu.Item as={Link} to="/handover">Handover Pickup</Menu.Item>
+				<Menu.Item as={Link} to="/invoice">Invoice</Menu.Item>
 				<Menu.Item as={Link} to="/petugas">User</Menu.Item>
 			</React.Fragment>
 			}

@@ -12,6 +12,8 @@ import SignupPage from "./components/pages/SignupPage";
 import AssigmentPage from "./components/pages/AssigmentPage";
 import HandOverPage from "./components/pages/HandOverPage";
 import PetugasPage from "./components/pages/PetugasPage";
+import TopupPage from "./components/pages/TopupPage";
+import InvoicePage from "./components/pages/InvoicePage";
 import UserRoute from "./routes/UserRoute";
 import GuestRoute from "./routes/GuestRoute";
 
@@ -28,6 +30,8 @@ const App = ({ location }) =>
     <UserRoute location={location} path="/assigment" exact component={AssigmentPage} />
     <UserRoute location={location} path="/handover" exact component={HandOverPage} />
     <UserRoute location={location} path="/petugas" exact component={PetugasPage} />
+    <UserRoute location={location} path="/topup/:id" exact component={TopupPage} />
+    <UserRoute location={location} path="/invoice" exact component={InvoicePage} />
   </div>;  
 
 

@@ -11,10 +11,10 @@ export default function order( state = initialState, action={}){
 	switch(action.type){
 		case PO_ADDED:
 			return {
-				entripo: [ ...state.entripo, action.data ], 
-				order: [], 
-				kantor: [ ... state.kantor ],
-				assigment: [ ...state.assigment ]
+				...state, entripo: [ action.data ], order: []
+				//entripo: [ ...state.entripo, action.data ], 
+				//kantor: [ ... state.kantor ],
+				//assigment: [ ...state.assigment ]
 			}
 		case KANTOR_FETCHED:
 			return {
