@@ -20,6 +20,15 @@
     "semantic-ui-react": "^0.88.0",
     "validator": "^11.1.0"
   },
+  "scriptsComment": {
+    "start": "react-scripts start",
+    "build-sw": "node ./src/sw-build.js",
+    "clean-cra-sw": "rm -f build/precache-manifest.*.js && rm -f build/service-worker.js",
+    "build": "react-scripts build && npm run build-sw && npm run clean-cra-sw",
+    "test": "react-scripts test",
+    "eject": "react-scripts eject",
+    "lint": "eslint src"
+  },
   "scripts": {
     "start": "react-scripts start",
     "build": "react-scripts build",
@@ -27,7 +36,8 @@
     "eject": "react-scripts eject",
     "lint": "eslint src"
   },
-  "homepage": "http://10.32.41.90/order/",
+  "homepageDev": "http://10.32.41.90/order/",
+  "homepage": "https://order.posindonesia.co.id/",
   "eslintConfig": {
     "extends": "react-app"
   },
@@ -51,6 +61,7 @@
     "eslint-plugin-jsx-a11y": "^5.1.1",
     "eslint-plugin-prettier": "^3.1.0",
     "eslint-plugin-react": "^7.14.3",
-    "prettier": "^1.18.2"
+    "prettier": "^1.18.2",
+    "workbox-build": "^4.3.1"
   }
 }

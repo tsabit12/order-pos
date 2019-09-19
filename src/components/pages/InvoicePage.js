@@ -10,11 +10,15 @@ import axios from "axios";
 class InvoicePage extends React.Component {
 	state = {
 		idpo: '',
-		loading: false
+		loading: false,
+		data: {
+			userid: this.props.user.userid,
+			level: this.props.user.level
+		}
 	}
 
 	componentDidMount(){
-		this.props.getPurchase();
+		this.props.getPurchase(this.state.data);
 	}
 
 	cetakPo = (id) => {
@@ -61,12 +65,15 @@ class InvoicePage extends React.Component {
 
 InvoicePage.propTypes = {
 	getPurchase: PropTypes.func.isRequired,
-	dataPo: PropTypes.array.isRequired
+	dataPo: PropTypes.array.isRequired,
+	user: PropTypes.object.isRequired
 }
 
 function mapStateProps(state) {
 	return{
-		dataPo: state.purchase.filter(list => list.fee_realtrans > 0 )
+		// dataPo: state.purchase.filter(list => list.fee_realtrans > 0 )
+		dataPo: state.purchase,
+		user: state.user
 	}
 }
 
