@@ -20,7 +20,7 @@
     "semantic-ui-react": "^0.88.0",
     "validator": "^11.1.0"
   },
-  "scriptsComment": {
+  "scripts": {
     "start": "react-scripts start",
     "build-sw": "node ./src/sw-build.js",
     "clean-cra-sw": "rm -f build/precache-manifest.*.js && rm -f build/service-worker.js",
@@ -29,7 +29,7 @@
     "eject": "react-scripts eject",
     "lint": "eslint src"
   },
-  "scripts": {
+  "scriptsComment": {
     "start": "react-scripts start",
     "build": "react-scripts build",
     "test": "react-scripts test",

@@ -65,7 +65,7 @@ DashboardPage.propTypes = {
 function mapStateToProps(state) {
 	return{
 		username: state.user.nama,
-		listLimit: state.purchase.filter(list => Math.round(list.persentase) <= 20),
+		listLimit: state.purchase.filter(list => Math.round(list.persentase) <= 90),
 		level: state.user.level,
 		userid: state.user.userid
 	}

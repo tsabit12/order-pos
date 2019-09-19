@@ -21,6 +21,7 @@ const NavbarDekstop = ({ isAuthenticated, logout, level }) => (
 		          <Dropdown.Item as={Link} to="/lacak">Lacak Kiriman</Dropdown.Item>
 		          <Dropdown.Divider />
 		          <Dropdown.Item as={Link} to="/pickup">Request Pickup</Dropdown.Item>
+		          <Dropdown.Item as={Link} to="/topup">Topup</Dropdown.Item>
 		        </Dropdown.Menu>
 		    </Dropdown>
 		</React.Fragment> : <React.Fragment>
