@@ -86,7 +86,7 @@ class OrderPageNew extends React.Component {
 
 	render(){
 		const { step, errors, loading, data } = this.state;
-		console.log(this.state.dataOptions);
+		
 		return(
 			<Navbar>
 				<Segment.Group raised>
