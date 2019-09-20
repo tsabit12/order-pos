@@ -24,7 +24,22 @@ class InvoicePage extends React.Component {
 	cetakPo = (id) => {
 		this.setState({ loading: true });
 		axios.post(`${process.env.REACT_APP_API}/purchaseOrder/cetakInvoice`, {idpo: id})
-			.then(() => this.setState({ loading: false }));	
+			.then(() => { 
+				this.setState({ loading: false });
+				this.download(id);
+			});	
+	}
+
+	download = (id) => {
+		axios.get(`${process.env.REACT_APP_API}/purchaseOrder/downloadInvoice`, {
+			params: {idpo: id},
+			responseType: 'arraybuffer'
+		}).then(res => {
+			console.log(res);
+			let blob = new Blob([res.data], { type: 'application/pdf' }),
+		  	url = window.URL.createObjectURL(blob)
+		  	window.open(url) 
+		  });
 	}
 
 	onChange = (e) => this.setState({ idpo: e.target.value });
@@ -51,7 +66,7 @@ class InvoicePage extends React.Component {
 						      	value={this.state.idpo}
 						      	onChange={this.onChange}
 						      	fluid 
-						      	loading 
+						      	loading={false}
 						      	placeholder='Cari nomor purchase order...' />
 						    </Grid.Column>
 						</Grid>
