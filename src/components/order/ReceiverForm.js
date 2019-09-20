@@ -3,14 +3,6 @@ import PropTypes from "prop-types";
 import { Button, Form, Dropdown } from "semantic-ui-react";
 import axios from "axios";
 
-const config = {
-	headers: {
-		'Content-Type': 'application/json',
-		'Authorization': 'Bearer 74f5dbde-b920-3504-a41a-7691bf264d36',
-		'Accept': 'application/json'
-	}
-}
-
 class ReceiverForm extends React.Component{
 	state = {
 		step: 3,
@@ -23,13 +15,15 @@ class ReceiverForm extends React.Component{
 			receiverPos: this.props.dataReceiver.receiverPos,
 			receiverPhone: this.props.dataReceiver.receiverPhone,
 		},
-		options: [],
-		optionsKab: [],
-		optionsKec: [],
+		options: this.props.dataOptions.options,
+		optionsKab: this.props.dataOptions.optionsKab,
+		optionsKec: this.props.dataOptions.optionsKec,
+		optionPostal: this.props.dataOptions.optionPostal,
 		loadingsearch: false,
+		loadingsearchKab: false,
+		loadingsearchKec: false,
 		provCode: '',
 		kabCode: '',
-		kecKode: '',
 		errors: {},
 		loading: false
 
@@ -40,23 +34,23 @@ class ReceiverForm extends React.Component{
 	onSearchChange = (e, data) => 	{
 		clearTimeout(this.timer);
 		this.setState({ data: {...this.state.data, receiverProv: data.searchQuery} });
-		this.timer = setTimeout(this.fetchProp, 1000);
+		this.timer = setTimeout(this.fetchProp, 500);
 	}
 
 	fetchProp = () => {
 		if (!this.state.data.receiverProv) return;
 		this.setState({ loadingsearch: true });
-		axios.post('https://api.posindonesia.co.id:8245/utilitas/1.0.1/getProvince', {
+		axios.post(`${process.env.REACT_APP_API}/Provinsi/getProv`, {
 			provinceName: this.state.receiverProv
-		}, config)
-			.then(res => res.data.responses.response)
+		})
+			.then(res => res.data.result)
 			.then(result => {
 				const options = [];
 				result.forEach(result => {
 					options.push({
-						key: result.provinceCode,
-						value: result.provinceName,
-						text: result.provinceName
+						key: result.Kode_Propinsi,
+						value: result.Nama_Propinsi,
+						text: result.Nama_Propinsi
 					})
 				});
 				this.setState({ loadingsearch: false, options });
@@ -72,27 +66,27 @@ class ReceiverForm extends React.Component{
 	onSearchChangeKab = (e, data) => {
 		clearTimeout(this.timer);
 		this.setState({ data: {...this.state.data, receiverKab: data.searchQuery} });
-		this.timer = setTimeout(this.fetchKab, 1000);	
+		this.timer = setTimeout(this.fetchKab, 500);	
 	}
 
 	fetchKab = () => {
 		if (!this.state.data.receiverKab) return;
-		this.setState({ loadingsearch: true });
-		axios.post('https://api.posindonesia.co.id:8245/utilitas/1.0.1/getCity', {
+		this.setState({ loadingsearchKab: true });
+		axios.post(`${process.env.REACT_APP_API}/Provinsi/getKab`, {
 			provinceCode: this.state.provCode,
 			cityName: this.state.data.receiverKab
-		}, config)
-			.then(res => res.data.responses.response)
+		})
+			.then(res => res.data.result)
 			.then(result =>{
 				const optionsKab = [];
 				result.forEach(result => {
 					optionsKab.push({
-						key: result.cityCode,
-						value: result.cityName,
-						text: result.cityName
+						key: result.Kode_Kabupaten,
+						value: result.Nama_Kabupaten,
+						text: result.Nama_Kabupaten
 					})
 				});
-				this.setState({ loadingsearch: false, optionsKab  })
+				this.setState({ loadingsearchKab: false, optionsKab  })
 			})
 			.catch(err => console.log(err))
 	}
@@ -110,38 +104,61 @@ class ReceiverForm extends React.Component{
 
 	fetchKec = () => {
 		if (!this.state.data.receiverKec) return;
-		this.setState({ loadingsearch: true });
-		axios.post('https://api.posindonesia.co.id:8245/utilitas/1.0.1/getSubDistrict', {
+		this.setState({ loadingsearchKec: true });
+		axios.post(`${process.env.REACT_APP_API}/Provinsi/getKecamatan`, {
 			provinceCode: this.state.provCode,
 			cityCode: this.state.kabCode,
 			subDistrictName: this.state.data.receiverKec
-		}, config)
-			.then(res => res.data.responses.response)
+		})
+			.then(res => res.data.result)
 			.then(result =>{
 				const optionsKec = [];
 				result.forEach(result => {
 					optionsKec.push({
-						key: result.subDistrictCode,
-						value: result.subDistrictName,
-						text: result.subDistrictName
+						key: result.Kode_Kecamatan,
+						value: result.Nama_Kecamatan,
+						text: result.Nama_Kecamatan
 					})
 				});
-				this.setState({ loadingsearch: false, optionsKec  })
+				this.setState({ loadingsearchKec: false, optionsKec  })
 			})
 			.catch(err => console.log(err));
 	}
 
 	onChangeKec = (e, data) => {
-		const { key } = data.options.find(o => o.value === data.value);
-		this.setState({ data: {...this.state.data, receiverKec: data.value }, kecKode: key });	
+		this.setState({ data: {...this.state.data, receiverKec: data.value }, optionPostal: [] });	
+		axios.post(`${process.env.REACT_APP_API}/Provinsi/getKodePos`, {
+			kecamatan: data.value
+		}).then(res => res.data.result)
+			.then(result => {
+				const optionPostal = [];
+				result.forEach(list => {
+					optionPostal.push({
+						key: list.kodepos,
+						value: list.kodepos,
+						text: list.kodepos
+					})
+				});
+				this.setState({ optionPostal });
+			})
 	}
+
+	handleChangePos = (e, data) => this.setState({ data: { ...this.state.data, receiverPos: data.value } })
 
 	onSubmit = () => {
 		const errors = this.validate(this.state.data);
 		this.setState({ errors });
 		if (Object.keys(errors).length === 0) {
+			const { options, optionsKab, optionsKec, optionPostal } = this.state;
+			const dataOption = {
+				options: options,
+				optionsKab: optionsKab,
+				optionsKec: optionsKec,
+				optionPostal: optionPostal
+			};
+
 			this.setState({ loading: true });
-			this.props.submitReceiver(this.state.data, this.state.step);
+			this.props.submitReceiver(this.state.data, this.state.step, dataOption);
 		}
 	}
 
@@ -204,7 +221,7 @@ class ReceiverForm extends React.Component{
 						        value={data.receiverKab}
 				    			onSearchChange={this.onSearchChangeKab}
 				    			options={this.state.optionsKab}
-				    			loading={this.state.loadingsearch}
+				    			loading={this.state.loadingsearchKab}
 				    			onChange={this.onChangeKab}
 						    />
 					    </Form.Field>
@@ -221,7 +238,7 @@ class ReceiverForm extends React.Component{
 						        value={data.receiverKec}
 				    			onSearchChange={this.onSearchChangeKec}
 				    			options={this.state.optionsKec}
-				    			loading={this.state.loadingsearch}
+				    			loading={this.state.loadingsearchKec}
 				    			onChange={this.onChangeKec}
 						    />
 					    </Form.Field>
@@ -238,30 +255,32 @@ class ReceiverForm extends React.Component{
 							/>
 						</Form.Field>
 					</Form.Group>
-					<Form.Field>
-						<Form.Input
-							name="receiverPos"
-							id="receiverPos"
-							type="text"
-							placeholder="Masukan kodepos penerima"
-							label="Kodepos"
-							value={data.receiverPos}
-							onChange={this.onChange}
-							error={errors.receiverPos}
-						/>
-					</Form.Field>
-					<Form.Field>
-				      	<Form.Input
-				          label='Nomor Handphone'
-				          placeholder='Masukan nomor handphone penerima'
-				          type='text'
-				          id="receiverPhone"
-				          name="receiverPhone"
-				          value={data.receiverPhone}
-				          onChange={this.onChange}
-				          error={errors.receiverPhone}
-				        />
-				    </Form.Field>
+					<Form.Group widths="equal">
+						<Form.Field error={!!errors.receiverPos}>
+							<label>Kode Pos</label>
+							<Dropdown 
+								clearable 
+								options={this.state.optionPostal} 
+								selection 
+								additionPosition='bottom'
+								value={data.receiverPos}
+								onChange={this.handleChangePos}
+							/>
+						</Form.Field>
+						<Form.Field>
+					      	<Form.Input
+					          label='Nomor Handphone'
+					          placeholder='Masukan nomor handphone penerima'
+					          type='text'
+					          id="receiverPhone"
+					          name="receiverPhone"
+					          value={data.receiverPhone}
+					          onChange={this.onChange}
+					          error={errors.receiverPhone}
+					        />
+					    </Form.Field>
+					</Form.Group>
+				
 				</Form>
 				<br/>
 				<Button.Group fluid>

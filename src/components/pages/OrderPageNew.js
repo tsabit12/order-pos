@@ -22,7 +22,13 @@ class OrderPageNew extends React.Component {
 			receiver: {}
 		},
 		open: false,
-		idorder: ''
+		idorder: '',
+		dataOptions: {
+			options: [],
+			optionsKab: [],
+			optionsKec: [],
+			optionPostal: []
+		}
 	}
 
 	onClick = (step) => {
@@ -56,8 +62,17 @@ class OrderPageNew extends React.Component {
 		this.setState({ data: { ...this.state.data, sender: data }, loading: false, step: step+1 });
 	}
 
-	submitReceiver = (data, step) => {
-		this.setState({ step: step+1, data: { ...this.state.data, receiver: data } });
+	submitReceiver = (data, step, dataOptions) => {
+		this.setState({ 
+			step: step+1, 
+			dataOptions: {
+				...this.state.dataOptions, 
+				options: dataOptions.options, 
+				optionsKab: dataOptions.optionsKab, 
+				optionsKec: dataOptions.optionsKec,
+				optionPostal: dataOptions.optionPostal
+			}, 
+			data: { ...this.state.data, receiver: data } });
 	}
 
 	submitFee = (datafee) => {
@@ -71,6 +86,7 @@ class OrderPageNew extends React.Component {
 
 	render(){
 		const { step, errors, loading, data } = this.state;
+		console.log(this.state.dataOptions);
 		return(
 			<Navbar>
 				<Segment.Group raised>
@@ -83,7 +99,12 @@ class OrderPageNew extends React.Component {
 						<StepOrder step={step} />
 						{ step === 1 && <CariPoForm submitPO={this.onClickPO} errors={ errors.po } loading={loading} nomorPo={data.nomorPo}/> }
 						{ step === 2 && <SenderForm submitSender={this.submitSender} onClickBack={this.onClickBack} dataSender={data.sender}/> }
-						{ step === 3 && <ReceiverForm onClickBack={this.onClickBack} submitReceiver={this.submitReceiver} dataReceiver={data.receiver}/> }
+						{ step === 3 && <ReceiverForm 
+							onClickBack={this.onClickBack} 
+							submitReceiver={this.submitReceiver} 
+							dataReceiver={data.receiver}
+							dataOptions={this.state.dataOptions}
+						/> }
 						{ step === 4 && <FeeForm 
 							onClickBack={this.onClickBack} 
 							dataReceiver={data.receiver} 
