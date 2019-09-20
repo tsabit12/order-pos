@@ -15,13 +15,18 @@ const NavbarDekstop = ({ isAuthenticated, logout, level }) => (
 			<Menu.Item as={Link} to="/dashboard" title="dashboard">Dashboard</Menu.Item>
 			<Menu.Item as={Link} to="/order" title="Add Posting">Order</Menu.Item>
 			<Menu.Item as={Link} to="/po" title="Lacak Kiriman">Entri PO</Menu.Item>
+			<Dropdown item simple text='Laporan'>
+				<Dropdown.Menu>
+		          <Dropdown.Item as={Link} to="/list_po">List Purchase Order</Dropdown.Item>   
+		        </Dropdown.Menu>
+			</Dropdown>
 			<Dropdown item simple text='Menu Lain'>
 		        <Dropdown.Menu>
-		          <Dropdown.Item as={Link} to="/transaction">Get Real Transaction</Dropdown.Item>              
+		          <Dropdown.Item as={Link} to="/topup">Topup</Dropdown.Item>
+		          <Dropdown.Item as={Link} to="/pickup">Request Pickup</Dropdown.Item>
 		          <Dropdown.Item as={Link} to="/lacak">Lacak Kiriman</Dropdown.Item>
 		          <Dropdown.Divider />
-		          <Dropdown.Item as={Link} to="/pickup">Request Pickup</Dropdown.Item>
-		          <Dropdown.Item as={Link} to="/topup">Topup</Dropdown.Item>
+		          <Dropdown.Item as={Link} to="/transaction">Get Real Transaction</Dropdown.Item>              
 		        </Dropdown.Menu>
 		    </Dropdown>
 		</React.Fragment> : <React.Fragment>

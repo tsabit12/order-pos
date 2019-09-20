@@ -63,6 +63,10 @@ export default {
 				hasil: data.hasil,
 				id_po: data.id_po,
 				userid: data.userid
+			}, config).then(res => res.data.result),
+		fetch_listpo: (id) => 
+			axios.post(`${process.env.REACT_APP_API}/getPoUser`, { 
+				userid: id 
 			}, config).then(res => res.data.result)
 	}
 }

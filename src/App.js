@@ -17,6 +17,7 @@ import TopupForm from "./components/forms/TopupForm";
 import InvoicePage from "./components/pages/InvoicePage";
 import UserRoute from "./routes/UserRoute";
 import GuestRoute from "./routes/GuestRoute";
+import PageListPo from "./components/pages/PageListPo"; 
 
 const App = ({ location }) =>
   <div>
@@ -34,6 +35,7 @@ const App = ({ location }) =>
     <UserRoute location={location} path="/topup/:id" exact component={TopupPage} />
     <UserRoute location={location} path="/topup" exact component={TopupForm} />
     <UserRoute location={location} path="/invoice" exact component={InvoicePage} />
+    <UserRoute location={location} path="/list_po" exact component={PageListPo} />
   </div>;  
 
 

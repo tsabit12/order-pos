@@ -17,18 +17,19 @@ const NavbarMobile = ({ children, onPusherClick, onToggle, visible, logout, leve
 			vertical
 			visible={visible}>
 			{ level === '02' ? <React.Fragment>
-				<Menu.Item as={Link} to="/dashboard" title="dashboard">Dashboard</Menu.Item>
-				<Menu.Item as={Link} to="/order">Order</Menu.Item>
-				<Menu.Item as={Link} to="/po">Entri PO</Menu.Item>
-				<Menu.Item as={Link} to="/transaction">Real Transaction</Menu.Item>
-				<Menu.Item as={Link} to="/lacak">Lacak</Menu.Item>
-				<Menu.Item as={Link} to="/pickup">Request Pickup</Menu.Item>
+				<Menu.Item style={{textAlign: 'left'}} as={Link} to="/dashboard" title="dashboard">Dashboard</Menu.Item>
+				<Menu.Item style={{textAlign: 'left'}} as={Link} to="/order">Order</Menu.Item>
+				<Menu.Item style={{textAlign: 'left'}} as={Link} to="/po">Entri PO</Menu.Item>
+				<Menu.Item style={{textAlign: 'left'}} as={Link} to="/pickup">Topup</Menu.Item>
+				<Menu.Item style={{textAlign: 'left'}} as={Link} to="/pickup">Request Pickup</Menu.Item>
+				<Menu.Item style={{textAlign: 'left'}} as={Link} to="/lacak">Lacak Kiriman</Menu.Item>
+				<Menu.Item style={{textAlign: 'left'}} as={Link} to="/transaction">Real Transaction</Menu.Item>
 			</React.Fragment> : <React.Fragment>
-				<Menu.Item as={Link} to="/dashboard">Dashboard</Menu.Item>
-				<Menu.Item as={Link} to="/assigment">Assigment Pickup</Menu.Item>
-				<Menu.Item as={Link} to="/handover">Handover Pickup</Menu.Item>
-				<Menu.Item as={Link} to="/invoice">Invoice</Menu.Item>
-				<Menu.Item as={Link} to="/petugas">User</Menu.Item>
+				<Menu.Item style={{textAlign: 'left'}} as={Link} to="/dashboard">Dashboard</Menu.Item>
+				<Menu.Item style={{textAlign: 'left'}} as={Link} to="/assigment">Assigment Pickup</Menu.Item>
+				<Menu.Item style={{textAlign: 'left'}} as={Link} to="/handover">Handover Pickup</Menu.Item>
+				<Menu.Item style={{textAlign: 'left'}} as={Link} to="/invoice">Invoice</Menu.Item>
+				<Menu.Item style={{textAlign: 'left'}} as={Link} to="/petugas">User</Menu.Item>
 			</React.Fragment>
 			}
 		</Sidebar>
