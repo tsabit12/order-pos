@@ -18,7 +18,7 @@ class ListAssigment extends React.Component{
 
 	handleClick = (data) => {
 	    this.setState({ open: true, nopickup: data });
-	    axios.post('/api_sampoerna/order/getPetugasPickup')
+	    axios.post(`${process.env.REACT_APP_API}/order/getPetugasPickup`)
 	    	.then(res => res.data.result)
 	    	.then(result => {
 	    		this.setState({ dataPetugas: result })
@@ -57,7 +57,7 @@ class ListAssigment extends React.Component{
 
 	download = () => {
 		const { nopickup } = this.state;
-		axios.get('/api_sampoerna/postAssigment/downloadTugas', {
+		axios.get(`${process.env.REACT_APP_API}/postAssigment/downloadTugas`, {
 			params: { nopickup: nopickup },
 			responseType: 'arraybuffer'
 		}).then(res => {

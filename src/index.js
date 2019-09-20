@@ -26,7 +26,7 @@ if (localStorage.sampoernaToken) {
 }
 
 ReactDOM.render(
-	<HashRouter>
+	<HashRouter /*basename={process.env.PUBLIC_URL+'/app'} */>
 		<Provider store={store}>
 			<Route component={App} />
 		</Provider>

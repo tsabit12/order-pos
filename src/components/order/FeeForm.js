@@ -5,14 +5,6 @@ import { Button, Message, Icon, Modal, Dimmer, Loader } from "semantic-ui-react"
 import axios from "axios";
 import ListFee from "../list/ListFee";
 
-const config = {
-	headers: {
-		'Content-Type': 'application/json',
-		'Authorization': 'Bearer 74f5dbde-b920-3504-a41a-7691bf264d36',
-		'Accept': 'application/json'
-	}
-}
-
 class FeeForm extends React.Component {
 	state = {
 		step: 4,
@@ -39,20 +31,11 @@ class FeeForm extends React.Component {
 
 	getFee = () => {
 		this.setState({ loading: true });
-		axios.post('https://api.posindonesia.co.id:8245/utilitas/1.0.1/getFee', {
-			  customerid: "",
-			  desttypeid: "1",
-			  itemtypeid: "1",
+		axios.post(`${process.env.REACT_APP_API}/getFee`, {
 			  shipperzipcode: this.state.shipperzipcode,
-			  receiverzipcode: this.state.receiverzipcode,
-			  weight: "1000",
-			  length: "0",
-			  width: "0",
-			  height: "0",
-			  diameter:"0",
-			  valuegoods: "0"
-		}, config)
-		.then(res => res.data.rs_fee.r_fee)
+			  receiverzipcode: this.state.receiverzipcode
+		})
+		.then(res => res.data.result)
 		.then(result => {
 			this.setState({ loading: false, success: true, fee: result });
 		})
@@ -66,11 +49,11 @@ class FeeForm extends React.Component {
 				serviceName: name, 
 				totalFee: total, 
 				serviceCode: code,
-				fee: `${fee}`,
+				fee: `${fee}`, //convert to string
 				feeTax: `${feeTax}`,
-				insurance: insurance,
-				insuranceTax: insuranceTax,
-				itemValue: itemValue
+				insurance: `${insurance}`,
+				insuranceTax: `${insuranceTax}`,
+				itemValue: `${itemValue}`
 			} 
 		});
 	}
