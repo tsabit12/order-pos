@@ -4,12 +4,12 @@ import { Link } from "react-router-dom";
 import { Menu, Image, Dropdown } from "semantic-ui-react";
 import { connect } from "react-redux";
 import  * as actions from "../../actions/auth";
-import Logo from "../../logosampoerna.png";
+import Logo from "../../logoposindonesia2.png";
 
 const NavbarDekstop = ({ isAuthenticated, logout, level }) => (
 	<Menu fixed="top" inverted>
 		<Menu.Item>
-			<Image size="mini" src={Logo} />
+			<Image size="tiny" floated="left" src={Logo} />
 		</Menu.Item>
 		{ level === '02' && <React.Fragment>
 			<Menu.Item as={Link} to="/dashboard" title="dashboard">Dashboard</Menu.Item>

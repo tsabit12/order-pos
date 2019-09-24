@@ -1,10 +1,10 @@
 import React from "react";
 import Navbar from "../menu/Navbar";
-import { Segment, Image, Header, Divider } from "semantic-ui-react";
+import { Image, Header, Divider } from "semantic-ui-react";
 
 const HomePage = () => (
 	<Navbar>
-		<Segment padded='very'>
+		<div style={{paddingTop: '20px'}}>
 			<Header as='h3'>
 			    <Header.Content>Selamat Datang</Header.Content>
 			</Header>
@@ -12,7 +12,7 @@ const HomePage = () => (
 			<Image src='https://react.semantic-ui.com/images/wireframe/paragraph.png' alt='paragraph' />
 			<br />
 			<Image src='https://react.semantic-ui.com/images/wireframe/paragraph.png' alt='paragraph' />
-		</Segment>
+		</div>
 	</Navbar>
 );
 

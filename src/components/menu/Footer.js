@@ -7,7 +7,7 @@ const Footer = () => (
         <Grid divided inverted stackable>
           <Grid.Row>
             <Grid.Column width={3}>
-              <Header inverted as='h4' content='About' />
+              <Header inverted as='h4' content='About' style={{marginTop: "-20px"}} />
               <List link inverted>
                 <List.Item as='a'>Sitemap</List.Item>
                 <List.Item as='a'>Contact Us</List.Item>
@@ -16,7 +16,7 @@ const Footer = () => (
               </List>
             </Grid.Column>
             <Grid.Column width={3}>
-              <Header inverted as='h4' content='Services' />
+              <Header inverted as='h4' content='Services' style={{marginTop: "-20px"}} />
               <List link inverted>
                 <List.Item as='a'>Banana Pre-Order</List.Item>
                 <List.Item as='a'>DNA FAQ</List.Item>
@@ -25,7 +25,7 @@ const Footer = () => (
               </List>
             </Grid.Column>
             <Grid.Column width={7}>
-              <Header as='h4' inverted>
+              <Header as='h4' inverted style={{marginTop: "-20px"}}>
                 Footer Header
               </Header>
               <p>

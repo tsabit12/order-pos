@@ -5,7 +5,7 @@ import NavbarMobile from "./NavbarMobile";
 import Footer from "./Footer";
 
 const NavbarChildren = ({ children }) => (
-	<Container style={{paddingTop: "5em", paddingBottom: "2em" }}>{children}</Container>
+	<Container style={{paddingTop: "6em", paddingBottom: "2em" }}>{children}</Container>
 )
 
 class Navbar extends React.Component {

@@ -4,7 +4,7 @@ import { Link } from "react-router-dom";
 import { Sidebar, Menu, Icon, Image } from "semantic-ui-react";
 import { connect } from "react-redux";
 import  * as actions from "../../actions/auth";
-import Logo from "../../logosampoerna.png";
+import Logo from "../../logoposindonesia2.png";
 
 const NavbarMobile = ({ children, onPusherClick, onToggle, visible, logout, level, isAuthenticated }) => (
 	<Sidebar.Pushable>
@@ -39,7 +39,7 @@ const NavbarMobile = ({ children, onPusherClick, onToggle, visible, logout, leve
 			style={{ minHeight: "100vh" }}>
 			<Menu fixed="top" inverted>
 				<Menu.Item>
-					<Image size="mini" src={Logo} />
+					<Image size="tiny" floated="left" src={Logo} />
 				</Menu.Item>
 				{ isAuthenticated ? <React.Fragment>
 					<Menu.Item onClick={onToggle}>
