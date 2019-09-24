@@ -6,7 +6,7 @@ import { connect } from "react-redux";
 import  * as actions from "../../actions/auth";
 import Logo from "../../logosampoerna.png";
 
-const NavbarMobile = ({ children, onPusherClick, onToggle, visible, logout, level }) => (
+const NavbarMobile = ({ children, onPusherClick, onToggle, visible, logout, level, isAuthenticated }) => (
 	<Sidebar.Pushable>
 		<Sidebar
 			as={Menu}
@@ -16,7 +16,7 @@ const NavbarMobile = ({ children, onPusherClick, onToggle, visible, logout, leve
 			style={{width: "208px"}}
 			vertical
 			visible={visible}>
-			{ level === '02' ? <React.Fragment>
+			{ level === '02' && <React.Fragment>
 				<Menu.Item style={{textAlign: 'left'}} as={Link} to="/dashboard" title="dashboard">Dashboard</Menu.Item>
 				<Menu.Item style={{textAlign: 'left'}} as={Link} to="/order">Order</Menu.Item>
 				<Menu.Item style={{textAlign: 'left'}} as={Link} to="/po">Entri PO</Menu.Item>
@@ -24,14 +24,14 @@ const NavbarMobile = ({ children, onPusherClick, onToggle, visible, logout, leve
 				<Menu.Item style={{textAlign: 'left'}} as={Link} to="/pickup">Request Pickup</Menu.Item>
 				<Menu.Item style={{textAlign: 'left'}} as={Link} to="/lacak">Lacak Kiriman</Menu.Item>
 				<Menu.Item style={{textAlign: 'left'}} as={Link} to="/transaction">Real Transaction</Menu.Item>
-			</React.Fragment> : <React.Fragment>
+			</React.Fragment> } 
+			{ level === '01' && <React.Fragment>
 				<Menu.Item style={{textAlign: 'left'}} as={Link} to="/dashboard">Dashboard</Menu.Item>
 				<Menu.Item style={{textAlign: 'left'}} as={Link} to="/assigment">Assigment Pickup</Menu.Item>
 				<Menu.Item style={{textAlign: 'left'}} as={Link} to="/handover">Handover Pickup</Menu.Item>
 				<Menu.Item style={{textAlign: 'left'}} as={Link} to="/invoice">Invoice</Menu.Item>
 				<Menu.Item style={{textAlign: 'left'}} as={Link} to="/petugas">User</Menu.Item>
-			</React.Fragment>
-			}
+			</React.Fragment> }
 		</Sidebar>
 		<Sidebar.Pusher
 			dimmed={visible}
@@ -41,12 +41,19 @@ const NavbarMobile = ({ children, onPusherClick, onToggle, visible, logout, leve
 				<Menu.Item>
 					<Image size="mini" src={Logo} />
 				</Menu.Item>
-				<Menu.Item onClick={onToggle}>
-					<Icon name="sidebar"/>
-				</Menu.Item>
-				<Menu.Menu position="right">
-					<Menu.Item as="a" title="Add Posting" onClick={() => logout() }>Logout</Menu.Item>
-				</Menu.Menu>
+				{ isAuthenticated ? <React.Fragment>
+					<Menu.Item onClick={onToggle}>
+						<Icon name="sidebar"/>
+					</Menu.Item>
+					<Menu.Menu position="right">
+						<Menu.Item as="a" title="Logout" onClick={() => logout() }>Logout</Menu.Item>
+					</Menu.Menu>
+				</React.Fragment> : <React.Fragment>
+					<Menu.Menu position="right">
+						<Menu.Item as={Link} to="/login" title="Login" >Login</Menu.Item>
+						<Menu.Item as={Link} to="/signup" title="Signup" >Signup</Menu.Item>
+					</Menu.Menu>
+				</React.Fragment>}
 			</Menu>
 			{ children }
 		</Sidebar.Pusher>
@@ -55,12 +62,14 @@ const NavbarMobile = ({ children, onPusherClick, onToggle, visible, logout, leve
 
 NavbarMobile.propTypes = {
 	logout: PropTypes.func.isRequired,
-	level: PropTypes.string.isRequired
+	level: PropTypes.string.isRequired,
+	isAuthenticated: PropTypes.bool.isRequired
 }
 
 function mapStateToProps(state) {
 	return{
-		level: state.user.level
+		level: state.user.level,
+		isAuthenticated: !!state.user.token
 	}
 }
 
