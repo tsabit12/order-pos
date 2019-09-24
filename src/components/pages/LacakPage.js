@@ -1,9 +1,9 @@
 import React from "react";
 import Navbar from "../menu/Navbar";
-import { Segment, Header, Divider, Input, Form, Message, Table, Icon } from "semantic-ui-react";
+import { Segment, Header, Divider, Input, Form, Message, Icon } from "semantic-ui-react";
 import InlineError from "../InlineError";
-import ListTrace from "../list/ListTrace";
 import axios from "axios";
+import ListLacak from "../list/ListLacak";
 
 class LacakPage extends React.Component {
 	state = {
@@ -71,19 +71,7 @@ class LacakPage extends React.Component {
 								<p>{errors.global}</p>
 							</Message> }
 							{ trace.length === 0 ? <p>Masukan kode barcode pada kolom pencarian di atas</p> :
-								<Table celled padded>
-								    <Table.Header>
-								      <Table.Row>
-								        <Table.HeaderCell singleLine>Event Name</Table.HeaderCell>
-								        <Table.HeaderCell>Event Date</Table.HeaderCell>
-								        <Table.HeaderCell>Office Name</Table.HeaderCell>
-								        <Table.HeaderCell>Description</Table.HeaderCell>
-								      </Table.Row>
-								    </Table.Header>
-								    <Table.Body>
-										{trace.map((data, i) => <ListTrace key={i} listdata={data} />)} 
-								    </Table.Body>
-								</Table> }
+								<ListLacak listdata={trace} /> }
 						 </Segment>
 				</Segment.Group>
 			</Navbar>
