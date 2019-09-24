@@ -1,76 +1,56 @@
 import React from "react";
-import PropTypes from "prop-types";
 import Navbar from "../menu/Navbar";
+import PropTypes from "prop-types";
+import { Link } from "react-router-dom";
+import { Segment, Header, Divider, Icon } from "semantic-ui-react";
+import InvoiceForm from "../forms/InvoiceForm";
 import { connect } from "react-redux";
-import { Segment, Header, Icon, Divider, Input, Grid, Dimmer, Loader } from "semantic-ui-react";
-import ListInvoice from "../list/ListInvoice";
-import { getPurchase } from "../../actions/purchase";
-import axios from "axios";
+import { getKantor } from "../../actions/order";
+import api from "../../api";
 
 class InvoicePage extends React.Component {
 	state = {
-		idpo: '',
-		loading: false,
-		data: {
-			userid: this.props.user.userid,
-			level: this.props.user.level
-		}
+		success: false,
+		noinvoice: ''
 	}
 
 	componentDidMount(){
-		this.props.getPurchase(this.state.data);
+		this.props.getKantor();
 	}
+	
+	onSubmit = (data) => api.invoice.cetak(data).then(res => {
+		this.cetak(res.data.invoice);
+		this.setState({ success: true,  noinvoice: res.data.invoice });
+	})
 
-	cetakPo = (id) => {
-		this.setState({ loading: true });
-		axios.post(`${process.env.REACT_APP_API}/purchaseOrder/cetakInvoice`, {idpo: id})
-			.then(() => { 
-				this.setState({ loading: false });
-				this.download(id);
-			});	
-	}
-
-	download = (id) => {
-		axios.get(`${process.env.REACT_APP_API}/purchaseOrder/downloadInvoice`, {
-			params: {idpo: id},
-			responseType: 'arraybuffer'
-		}).then(res => {
-			console.log(res);
+	cetak = (noinvoice) => 
+		api.invoice.download(noinvoice).then(res => {
 			let blob = new Blob([res.data], { type: 'application/pdf' }),
 		  	url = window.URL.createObjectURL(blob)
 		  	window.open(url) 
-		  });
-	}
+		})
 
-	onChange = (e) => this.setState({ idpo: e.target.value });
+	handleSuccess = () => this.setState({ success: false });
 
 	render(){
-		const { loading } = this.state;
+		const { success } = this.state;
 		return(
 			<Navbar>
 				<Segment.Group raised>
 				    <Segment>
 					    <Header as='h2'>
 						    <Icon name='paste' />
-						    <Header.Content>Halaman Invoice</Header.Content>
+						    <Header.Content>Cetak Invoice</Header.Content>
 						</Header>
 						<Divider clearing />
-						<Dimmer inverted active={loading}>
-					        <Loader size='medium'>Loading</Loader>
-					    </Dimmer>
-						<Grid>
-							<Grid.Column floated='right' computer={5} tablet={10} mobile={16}>
-						      <Input
-						      	name='idpo'
-						      	id='idpo'
-						      	value={this.state.idpo}
-						      	onChange={this.onChange}
-						      	fluid 
-						      	loading={false}
-						      	placeholder='Cari nomor purchase order...' />
-						    </Grid.Column>
-						</Grid>
-						<ListInvoice listdata={this.props.dataPo} cetak={this.cetakPo} />
+						{ success && <div className="ui icon message">
+							  <i aria-hidden="true" className="check icon"></i>
+							  <div className="content">
+							    <div className="header">Invoice berhasil dicetak!</div>
+							    <p>Hasil pdf tidak muncul? Klik <Link to="/invoice" onClick={() => this.cetak(this.state.noinvoice)}>disini</Link> untuk cetak ulang</p>
+							  </div>
+							</div> }
+						<InvoiceForm datakantor={this.props.listkantor} submit={this.onSubmit} remove={this.handleSuccess} />
 					</Segment>
 				</Segment.Group>
 			</Navbar>
@@ -79,17 +59,13 @@ class InvoicePage extends React.Component {
 }
 
 InvoicePage.propTypes = {
-	getPurchase: PropTypes.func.isRequired,
-	dataPo: PropTypes.array.isRequired,
-	user: PropTypes.object.isRequired
+	listkantor: PropTypes.array.isRequired
 }
 
 function mapStateProps(state) {
-	return{
-		// dataPo: state.purchase.filter(list => list.fee_realtrans > 0 )
-		dataPo: state.purchase,
-		user: state.user
+	return {
+		listkantor: state.order.kantor
 	}
 }
 
-export default connect(mapStateProps, { getPurchase })(InvoicePage);
+export default connect(mapStateProps, { getKantor} )(InvoicePage);

@@ -68,5 +68,17 @@ export default {
 			axios.post(`${process.env.REACT_APP_API}/getPoUser`, { 
 				userid: id 
 			}, config).then(res => res.data.result)
+	},
+	invoice: {
+		cetak: (data) => 
+			axios.post(`${process.env.REACT_APP_API}/invoice/cetak`, {
+				kantor: data.kantor,
+				periode: data.tanggal
+			}),
+		download: (noinvoice) =>
+			axios.get(`${process.env.REACT_APP_API}/invoice/download`, {
+				params: {no_invoice: noinvoice},
+				responseType: 'arraybuffer'
+			})
 	}
 }
