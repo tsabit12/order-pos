@@ -2,9 +2,10 @@ import React from "react";
 import { Responsive, Container } from "semantic-ui-react";
 import NavbarDekstop from "./NavbarDekstop";
 import NavbarMobile from "./NavbarMobile";
+import Footer from "./Footer";
 
 const NavbarChildren = ({ children }) => (
-	<Container style={{marginTop: "5em"}}>{children}</Container>
+	<Container style={{paddingTop: "5em", paddingBottom: "2em" }}>{children}</Container>
 )
 
 class Navbar extends React.Component {
@@ -39,17 +40,21 @@ class Navbar extends React.Component {
 		return(
 			<div>
 				<Responsive {...Responsive.onlyMobile}>
-					<NavbarMobile 
+					<NavbarMobile
 						onPusherClick={this.handlePusher}
 						onToggle={this.handleToggle}
 						visible={visible}
 					>
 						<NavbarChildren>{children}</NavbarChildren>
+						<Footer />
 					</NavbarMobile>
 				</Responsive>
 				<Responsive minWidth={Responsive.onlyTablet.minWidth}>
 					<NavbarDekstop />
-					<NavbarChildren>{children}</NavbarChildren>
+					<div style={{minHeight: "39em"}}>
+						<NavbarChildren>{children}</NavbarChildren>
+					</div>
+					<Footer />
 				</Responsive>
 			</div>
 		);

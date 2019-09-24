@@ -18,10 +18,13 @@ import InvoicePage from "./components/pages/InvoicePage";
 import UserRoute from "./routes/UserRoute";
 import GuestRoute from "./routes/GuestRoute";
 import PageListPo from "./components/pages/PageListPo"; 
+import ListInvoicePage from "./components/pages/ListInvoicePage";
+import HomePage from "./components/pages/HomePage";
 
 const App = ({ location }) =>
   <div>
-    <GuestRoute location={location} path="/" exact component={LoginPage} />
+    <GuestRoute location={location} path="/" exact component={HomePage} />
+    <GuestRoute location={location} path="/login" exact component={LoginPage} />
     <GuestRoute location={location} path="/signup" exact component={SignupPage} />
     <UserRoute location={location} path="/dashboard" exact component={DashboardPage} />
     <UserRoute location={location} path="/order" exact component={OrderPageNew} />
@@ -36,6 +39,7 @@ const App = ({ location }) =>
     <UserRoute location={location} path="/topup" exact component={TopupForm} />
     <UserRoute location={location} path="/invoice" exact component={InvoicePage} />
     <UserRoute location={location} path="/list_po" exact component={PageListPo} />
+    <UserRoute location={location} path="/invoice/laporan" exact component={ListInvoicePage} />
   </div>;  
 
 

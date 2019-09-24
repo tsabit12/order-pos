@@ -11,7 +11,7 @@ const NavbarDekstop = ({ isAuthenticated, logout, level }) => (
 		<Menu.Item>
 			<Image size="mini" src={Logo} />
 		</Menu.Item>
-		{ level === '02' ? <React.Fragment>
+		{ level === '02' && <React.Fragment>
 			<Menu.Item as={Link} to="/dashboard" title="dashboard">Dashboard</Menu.Item>
 			<Menu.Item as={Link} to="/order" title="Add Posting">Order</Menu.Item>
 			<Menu.Item as={Link} to="/po" title="Lacak Kiriman">Entri PO</Menu.Item>
@@ -29,26 +29,39 @@ const NavbarDekstop = ({ isAuthenticated, logout, level }) => (
 		          <Dropdown.Item as={Link} to="/transaction">Get Real Transaction</Dropdown.Item>              
 		        </Dropdown.Menu>
 		    </Dropdown>
-		</React.Fragment> : <React.Fragment>
+		</React.Fragment>  }
+		{ level === '01' &&  <React.Fragment>
 			<Menu.Item as={Link} to="/dashboard" title="dashboard">Dashboard</Menu.Item>
 			<Menu.Item as={Link} to="/assigment">Assigment</Menu.Item>
+			<Dropdown item simple text='Invoice'>
+				<Dropdown.Menu>
+			        <Dropdown.Item as={Link} to="/invoice">Cetak Invoice</Dropdown.Item>
+			        <Dropdown.Item as={Link} to="/invoice/laporan">Laporan Invoice</Dropdown.Item>
+				</Dropdown.Menu>
+			</Dropdown>
 			<Menu.Item as={Link} to="/handover">Handover</Menu.Item>
-			<Menu.Item as={Link} to="/invoice">Invoice</Menu.Item>
 			<Menu.Item as={Link} to="/petugas">User</Menu.Item>
 		</React.Fragment> }
+
 		<Menu.Menu position="right">
-		<Menu.Item as="a" title="Add Posting" onClick={() => logout() }>Logout</Menu.Item>
+			{ isAuthenticated && <Menu.Item as="a" title="Logout" onClick={() => logout() }>Logout</Menu.Item> }
+			{ !isAuthenticated && <React.Fragment>
+				<Menu.Item as={Link} to="/login" title="Login">Login</Menu.Item> 
+				<Menu.Item as={Link} to="/signup" title="Signup">Signup</Menu.Item> 
+			</React.Fragment>}
 		</Menu.Menu> 
 	</Menu>
 );
 
 NavbarDekstop.propTypes = {
-	logout: PropTypes.func.isRequired
+	logout: PropTypes.func.isRequired,
+	isAuthenticated: PropTypes.bool.isRequired
 }
 
 function mapStateToProps(state) {
 	return{
-		level: state.user.level
+		level: state.user.level,
+		isAuthenticated: !!state.user.token
 	}
 }
 

@@ -66,7 +66,6 @@ class SignupForm extends React.Component {
 			      attached
 			      positive
 			      header='Halaman Registrasi'
-			      content='Password akan dikirim melalui email'
 			    />
 				<Form className='attached fluid segment' onSubmit={this.onSubmit} loading={loading}>
 					<Form.Field>
@@ -128,7 +127,7 @@ class SignupForm extends React.Component {
 			        <Button color='blue' type='submit'>Signup</Button>
 			    </Form>
 			    <Message attached='bottom' warning>
-				    Kembali ke login? <Link to="/">disini</Link>
+				    Kembali ke login? <Link to="/login">disini</Link>
 				</Message>
 			</React.Fragment>
 		);
