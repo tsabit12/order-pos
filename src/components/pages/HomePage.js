@@ -1,6 +1,6 @@
 import React from "react";
 import Navbar from "../menu/Navbar";
-import { Segment, Image, Header, Icon, Divider } from "semantic-ui-react";
+import { Segment, Image, Header, Divider } from "semantic-ui-react";
 
 const HomePage = () => (
 	<Navbar>
