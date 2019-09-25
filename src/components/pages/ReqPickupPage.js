@@ -5,6 +5,7 @@ import ListReqPickup from "../list/ListReqPickup";
 import { connect } from "react-redux";
 import { fetchPickup, pickup } from "../../actions/handover";
 import { getKantor } from "../../actions/order";
+import { setProgressBar } from "../../actions/progress";
 import { Segment, Header, Icon, Divider, Dimmer, Loader, Message, Modal, Button, Form, Checkbox } from "semantic-ui-react";
 
 
@@ -19,7 +20,8 @@ class ReqPickupPage extends React.Component{
 	}
 
 	componentDidMount() {
-	    this.props.fetchPickup();
+		this.props.setProgressBar(true);
+	    this.props.fetchPickup().then(() => this.props.setProgressBar(false));
 	}
 
 	submit = (data) => {
@@ -111,4 +113,4 @@ function mapStateToProps(state) {
 	}
 }
 
-export default connect(mapStateToProps, { fetchPickup, pickup, getKantor })(ReqPickupPage);
+export default connect(mapStateToProps, { fetchPickup, pickup, getKantor, setProgressBar })(ReqPickupPage);

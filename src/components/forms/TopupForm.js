@@ -7,6 +7,7 @@ import ChoosePo from "../topup/ChoosePo";
 import BsuTopup from "../topup/BsuTopup";
 import Summary from "../topup/Summary";
 import { getPurchase, getPoByid, addTopup } from "../../actions/purchase";
+import { setProgressBar } from "../../actions/progress";
 
 class TopupForm extends React.Component {
 	state = {
@@ -18,13 +19,13 @@ class TopupForm extends React.Component {
 		idpo: ''
 	}
 
-	componentDidMount(){
+	componentWillMount(){
+		this.props.setProgressBar(true);
 		const data = {
 			level: this.props.user.level,
 			userid: this.props.user.userid
 		};
-		this.props.getPurchase(data);
-
+		this.props.getPurchase(data).then(() => this.props.setProgressBar(false));
 	}
 
 	submitPo = (data) => {
@@ -108,4 +109,4 @@ function mapStateToProps(state) {
 	}
 }
 
-export default connect(mapStateToProps, { getPurchase, getPoByid, addTopup })(TopupForm);
+export default connect(mapStateToProps, { getPurchase, getPoByid, addTopup, setProgressBar })(TopupForm);

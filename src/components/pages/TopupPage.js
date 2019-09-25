@@ -4,6 +4,7 @@ import { connect } from "react-redux";
 import { Message, Form, Button, Grid } from "semantic-ui-react";
 import Navbar from "../menu/Navbar";
 import { getPoByid, addTopup } from "../../actions/purchase";
+import { setProgressBar } from "../../actions/progress";
 
 class TopupPage extends React.Component{
 	state = {
@@ -29,9 +30,13 @@ class TopupPage extends React.Component{
 			const userid 	= this.props.userid;
 			const id 		= this.props.match.params.id;
 			const data 		= {id_po: id, userid: userid};
-
+			
+			this.props.setProgressBar(true);
 			this.props.getPoByid(data)
-				.then(() => this.setState({ success: true }))
+				.then(() => {
+					this.setState({ success: true })
+					this.props.setProgressBar(false);		
+				})
 				.catch(err => this.setState({ errors: err.response.data.errors, success: false }));
 		}
 	}
@@ -163,4 +168,4 @@ function mapStateProps(state, props) {
 	
 }
 
-export default  connect(mapStateProps, { getPoByid, addTopup })(TopupPage);
+export default  connect(mapStateProps, { getPoByid, addTopup, setProgressBar })(TopupPage);

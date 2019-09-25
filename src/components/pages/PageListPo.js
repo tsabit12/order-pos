@@ -5,6 +5,7 @@ import { Segment, Header, Icon, Divider } from "semantic-ui-react";
 import ListData from "../po/ListData";
 import { connect } from "react-redux";
 import { fetchListpo } from "../../actions/purchase";
+import { setProgressBar } from "../../actions/progress";
 
 class PageListPo extends React.Component {
 	state = {
@@ -12,8 +13,9 @@ class PageListPo extends React.Component {
 	}
 
 	componentDidMount(){
+		this.props.setProgressBar(true);
 		const { userid } = this.props.user;
-		this.props.fetchListpo(userid);
+		this.props.fetchListpo(userid).then(() => this.props.setProgressBar(false));
 	}
 
 	render(){
@@ -45,4 +47,4 @@ function mapStateProps(state) {
 	}
 }
 
-export default connect(mapStateProps, { fetchListpo })(PageListPo);
+export default connect(mapStateProps, { fetchListpo, setProgressBar })(PageListPo);

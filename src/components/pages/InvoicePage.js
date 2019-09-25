@@ -6,6 +6,7 @@ import { Segment, Header, Divider, Icon } from "semantic-ui-react";
 import InvoiceForm from "../forms/InvoiceForm";
 import { connect } from "react-redux";
 import { getKantor } from "../../actions/order";
+import { setProgressBar } from "../../actions/progress";
 import api from "../../api";
 
 class InvoicePage extends React.Component {
@@ -15,7 +16,8 @@ class InvoicePage extends React.Component {
 	}
 
 	componentDidMount(){
-		this.props.getKantor();
+		this.props.setProgressBar(true);
+		this.props.getKantor().then(() => this.props.setProgressBar(false));
 	}
 	
 	onSubmit = (data) => api.invoice.cetak(data).then(res => {
@@ -68,4 +70,4 @@ function mapStateProps(state) {
 	}
 }
 
-export default connect(mapStateProps, { getKantor} )(InvoicePage);
+export default connect(mapStateProps, { getKantor, setProgressBar } )(InvoicePage);

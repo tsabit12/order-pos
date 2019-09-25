@@ -4,20 +4,17 @@ import PropTypes from "prop-types";
 import { Segment, Header, Icon, Divider, Message } from "semantic-ui-react";
 import { connect } from "react-redux";
 import { fetchPetugas } from "../../actions/petugas";
+import { setProgressBar } from "../../actions/progress";
 import ListPetugas from "../list/ListPetugas";
 
 class PetugasPage extends React.Component {
-	state = {
-		loading: false
-	}
 
 	componentDidMount(){
-		this.setState({ loading: true });
-		this.props.fetchPetugas().then(() => this.setState({loading: false }));
+		this.props.setProgressBar(true);
+		this.props.fetchPetugas().then(() => this.props.setProgressBar(false));
 	}
 
 	render(){
-		const { loading } = this.state;
 		return(
 			<Navbar>
 				<Segment.Group raised>
@@ -27,14 +24,7 @@ class PetugasPage extends React.Component {
 						    <Header.Content>User</Header.Content>
 						</Header>
 					    <Divider clearing />
-					    { loading &&  <Message icon>
-								    <Icon name='circle notched' loading />
-								    <Message.Content>
-								      <Message.Header>Just one second</Message.Header>
-								      We are fetching that content for you.
-								    </Message.Content>
-								  </Message> }
-						{ !loading && <ListPetugas listdata={this.props.petugas} />}
+						<ListPetugas listdata={this.props.petugas} />
 					</Segment>
 				</Segment.Group>
 			</Navbar>
@@ -53,4 +43,4 @@ function mapStateProps(state){
 	}
 }
 
-export default connect(mapStateProps, { fetchPetugas })(PetugasPage);
+export default connect(mapStateProps, { fetchPetugas, setProgressBar })(PetugasPage);
