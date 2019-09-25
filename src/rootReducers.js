@@ -8,6 +8,7 @@ import dashboard from "./reducers/dashboard";
 import purchase from "./reducers/purchase";
 import pouser from "./reducers/pouser";
 import ui from "./reducers/ui";
+import invoice from "./reducers/invoice";
 
 export default combineReducers({
 	ui,
@@ -18,5 +19,6 @@ export default combineReducers({
 	petugas,
 	dashboard,
 	purchase,
-	pouser
+	pouser,
+	invoice
 }); 

@@ -79,6 +79,8 @@ export default {
 			axios.get(`${process.env.REACT_APP_API}/invoice/download`, {
 				params: {no_invoice: noinvoice},
 				responseType: 'arraybuffer'
-			})
+			}),
+		laporan: () => 
+			axios.post(`${process.env.REACT_APP_API}/invoice/laporan`).then(res => res.data.result)
 	}
 }
