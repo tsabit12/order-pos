@@ -4,6 +4,7 @@ import PropTypes from "prop-types";
 import { connect } from "react-redux";
 import { Segment, Header, Icon, Dimmer, Loader, Divider } from "semantic-ui-react";
 import { fetchAssigment, addAssigment } from "../../actions/order";
+import { setProgressBar } from "../../actions/progress";
 import ListAssigment from "../list/ListAssigment";
 
 class AssigmentPage extends React.Component{
@@ -13,7 +14,8 @@ class AssigmentPage extends React.Component{
 	}
 
 	componentDidMount(){
-		this.props.fetchAssigment();
+		this.props.setProgressBar(true);
+		this.props.fetchAssigment().then(() => this.props.setProgressBar(false));
 	}
 
 	submit = (data) => this.props.addAssigment(data, this.props.nama);
@@ -54,4 +56,4 @@ function mapStateToProps(state) {
 	}
 }
 
-export default connect(mapStateToProps, { fetchAssigment, addAssigment })(AssigmentPage);
+export default connect(mapStateToProps, { fetchAssigment, addAssigment, setProgressBar })(AssigmentPage);
