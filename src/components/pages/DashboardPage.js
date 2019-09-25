@@ -5,24 +5,23 @@ import { Segment, Header, Icon, Divider, Message, Grid } from "semantic-ui-react
 import Navbar from "../menu/Navbar";
 import ListLimit from "../list/ListLimit";
 import { getPurchase } from "../../actions/purchase";
+import { setProgressBar } from "../../actions/progress";
 
 class DashboardPage extends React.Component{
 	state = { 
 		loading: false
 	}
 	componentDidMount(){
-		this.setState({ loading: true });
+		this.props.setProgressBar(true);
 		const data = {
 			level: this.props.level,
 			userid: this.props.userid
 		};
-
-		this.props.getPurchase(data).then(() => this.setState({ loading: false }));
+		this.props.getPurchase(data).then(() => this.props.setProgressBar(false));
 	}
 
 	render(){
 		const { listLimit, level } = this.props;
-		const { loading } = this.state;
 		return(
 			<Navbar>
 				<Grid>
@@ -43,10 +42,7 @@ class DashboardPage extends React.Component{
 						</Segment.Group>
 					</Grid.Column>
 						{ listLimit.length > 0 && level === '02' ? <Grid.Column mobile={16} tablet={16} computer={4}>
-							<ListLimit 
-								listdata={listLimit} 
-								loading={loading}
-							/>
+							<ListLimit listdata={listLimit} />
 						</Grid.Column> : <React.Fragment /> }
 				</Grid>
 			</Navbar>
@@ -71,4 +67,4 @@ function mapStateToProps(state) {
 	}
 }
 
-export default connect(mapStateToProps, { getPurchase })(DashboardPage);
+export default connect(mapStateToProps, { getPurchase, setProgressBar })(DashboardPage);

@@ -1,12 +1,11 @@
 import React from "react";
-import { Card, List, Header, Icon } from "semantic-ui-react";
+import { Card, List, Header } from "semantic-ui-react";
 import { Link } from "react-router-dom";
 
-const ListLimit = ({ listdata, loading }) => 
+const ListLimit = ({ listdata }) => 
 		 <Card>
 		    <Card.Content>
 		      <Card.Header>Saldo PO</Card.Header>
-		      { loading && <Card.Meta><Icon name='circle notched' loading /> sedang memuat data...</Card.Meta>}
 		    </Card.Content>
 		    <Card.Content>
 		    	<List divided verticalAlign='middle'>

@@ -7,8 +7,10 @@ import petugas from "./reducers/petugas";
 import dashboard from "./reducers/dashboard";
 import purchase from "./reducers/purchase";
 import pouser from "./reducers/pouser";
+import ui from "./reducers/ui";
 
 export default combineReducers({
+	ui,
 	user,
 	handover,
 	order,

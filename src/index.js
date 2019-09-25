@@ -2,8 +2,9 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import "semantic-ui-css/semantic.min.css";
 import App from './App';
+import HandleProgressBar from "./components/pages/HandleProgressBar";
 import * as serviceWorker from './serviceWorker';
-import { HashRouter, Route } from "react-router-dom";
+import { HashRouter, Route, Switch } from "react-router-dom";
 
 import thunk from "redux-thunk";
 import { Provider } from "react-redux";
@@ -28,7 +29,10 @@ if (localStorage.sampoernaToken) {
 ReactDOM.render(
 	<HashRouter /*basename={process.env.PUBLIC_URL+'/app'} */>
 		<Provider store={store}>
-			<Route component={App} />
+			<HandleProgressBar />
+			<Switch>
+				<Route component={App} />
+			</Switch>
 		</Provider>
 	</HashRouter>, 
 document.getElementById('root'));

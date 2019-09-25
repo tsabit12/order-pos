@@ -1,5 +1,8 @@
 /* ================ The Timeline ================ */
-
+.ptimeline {
+  margin: 0 0 1em;
+  line-height: 0.4285em;
+}
 .timeline {
   position: relative;
   width: 660px;
