@@ -17,16 +17,14 @@ class PetugasPage extends React.Component {
 	render(){
 		return(
 			<Navbar>
-				<Segment.Group raised>
-				    <Segment>
-					    <Header as='h2'>
-						    <Icon name='users' />
-						    <Header.Content>User</Header.Content>
-						</Header>
-					    <Divider clearing />
-						<ListPetugas listdata={this.props.petugas} />
-					</Segment>
-				</Segment.Group>
+			    <Header as='h2'>
+				    <Icon name='users' />
+				    <Header.Content>User</Header.Content>
+				</Header>
+			    <Divider clearing />
+			    <Segment>
+					<ListPetugas listdata={this.props.petugas} />
+				</Segment>
 			</Navbar>
 		);
 	}

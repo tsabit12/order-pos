@@ -15,20 +15,15 @@ class HandOverPage extends React.Component {
 		const { handoverisget } = this.props;
 		return(
 			<Navbar>
-				<Segment.Group raised>
-					<Segment>
-						<Header as='h2'>
-						    <Icon name='american sign language interpreting' />
-						    <Header.Content>Handover Pickup</Header.Content>
-						</Header>
-						<Divider clearing />
-						<FormHandOver submit={this.submit} />
-					</Segment>
-					{ handoverisget.length === 0 ? <React.Fragment /> : 
-						<ListHandOver 
-							listdata={this.props.handoverisget} 
-						/> }
-				</Segment.Group>
+				<Header as='h2'>
+				    <Icon name='american sign language interpreting' />
+				    <Header.Content>Handover Pickup</Header.Content>
+				</Header>
+				<Divider clearing />
+				<Segment>
+					<FormHandOver submit={this.submit} />
+					{ handoverisget.length === 0 ? <React.Fragment /> : <ListHandOver listdata={this.props.handoverisget} /> }
+				</Segment>
 			</Navbar>
 		);
 	}

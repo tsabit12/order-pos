@@ -82,19 +82,19 @@ class ReqPickupPage extends React.Component{
 		            />
 		          </Modal.Actions>
 		        </Modal>
-				<Segment padded>
-				    { errors.global && <Message negative>
-						<Message.Header>Maaf!</Message.Header>
-						<p>{errors.global}</p>
-					</Message> }
-					<Header as='h2'>
-					    <Icon name='envelope' />
-					    <Header.Content>Request Pickup</Header.Content>
-					</Header>
-					<Divider/>
-					<Dimmer active={this.state.loading} inverted>
-				        <Loader inverted size='medium'>Loading</Loader>
-				    </Dimmer>
+			    { errors.global && <Message negative>
+					<Message.Header>Maaf!</Message.Header>
+					<p>{errors.global}</p>
+				</Message> }
+				<Header as='h2'>
+				    <Icon name='envelope' />
+				    <Header.Content>Request Pickup</Header.Content>
+				</Header>
+				<Divider/>
+				<Dimmer active={this.state.loading} inverted>
+			        <Loader inverted size='medium'>Loading</Loader>
+			    </Dimmer>
+			    <Segment>
 					<ListReqPickup updateOrder={this.submit} />
 				</Segment>
 			</Navbar>

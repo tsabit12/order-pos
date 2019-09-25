@@ -2,7 +2,7 @@ import React from "react";
 import { Step, Icon } from "semantic-ui-react";
 
 const StepOrder = ({ step, disabled }) => (
-	<Step.Group  widths={6}>
+	<Step.Group  widths={6} style={{marginTop: '-10px'}}>
 	    <Step active={step === 1 ? true : false}>
 	      <Icon name='search' />
 	      <Step.Content>

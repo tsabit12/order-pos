@@ -23,20 +23,20 @@ class AssigmentPage extends React.Component{
 	render(){
 		return(
 			<Navbar>
-				<Segment padded>
-					<Header as='h2'>
-					    <Icon name='phone volume' />
-					    <Header.Content>Assigment Pickup</Header.Content>
-					</Header>
-					<Divider/>
-					<Dimmer active={this.state.loading} inverted>
-				        <Loader inverted size='medium'>Loading</Loader>
-				    </Dimmer>
+				<Header as='h2'>
+				    <Icon name='phone volume' />
+				    <Header.Content>Assigment Pickup</Header.Content>
+				</Header>
+				<Divider/>
+				<Dimmer active={this.state.loading} inverted>
+			        <Loader inverted size='medium'>Loading</Loader>
+			    </Dimmer>
+			    <Segment>
 				    <ListAssigment 
 				    	listdata={this.props.listdata} 
 				    	submit={this.submit}
 				    />
-				</Segment>
+			    </Segment>
 			</Navbar>
 		);
 	}

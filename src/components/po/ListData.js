@@ -1,12 +1,7 @@
 import React from "react";
 import PropTypes from "prop-types";
-import { Message, Table } from "semantic-ui-react";
+import { Table } from "semantic-ui-react";
 import { connect } from "react-redux";
-
-const items = [
-  'You can now have cover images on blog pages',
-  'Drafts will now auto-save while writing',
-]
 
 const numberWithCommas = (number) => {
     return number.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
@@ -39,10 +34,6 @@ const ListData = ({ listdata }) => {
 
 	return(
 		<React.Fragment>
-			<Message>
-			    <Message.Header>New Site Features</Message.Header>
-			    <Message.List items={items} />
-			</Message>
 			<Table celled>
 			    <Table.Header>
 			      <Table.Row>

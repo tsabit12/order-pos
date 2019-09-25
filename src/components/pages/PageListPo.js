@@ -21,16 +21,14 @@ class PageListPo extends React.Component {
 	render(){
 		return(
 			<Navbar>
-				<Segment.Group raised>
-				    <Segment>
-				    	<Header as='h2'>
-						    <Icon name='book' />
-						    <Header.Content>List purchase order</Header.Content>
-						</Header>
-						<Divider clearing />
-						<ListData />
-			    	</Segment>
-		    	</Segment.Group>
+		    	<Header as='h2'>
+				    <Icon name='book' />
+				    <Header.Content>List purchase order</Header.Content>
+				</Header>
+				<Divider clearing />
+				<Segment>
+					<ListData />
+				</Segment>
 			</Navbar>
 		);
 	}

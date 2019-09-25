@@ -38,23 +38,21 @@ class InvoicePage extends React.Component {
 		const { success } = this.state;
 		return(
 			<Navbar>
-				<Segment.Group raised>
-				    <Segment>
-					    <Header as='h2'>
-						    <Icon name='paste' />
-						    <Header.Content>Cetak Invoice</Header.Content>
-						</Header>
-						<Divider clearing />
-						{ success && <div className="ui icon message">
-							  <i aria-hidden="true" className="check icon"></i>
-							  <div className="content">
-							    <div className="header">Invoice berhasil dicetak!</div>
-							    <p>Hasil pdf tidak muncul? Klik <Link to="/invoice" onClick={() => this.cetak(this.state.noinvoice)}>disini</Link> untuk cetak ulang</p>
-							  </div>
-							</div> }
-						<InvoiceForm datakantor={this.props.listkantor} submit={this.onSubmit} remove={this.handleSuccess} />
-					</Segment>
-				</Segment.Group>
+			    <Header as='h2'>
+				    <Icon name='paste' />
+				    <Header.Content>Cetak Invoice</Header.Content>
+				</Header>
+				<Divider clearing />
+				{ success && <div className="ui icon message">
+					  <i aria-hidden="true" className="check icon"></i>
+					  <div className="content">
+					    <div className="header">Invoice berhasil dicetak!</div>
+					    <p>Hasil pdf tidak muncul? Klik <Link to="/invoice" onClick={() => this.cetak(this.state.noinvoice)}>disini</Link> untuk cetak ulang</p>
+					  </div>
+					</div> }
+				<Segment>
+					<InvoiceForm datakantor={this.props.listkantor} submit={this.onSubmit} remove={this.handleSuccess} />
+				</Segment>
 			</Navbar>
 		);
 	}

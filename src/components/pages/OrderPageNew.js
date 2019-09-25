@@ -5,7 +5,7 @@ import CariPoForm from "../order/CariPoForm";
 import SenderForm from "../order/SenderForm";
 import ReceiverForm from "../order/ReceiverForm";
 import FeeForm from "../order/FeeForm";
-import { Segment, Header, Icon, Divider, Message } from "semantic-ui-react";
+import { Segment, Message } from "semantic-ui-react";
 import axios from "axios";
 
 class OrderPageNew extends React.Component {
@@ -89,38 +89,35 @@ class OrderPageNew extends React.Component {
 		
 		return(
 			<Navbar>
-				<Segment.Group raised>
-					<Segment>
-						<Header as='h2'>
-						    <Icon name='paper plane' />
-						    <Header.Content>Order</Header.Content>
-						</Header>
-						<Divider clearing />
-						<StepOrder step={step} />
-						{ step === 1 && <CariPoForm submitPO={this.onClickPO} errors={ errors.po } loading={loading} nomorPo={data.nomorPo}/> }
-						{ step === 2 && <SenderForm submitSender={this.submitSender} onClickBack={this.onClickBack} dataSender={data.sender}/> }
-						{ step === 3 && <ReceiverForm 
-							onClickBack={this.onClickBack} 
-							submitReceiver={this.submitReceiver} 
-							dataReceiver={data.receiver}
-							dataOptions={this.state.dataOptions}
-						/> }
-						{ step === 4 && <FeeForm 
-							onClickBack={this.onClickBack} 
-							dataReceiver={data.receiver} 
-							dataSender={data.sender} 
-							onClickFee={this.submitFee} 
-							openModal={this.state.open}
-							loading={loading}
-							errors={errors.fee}
-						/> }
-						{ step === 5 && <Message
-						    icon='check'
-						    header='Proses order sukses'
-						    content={'Order berhasil, berikut adalah nomor order anda ' +this.state.idorder}
-						/> }
-					</Segment>
-				</Segment.Group>
+				<Message
+				    header='Halaman Order'
+				    content='Silahkan lengkapi tahap-tahap dibawah ini untuk melakukan order'
+				/>
+				<StepOrder step={step} />
+				<Segment raised>
+					{ step === 1 && <CariPoForm submitPO={this.onClickPO} errors={ errors.po } loading={loading} nomorPo={data.nomorPo}/> }
+					{ step === 2 && <SenderForm submitSender={this.submitSender} onClickBack={this.onClickBack} dataSender={data.sender}/> }
+					{ step === 3 && <ReceiverForm 
+						onClickBack={this.onClickBack} 
+						submitReceiver={this.submitReceiver} 
+						dataReceiver={data.receiver}
+						dataOptions={this.state.dataOptions}
+					/> }
+					{ step === 4 && <FeeForm 
+						onClickBack={this.onClickBack} 
+						dataReceiver={data.receiver} 
+						dataSender={data.sender} 
+						onClickFee={this.submitFee} 
+						openModal={this.state.open}
+						loading={loading}
+						errors={errors.fee}
+					/> }
+					{ step === 5 && <Message
+					    icon='check'
+					    header='Proses order sukses'
+					    content={'Order berhasil, berikut adalah nomor order anda ' +this.state.idorder}
+					/> }
+				</Segment>
 			</Navbar>
 		);
 	}

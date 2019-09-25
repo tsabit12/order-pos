@@ -1,7 +1,7 @@
 import React from "react";
 import PropTypes from "prop-types";
 import { connect } from "react-redux";
-import { Segment, Header, Icon, Divider, Message, Grid } from "semantic-ui-react";
+import { Header, Icon, Divider, Message, Grid } from "semantic-ui-react";
 import Navbar from "../menu/Navbar";
 import AdminDashboard from "./dashboard/AdminDashboard";
 import UserDashboard from "./dashboard/UserDashboard";
@@ -28,21 +28,18 @@ class DashboardPage extends React.Component{
 			<Navbar>
 				<Grid>
 					<Grid.Column mobile={16} tablet={16} computer={16}>
-						<Segment.Group raised>
-							<Segment>
-								<Header as='h2'>
-								    <Icon name='home' />
-								    <Header.Content>Dashboard</Header.Content>
-								</Header>
-								<Divider clearing />
-								 <Message
-								    icon='user'
-								    header={'Selamat datang '+this.props.username}
-								    content='Get the best news in your e-mail every day.'
-								/>
-								{ level === '02' ? <UserDashboard /> : <AdminDashboard />}
-							</Segment>
-						</Segment.Group>
+						<Header as='h2'>
+						    <Icon name='home' />
+						    <Header.Content>Dashboard</Header.Content>
+						</Header>
+						<Divider clearing />
+						 <Message
+						 	visible
+						    icon='user'
+						    header={'Selamat datang '+this.props.username}
+						    content='Get the best news in your e-mail every day.'
+						/>
+						{ level === '02' ? <UserDashboard /> : <AdminDashboard />}
 					</Grid.Column>
 				</Grid>
 			</Navbar>

@@ -20,6 +20,7 @@ const NavbarMobile = ({ children, onPusherClick, onToggle, visible, logout, leve
 				<Menu.Item style={{textAlign: 'left'}} as={Link} to="/dashboard" title="dashboard">Dashboard</Menu.Item>
 				<Menu.Item style={{textAlign: 'left'}} as={Link} to="/order">Order</Menu.Item>
 				<Menu.Item style={{textAlign: 'left'}} as={Link} to="/po">Entri PO</Menu.Item>
+				<Menu.Item style={{textAlign: 'left'}} as={Link} to="/list_po">List PO</Menu.Item>
 				<Menu.Item style={{textAlign: 'left'}} as={Link} to="/topup">Topup</Menu.Item>
 				<Menu.Item style={{textAlign: 'left'}} as={Link} to="/pickup">Request Pickup</Menu.Item>
 				<Menu.Item style={{textAlign: 'left'}} as={Link} to="/lacak">Lacak Kiriman</Menu.Item>

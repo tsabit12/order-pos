@@ -50,7 +50,7 @@ class ListReqPickup extends React.Component {
 				<Table compact celled definition>
 				    <Table.Header>
 				      <Table.Row>
-				        <Table.HeaderCell>ACTION</Table.HeaderCell>
+				        <Table.HeaderCell /> 
 				        <Table.HeaderCell>ID ORDER</Table.HeaderCell>
 				        <Table.HeaderCell>PENGIRIM NAMA/ALAMAT</Table.HeaderCell>
 				        <Table.HeaderCell>PENERIMA NAMA/ALAMAT</Table.HeaderCell>
