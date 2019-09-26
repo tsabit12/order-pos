@@ -38,5 +38,6 @@ export const addTopup = (data) => dispatch =>
 export const fetchListpo = (id) => dispatch =>
 	api.po.fetch_listpo(id).then(res => dispatch(listPoFetched(res)));
 
-export const getInvoice = () => dispatch =>
-	api.invoice.laporan().then(res => dispatch(invoiceFetched(res)));
+export const getInvoice = (values) => dispatch =>
+	api.invoice.laporan(values).then(res => dispatch(invoiceFetched(res)));
+	

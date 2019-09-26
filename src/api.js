@@ -80,7 +80,9 @@ export default {
 				params: {no_invoice: noinvoice},
 				responseType: 'arraybuffer'
 			}),
-		laporan: () => 
-			axios.post(`${process.env.REACT_APP_API}/invoice/laporan`).then(res => res.data.result)
+		laporan: (values) => 
+			axios.post(`${process.env.REACT_APP_API}/invoice/laporan`, {
+				tanggal: values.tanggal
+			}).then(res => res.data.result)
 	}
 }
