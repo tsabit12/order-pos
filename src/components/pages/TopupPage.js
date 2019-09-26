@@ -91,6 +91,7 @@ class TopupPage extends React.Component{
 		const { errors, success, items, data, changed, loading } = this.state;
 		return(
 			<Navbar>
+				<br/>
 				<Grid>
 					{ errors.global && <Grid.Column mobile={16} tablet={16} computer={10} style={{margin: "auto"}}>
 						<Message

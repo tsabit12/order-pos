@@ -26,12 +26,12 @@ class DashboardPage extends React.Component{
 		const { level } = this.props;
 		return(
 			<Navbar>
+				<Header as='h2'>
+				    <Icon name='home' />
+				    <Header.Content>Dashboard</Header.Content>
+				</Header>
 				<Grid>
 					<Grid.Column mobile={16} tablet={16} computer={16}>
-						<Header as='h2'>
-						    <Icon name='home' />
-						    <Header.Content>Dashboard</Header.Content>
-						</Header>
 						<Divider clearing />
 						 <Message
 						 	visible

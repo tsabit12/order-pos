@@ -1,7 +1,7 @@
 import React from "react";
 import Navbar from "../menu/Navbar";
 import PropTypes from "prop-types";
-import { Segment, Header, Icon, Divider } from "semantic-ui-react";
+import { Header, Icon, Divider } from "semantic-ui-react";
 import { connect } from "react-redux";
 import { fetchPetugas } from "../../actions/petugas";
 import { setProgressBar } from "../../actions/progress";
@@ -22,9 +22,7 @@ class PetugasPage extends React.Component {
 				    <Header.Content>User</Header.Content>
 				</Header>
 			    <Divider clearing />
-			    <Segment>
-					<ListPetugas listdata={this.props.petugas} />
-				</Segment>
+				<ListPetugas listdata={this.props.petugas} />
 			</Navbar>
 		);
 	}

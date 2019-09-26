@@ -1,7 +1,7 @@
 import React from "react";
 import Navbar from "../menu/Navbar";
 import PropTypes from "prop-types";
-import { Step, Icon, Segment, Grid, Divider, Header } from "semantic-ui-react";
+import { Step, Icon, Grid, Divider, Header } from "semantic-ui-react";
 import { connect } from "react-redux";
 import ChoosePo from "../topup/ChoosePo";
 import BsuTopup from "../topup/BsuTopup";
@@ -80,11 +80,9 @@ class TopupForm extends React.Component {
 							</Step.Group>
 						</Grid.Column>
 						<Grid.Column mobile={16} tablet={8} computer={11}>
-							<Segment>
-							  	{ active.po && <ChoosePo submit={this.submitPo} /> }
-							  	{ active.bsu && <BsuTopup idpo={this.state.idpo} submit={this.submitBsu} />}
-							  	{ active.summary && <Summary idpo={this.state.idpo} />}
-							</Segment>
+						  	{ active.po && <ChoosePo submit={this.submitPo} /> }
+						  	{ active.bsu && <BsuTopup idpo={this.state.idpo} submit={this.submitBsu} />}
+						  	{ active.summary && <Summary idpo={this.state.idpo} />}
 						</Grid.Column>
 					</Grid>
 			</Navbar>

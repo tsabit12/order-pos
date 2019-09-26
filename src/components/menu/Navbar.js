@@ -1,11 +1,11 @@
 import React from "react";
-import { Responsive, Container } from "semantic-ui-react";
+import { Responsive, Container, Segment } from "semantic-ui-react";
 import NavbarDekstop from "./NavbarDekstop";
 import NavbarMobile from "./NavbarMobile";
 import Footer from "./Footer";
 
 const NavbarChildren = ({ children }) => (
-	<Container style={{paddingTop: "6em", paddingBottom: "2em" }}>{children}</Container>
+	<Container style={{paddingBottom: "2em" }}>{children}</Container>
 )
 
 class Navbar extends React.Component {
@@ -45,15 +45,15 @@ class Navbar extends React.Component {
 						onToggle={this.handleToggle}
 						visible={visible}
 					>
-						<NavbarChildren>{children}</NavbarChildren>
+						<NavbarChildren><br/><br/>{children}</NavbarChildren>
 						<Footer />
 					</NavbarMobile>
 				</Responsive>
 				<Responsive minWidth={Responsive.onlyTablet.minWidth}>
 					<NavbarDekstop />
-					<div style={{minHeight: "39em"}}>
+					<Segment raised style={{minHeight: "48em", top:"45px"}}>
 						<NavbarChildren>{children}</NavbarChildren>
-					</div>
+					</Segment>
 					<Footer />
 				</Responsive>
 			</div>

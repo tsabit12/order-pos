@@ -1,7 +1,7 @@
 import React from "react";
 import PropTypes from "prop-types";
 import Navbar from "../menu/Navbar";
-import { Segment, Header, Icon, Divider } from "semantic-ui-react";
+import { Header, Icon, Divider } from "semantic-ui-react";
 import ListData from "../po/ListData";
 import { connect } from "react-redux";
 import { fetchListpo } from "../../actions/purchase";
@@ -26,9 +26,7 @@ class PageListPo extends React.Component {
 				    <Header.Content>List purchase order</Header.Content>
 				</Header>
 				<Divider clearing />
-				<Segment>
-					<ListData />
-				</Segment>
+				<ListData />
 			</Navbar>
 		);
 	}

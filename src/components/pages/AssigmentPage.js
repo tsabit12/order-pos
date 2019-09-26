@@ -2,7 +2,7 @@ import React from "react";
 import Navbar from "../menu/Navbar";
 import PropTypes from "prop-types";
 import { connect } from "react-redux";
-import { Segment, Header, Icon, Dimmer, Loader, Divider } from "semantic-ui-react";
+import { Header, Icon, Dimmer, Loader, Divider } from "semantic-ui-react";
 import { fetchAssigment, addAssigment } from "../../actions/order";
 import { setProgressBar } from "../../actions/progress";
 import ListAssigment from "../list/ListAssigment";
@@ -31,12 +31,10 @@ class AssigmentPage extends React.Component{
 				<Dimmer active={this.state.loading} inverted>
 			        <Loader inverted size='medium'>Loading</Loader>
 			    </Dimmer>
-			    <Segment>
-				    <ListAssigment 
-				    	listdata={this.props.listdata} 
-				    	submit={this.submit}
-				    />
-			    </Segment>
+			    <ListAssigment 
+			    	listdata={this.props.listdata} 
+			    	submit={this.submit}
+			    />
 			</Navbar>
 		);
 	}

@@ -2,7 +2,7 @@ import React from "react";
 import Navbar from "../menu/Navbar";
 import { connect } from "react-redux";
 import PropTypes from "prop-types";
-import { Segment, Header, Divider, Icon } from "semantic-ui-react";
+import { Header, Divider, Icon } from "semantic-ui-react";
 import FormHandOver from "../forms/FormHandOver";
 import ListHandOver from "../list/ListHandOver";
 import { getHandover } from "../../actions/handover";
@@ -20,10 +20,8 @@ class HandOverPage extends React.Component {
 				    <Header.Content>Handover Pickup</Header.Content>
 				</Header>
 				<Divider clearing />
-				<Segment>
-					<FormHandOver submit={this.submit} />
-					{ handoverisget.length === 0 ? <React.Fragment /> : <ListHandOver listdata={this.props.handoverisget} /> }
-				</Segment>
+				<FormHandOver submit={this.submit} />
+				{ handoverisget.length === 0 ? <React.Fragment /> : <ListHandOver listdata={this.props.handoverisget} /> }
 			</Navbar>
 		);
 	}

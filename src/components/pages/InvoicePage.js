@@ -2,7 +2,7 @@ import React from "react";
 import Navbar from "../menu/Navbar";
 import PropTypes from "prop-types";
 import { Link } from "react-router-dom";
-import { Segment, Header, Divider, Icon } from "semantic-ui-react";
+import { Header, Divider, Icon } from "semantic-ui-react";
 import InvoiceForm from "../forms/InvoiceForm";
 import { connect } from "react-redux";
 import { getKantor } from "../../actions/order";
@@ -50,9 +50,7 @@ class InvoicePage extends React.Component {
 					    <p>Hasil pdf tidak muncul? Klik <Link to="/invoice" onClick={() => this.cetak(this.state.noinvoice)}>disini</Link> untuk cetak ulang</p>
 					  </div>
 					</div> }
-				<Segment>
-					<InvoiceForm datakantor={this.props.listkantor} submit={this.onSubmit} remove={this.handleSuccess} />
-				</Segment>
+				<InvoiceForm datakantor={this.props.listkantor} submit={this.onSubmit} remove={this.handleSuccess} />
 			</Navbar>
 		);
 	}

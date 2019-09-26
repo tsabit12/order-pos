@@ -6,7 +6,7 @@ import { connect } from "react-redux";
 import { fetchPickup, pickup } from "../../actions/handover";
 import { getKantor } from "../../actions/order";
 import { setProgressBar } from "../../actions/progress";
-import { Segment, Header, Icon, Divider, Dimmer, Loader, Message, Modal, Button, Form, Checkbox } from "semantic-ui-react";
+import { Header, Icon, Divider, Dimmer, Loader, Message, Modal, Button, Form, Checkbox } from "semantic-ui-react";
 
 
 class ReqPickupPage extends React.Component{
@@ -94,9 +94,7 @@ class ReqPickupPage extends React.Component{
 				<Dimmer active={this.state.loading} inverted>
 			        <Loader inverted size='medium'>Loading</Loader>
 			    </Dimmer>
-			    <Segment>
-					<ListReqPickup updateOrder={this.submit} />
-				</Segment>
+				<ListReqPickup updateOrder={this.submit} />
 			</Navbar>
 		);
 	}
