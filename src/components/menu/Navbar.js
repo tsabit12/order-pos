@@ -5,7 +5,7 @@ import NavbarMobile from "./NavbarMobile";
 import Footer from "./Footer";
 
 const NavbarChildren = ({ children }) => (
-	<Container style={{paddingBottom: "2em" }}>{children}</Container>
+	<Container style={{paddingBottom: "4em" }}>{children}</Container>
 )
 
 class Navbar extends React.Component {
@@ -45,13 +45,15 @@ class Navbar extends React.Component {
 						onToggle={this.handleToggle}
 						visible={visible}
 					>
-						<NavbarChildren><br/><br/>{children}</NavbarChildren>
-						<Footer />
+						<NavbarChildren>
+							<div style={{marginTop: '19px'}}>{children}</div>
+						</NavbarChildren>
 					</NavbarMobile>
+					<Footer />
 				</Responsive>
 				<Responsive minWidth={Responsive.onlyTablet.minWidth}>
 					<NavbarDekstop />
-					<Segment raised style={{minHeight: "48em", top:"45px"}}>
+					<Segment raised style={{minHeight: "50em", top:"45px"}}>
 						<NavbarChildren>{children}</NavbarChildren>
 					</Segment>
 					<Footer />

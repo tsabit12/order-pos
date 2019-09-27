@@ -1,10 +1,12 @@
-import React from "react";
+import React, { createRef } from "react";
 import PropTypes from "prop-types";
 import { Link } from "react-router-dom";
-import { Sidebar, Menu, Icon, Image, Segment } from "semantic-ui-react";
+import { Sidebar, Menu, Icon, Image, Segment, Sticky, Ref } from "semantic-ui-react";
 import { connect } from "react-redux";
 import  * as actions from "../../actions/auth";
 import Logo from "../../logosampoerna.png";
+
+const contextRef = createRef();
 
 const NavbarMobile = ({ children, onPusherClick, onToggle, visible, logout, level, isAuthenticated }) => (
 	<React.Fragment>
@@ -26,40 +28,45 @@ const NavbarMobile = ({ children, onPusherClick, onToggle, visible, logout, leve
 				</Menu.Menu>
 			</React.Fragment>}
 		</Menu>
-		<Sidebar.Pushable as={Segment} style={{top:'3em'}}>
-			<Sidebar
-				as={Menu}
-				animation="overlay"
-				icon="labeled"
-				width="thin"
-				inverted
-				vertical
-				visible={visible}>
-				{ level === '02' && <React.Fragment>
-					<Menu.Item style={{textAlign: 'left'}} as={Link} to="/dashboard" title="dashboard">Dashboard</Menu.Item>
-					<Menu.Item style={{textAlign: 'left'}} as={Link} to="/order">Order</Menu.Item>
-					<Menu.Item style={{textAlign: 'left'}} as={Link} to="/po">Entri PO</Menu.Item>
-					<Menu.Item style={{textAlign: 'left'}} as={Link} to="/list_po">List PO</Menu.Item>
-					<Menu.Item style={{textAlign: 'left'}} as={Link} to="/topup">Topup</Menu.Item>
-					<Menu.Item style={{textAlign: 'left'}} as={Link} to="/pickup">Request Pickup</Menu.Item>
-					<Menu.Item style={{textAlign: 'left'}} as={Link} to="/lacak">Lacak Kiriman</Menu.Item>
-					<Menu.Item style={{textAlign: 'left'}} as={Link} to="/transaction">Real Transaction</Menu.Item>
-				</React.Fragment> } 
-				{ level === '01' && <React.Fragment>
-					<Menu.Item style={{textAlign: 'left'}} as={Link} to="/dashboard">Dashboard</Menu.Item>
-					<Menu.Item style={{textAlign: 'left'}} as={Link} to="/assigment">Assigment Pickup</Menu.Item>
-					<Menu.Item style={{textAlign: 'left'}} as={Link} to="/handover">Handover Pickup</Menu.Item>
-					<Menu.Item style={{textAlign: 'left'}} as={Link} to="/invoice">Invoice</Menu.Item>
-					<Menu.Item style={{textAlign: 'left'}} as={Link} to="/petugas">User</Menu.Item>
-				</React.Fragment> }
-			</Sidebar>
-			<Sidebar.Pusher
-				dimmed={visible}
-				onClick={onPusherClick}
-				style={{ minHeight: "100vh", paddingBottom: "50px", "marginTop":"-30px" }}>
-				{ children }
-			</Sidebar.Pusher>
-		</Sidebar.Pushable>
+		<Ref innerRef={contextRef}>
+			<Sidebar.Pushable as={Segment} style={{left: '-1px', top:'43px', transform: "none"}}>
+				<Sticky context={contextRef}>
+					<Sidebar
+						as={Menu}
+						animation="overlay"
+						icon="labeled"
+						style={{width: "208px"}}
+						inverted
+						vertical
+						visible={visible}>
+						{ level === '02' && <React.Fragment>
+							<Menu.Item style={{textAlign: 'left'}} as={Link} to="/dashboard" title="dashboard">Dashboard</Menu.Item>
+							<Menu.Item style={{textAlign: 'left'}} as={Link} to="/order">Order</Menu.Item>
+							<Menu.Item style={{textAlign: 'left'}} as={Link} to="/po">Entri PO</Menu.Item>
+							<Menu.Item style={{textAlign: 'left'}} as={Link} to="/list_po">List PO</Menu.Item>
+							<Menu.Item style={{textAlign: 'left'}} as={Link} to="/topup">Topup</Menu.Item>
+							<Menu.Item style={{textAlign: 'left'}} as={Link} to="/pickup">Request Pickup</Menu.Item>
+							<Menu.Item style={{textAlign: 'left'}} as={Link} to="/lacak">Lacak Kiriman</Menu.Item>
+							<Menu.Item style={{textAlign: 'left'}} as={Link} to="/transaction">Real Transaction</Menu.Item>
+						</React.Fragment> } 
+						{ level === '01' && <React.Fragment>
+							<Menu.Item style={{textAlign: 'left'}} as={Link} to="/dashboard">Dashboard</Menu.Item>
+							<Menu.Item style={{textAlign: 'left'}} as={Link} to="/assigment">Assigment Pickup</Menu.Item>
+							<Menu.Item style={{textAlign: 'left'}} as={Link} to="/handover">Handover Pickup</Menu.Item>
+							<Menu.Item style={{textAlign: 'left'}} as={Link} to="/invoice">Invoice</Menu.Item>
+							<Menu.Item style={{textAlign: 'left'}} as={Link} to="/invoice/laporan">Laporan Invoice</Menu.Item>
+							<Menu.Item style={{textAlign: 'left'}} as={Link} to="/petugas">User</Menu.Item>
+						</React.Fragment> }
+					</Sidebar>
+				</Sticky>
+				<Sidebar.Pusher
+					dimmed={visible}
+					onClick={onPusherClick}
+					style={{minHeight: '100vh'}}>
+					{ children }
+				</Sidebar.Pusher>
+			</Sidebar.Pushable>
+		</Ref>
 	</React.Fragment>
 );
 
