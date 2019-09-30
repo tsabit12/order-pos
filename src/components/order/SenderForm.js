@@ -1,5 +1,5 @@
 import React from "react";
-import { Form, Button } from "semantic-ui-react";
+import { Form, Button, Checkbox } from "semantic-ui-react";
 import PropTypes from "prop-types";
 
 class SenderForm extends React.Component {
@@ -16,6 +16,7 @@ class SenderForm extends React.Component {
 			senederMail: this.props.dataSender.senederMail
 		},
 		errors: {},
+		checked: true
 	}
 
 	onChange = (e) => this.setState({ data: { ...this.state.data, [e.target.name]: e.target.value }})
@@ -25,6 +26,15 @@ class SenderForm extends React.Component {
 		this.setState({ errors });
 		if (Object.keys(errors).length === 0) {
 			this.props.submitSender(this.state.data, this.state.step);
+		}
+	}
+
+	handleClick = () => {
+		const { checked } = this.state;
+		if (checked) {
+			this.setState({ checked: false, data: { ...this.state.data, senederMail: '' } });
+		}else{
+			this.setState({ checked: true, data: { ...this.state.data, senederMail: this.props.dataSender.senederMail } });
 		}
 	}
 
@@ -49,18 +59,39 @@ class SenderForm extends React.Component {
 		return(
 			<React.Fragment>
 				<Form onSubmit={this.onSubmit}>
-					<Form.Field>
-						<Form.Input
-							name="senderName"
-							id="senderName"
-							type="text"
-							placeholder="Masukan nama pengirim"
-							label="Nama"
-							value={data.senderName}
-							onChange={this.onChange}
-							error={errors.senderName}
-						/>
-					</Form.Field>
+					<Form.Group widths="equal">
+						<Form.Field>
+							<Form.Input
+								name="senderName"
+								id="senderName"
+								type="text"
+								placeholder="Masukan nama pengirim"
+								label="Nama"
+								value={data.senderName}
+								onChange={this.onChange}
+								error={errors.senderName}
+							/>
+						</Form.Field>
+						<Form.Field>
+							<label style={{fontWeight: 100}}>
+								<Checkbox 
+									label='Gunakan email pembuat PO'
+									checked={this.state.checked}
+									onClick={this.handleClick}
+								/>
+							</label>
+							<Form.Input
+								name="senederMail"
+								id="senederMail"
+								type="text"
+								placeholder="Masukan alamat email"
+								value={data.senederMail}
+								onChange={this.onChange}
+								error={errors.senederMail}
+								disabled={this.state.checked}
+							/>
+						</Form.Field>
+					</Form.Group>
 					<Form.Group widths="equal">
 						<Form.Field>
 							<Form.Input
@@ -114,39 +145,31 @@ class SenderForm extends React.Component {
 							/>
 						</Form.Field>
 					</Form.Group>
-					<Form.Field>
-						<Form.Input
-							name="senderPos"
-							id="senderPos"
-							type="text"
-							placeholder="Masukan kode pos"
-							label="Kodepos"
-							value={data.senderPos}
-							onChange={this.onChange}
-							error={errors.senderPos}
-						/>
-					</Form.Field>
 					<Form.Group widths="equal">
-						<Form.Input
-							name="senderPhone"
-							id="senderPhone"
-							type="text"
-							placeholder="Masukan nomor handphone"
-							label="Nomor Handphone"
-							value={data.senderPhone}
-							onChange={this.onChange}
-							error={errors.senderPhone}
-						/>
-						<Form.Input
-							name="senederMail"
-							id="senederMail"
-							type="text"
-							placeholder="Masukan alamat email"
-							label="Email"
-							value={data.senederMail}
-							onChange={this.onChange}
-							error={errors.senederMail}
-						/>
+						<Form.Field>
+							<Form.Input
+								name="senderPos"
+								id="senderPos"
+								type="text"
+								placeholder="Masukan kode pos"
+								label="Kodepos"
+								value={data.senderPos}
+								onChange={this.onChange}
+								error={errors.senderPos}
+							/>
+						</Form.Field>
+						<Form.Field>
+							<Form.Input
+								name="senderPhone"
+								id="senderPhone"
+								type="text"
+								placeholder="Masukan nomor handphone"
+								label="Nomor Handphone"
+								value={data.senderPhone}
+								onChange={this.onChange}
+								error={errors.senderPhone}
+							/>
+						</Form.Field>
 					</Form.Group>
 				</Form>
 				<br/>

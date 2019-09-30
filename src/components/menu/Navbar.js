@@ -49,15 +49,14 @@ class Navbar extends React.Component {
 							<div style={{marginTop: '19px'}}>{children}</div>
 						</NavbarChildren>
 					</NavbarMobile>
-					<Footer />
 				</Responsive>
 				<Responsive minWidth={Responsive.onlyTablet.minWidth}>
 					<NavbarDekstop />
 					<Segment raised style={{minHeight: "50em", top:"45px"}}>
 						<NavbarChildren>{children}</NavbarChildren>
 					</Segment>
-					<Footer />
 				</Responsive>
+				<Footer />
 			</div>
 		);
 	}
