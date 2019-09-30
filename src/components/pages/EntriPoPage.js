@@ -87,7 +87,7 @@ class EntriPoPage extends React.Component {
 							    	name="email"
 							    	id="email"
 							    	label='Email VIC' 
-							    	placeholder='Masukan Email VIC' 
+							    	placeholder='Masukan Email PIC' 
 							    	value={data.email}
 							    	onChange={this.onChange}
 							    	error={errors.email}
