@@ -77,7 +77,7 @@ class OrderPageNew extends React.Component {
 
 	submitFee = (datafee) => {
 		const { data } = this.state;
-		axios.post(`${process.env.REACT_APP_API_DEV}/orderPost`, { other: data, fee: datafee })
+		axios.post(`${process.env.REACT_APP_API}/orderPost`, { other: data, fee: datafee })
 		.then(res => {
 			this.setState({ errors: {...this.state.errors, fee: {} }, loading: false, open: false, step: 5, idorder: res.data.orderId })
 		})
