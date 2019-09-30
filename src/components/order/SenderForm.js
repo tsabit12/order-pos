@@ -13,7 +13,7 @@ class SenderForm extends React.Component {
 			senderProv: this.props.dataSender.senderProv,
 			senderPos: this.props.dataSender.senderPos,
 			senderPhone: this.props.dataSender.senderPhone,
-			senederMail: this.props.dataSender.senederMail
+			senederMail: this.props.dataSender.emailPic
 		},
 		errors: {},
 		checked: true
@@ -34,7 +34,7 @@ class SenderForm extends React.Component {
 		if (checked) {
 			this.setState({ checked: false, data: { ...this.state.data, senederMail: '' } });
 		}else{
-			this.setState({ checked: true, data: { ...this.state.data, senederMail: this.props.dataSender.senederMail } });
+			this.setState({ checked: true, data: { ...this.state.data, senederMail: this.props.dataSender.emailPic } });
 		}
 	}
 

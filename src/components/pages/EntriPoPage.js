@@ -18,7 +18,9 @@ class EntriPoPage extends React.Component {
 			money: '',
 			noPo: '',
 			username: this.props.username,
-			email: this.props.email
+			email: '',
+			vendorname: '',
+			pic: ''
 		},
 		loading: false,
 		errors: {}
@@ -46,6 +48,9 @@ class EntriPoPage extends React.Component {
 		if (!data.tglDone) errors.tglDone = "Tanggal selesai harap di isi";
 		if (!data.money) errors.money = "Jumlah uang harap di isi";
 		if (!data.noPo) errors.noPo = "Nomor PO tidak boleh kosong";
+		if (!data.email) errors.email = "Email harap di isi";
+		if (!data.vendorname) errors.vendorname = "Email harap di isi";
+		if (!data.pic) errors.pic = "Nama p.i.c harap di isi";
 		
 		return errors;
 	}
@@ -79,6 +84,43 @@ class EntriPoPage extends React.Component {
 							    />
 							    <Form.Input 
 							    	type="text"
+							    	name="email"
+							    	id="email"
+							    	label='Email VIC' 
+							    	placeholder='Masukan Email VIC' 
+							    	value={data.email}
+							    	onChange={this.onChange}
+							    	error={errors.email}
+							    	autoComplete="off"
+							    />
+						    </Form.Group>
+						    <Form.Group widths='equal'>
+						    	<Form.Input 
+							    	type="text"
+							    	name="vendorname"
+							    	id="vendorname"
+							    	label='Nama Vendor' 
+							    	placeholder='Masukan nama vendor' 
+							    	value={data.vendorname}
+							    	onChange={this.onChange}
+							    	error={errors.vendorname}
+							    	autoComplete="off"
+							    />
+							    <Form.Input 
+							    	type="text"
+							    	name="pic"
+							    	id="pic"
+							    	label='PIC' 
+							    	placeholder='Masukan nama pic' 
+							    	value={data.pic}
+							    	onChange={this.onChange}
+							    	error={errors.pic}
+							    	autoComplete="off"
+							    />
+						    </Form.Group>
+						    <Form.Field>
+						    	<Form.Input 
+							    	type="text"
 							    	name="desc"
 							    	id="desc"
 							    	label='Deskripsi' 
@@ -88,7 +130,7 @@ class EntriPoPage extends React.Component {
 							    	error={errors.desc}
 							    	autoComplete="off"
 							    />
-						    </Form.Group>
+						    </Form.Field>
 						    <Form.Group widths='equal'>
 							    <Form.Field>
 							    	<label>Tanggal Mulai</label>
