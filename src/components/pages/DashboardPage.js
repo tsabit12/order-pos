@@ -1,7 +1,7 @@
 import React from "react";
 import PropTypes from "prop-types";
 import { connect } from "react-redux";
-import { Header, Icon, Divider, Message, Grid } from "semantic-ui-react";
+import { Message, Grid } from "semantic-ui-react";
 import Navbar from "../menu/Navbar";
 import AdminDashboard from "./dashboard/AdminDashboard";
 import UserDashboard from "./dashboard/UserDashboard";
@@ -29,14 +29,10 @@ class DashboardPage extends React.Component{
 		return(
 			<Navbar>
 				<Loader loaded={this.state.loading}>
-					<Header as='h2'>
-					    <Icon name='home' />
-					    <Header.Content>Dashboard</Header.Content>
-					</Header>
 					<Grid>
 						<Grid.Column mobile={16} tablet={16} computer={16}>
-							<Divider clearing />
 							 <Message
+							 	style={{ fontSize: '12px'}}
 							 	visible
 							    icon='user'
 							    header={'Selamat datang '+this.props.username}
