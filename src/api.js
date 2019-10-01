@@ -84,5 +84,12 @@ export default {
 			axios.post(`${process.env.REACT_APP_API}/invoice/laporan`, {
 				tanggal: values.tanggal
 			}).then(res => res.data.result)
+	},
+	kurir: {
+		get_kurir: (data) =>
+			axios.post(`${process.env.REACT_APP_API}/kurir`, {
+				regional: data.reg,
+				kprk: data.kprk
+			}).then(res => res.data.result)
 	}
 }

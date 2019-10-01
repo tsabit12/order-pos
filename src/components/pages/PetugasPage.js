@@ -35,7 +35,7 @@ PetugasPage.propTypes = {
 
 function mapStateProps(state){
 	return {
-		petugas: state.petugas
+		petugas: state.petugas.petugas
 	}
 }
 

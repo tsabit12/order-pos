@@ -20,6 +20,7 @@ import GuestRoute from "./routes/GuestRoute";
 import PageListPo from "./components/pages/PageListPo"; 
 import ListInvoicePage from "./components/pages/ListInvoicePage";
 import HomePage from "./components/pages/HomePage";
+import KurirPage from "./components/pages/KurirPage";
 
 const App = ({ location }) =>
   <div>
@@ -40,6 +41,7 @@ const App = ({ location }) =>
     <UserRoute location={location} path="/invoice" exact component={InvoicePage} />
     <UserRoute location={location} path="/list_po" exact component={PageListPo} />
     <UserRoute location={location} path="/invoice/laporan" exact component={ListInvoicePage} />
+    <UserRoute location={location} path="/kurir" exact component={KurirPage} />
   </div>;  
 
 
