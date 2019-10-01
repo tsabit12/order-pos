@@ -3,8 +3,9 @@ import PropTypes from "prop-types";
 import { connect } from "react-redux";
 import { Message, Grid } from "semantic-ui-react";
 import Navbar from "../menu/Navbar";
-import AdminDashboard from "./dashboard/AdminDashboard";
+import KurirDashboard from "./dashboard/KurirDashboard";
 import UserDashboard from "./dashboard/UserDashboard";
+import AdminDashboard from "./dashboard/AdminDashboard";
 import Loader from "react-loader";
 import { getPurchase } from "../../actions/purchase";
 import { setProgressBar } from "../../actions/progress";
@@ -38,7 +39,9 @@ class DashboardPage extends React.Component{
 							    header={'Selamat datang '+this.props.username}
 							    content='Get the best news in your e-mail every day.'
 							/>
-							{ level === '02' ? <UserDashboard /> : <AdminDashboard />}
+							{ level === '01' && <KurirDashboard /> }
+							{ level === '02' && <UserDashboard /> }
+							{ level === '03' && <AdminDashboard />}
 						</Grid.Column>
 					</Grid>
 				</Loader>
