@@ -5,7 +5,7 @@ import CariPoForm from "../order/CariPoForm";
 import SenderForm from "../order/SenderForm";
 import ReceiverForm from "../order/ReceiverForm";
 import FeeForm from "../order/FeeForm";
-import { Message } from "semantic-ui-react";
+import { Message, Button } from "semantic-ui-react";
 import axios from "axios";
 
 class OrderPageNew extends React.Component {
@@ -40,6 +40,7 @@ class OrderPageNew extends React.Component {
 	}
 
 	onClickPO = (data) => {
+		window.scrollTo(0, 0);
 		const { nomorPo, user } = data;
 		this.setState({ loading: true, data: { ...this.state.data, nomorPo: nomorPo } });
 		axios.post(`${process.env.REACT_APP_API}/order/searchPO`, { idpo: nomorPo, user: user })
@@ -59,10 +60,12 @@ class OrderPageNew extends React.Component {
 	}
 
 	submitSender = (data, step) => {
+		window.scrollTo(0, 0);
 		this.setState({ data: { ...this.state.data, sender: data }, loading: false, step: step+1 });
 	}
 
 	submitReceiver = (data, step, dataOptions) => {
+		window.scrollTo(0, 0);
 		this.setState({ 
 			step: step+1, 
 			dataOptions: {
@@ -82,6 +85,10 @@ class OrderPageNew extends React.Component {
 			this.setState({ errors: {...this.state.errors, fee: {} }, loading: false, open: false, step: 5, idorder: res.data.orderId })
 		})
 		.catch(err => this.setState({ errors: { ...this.state.errors, fee: err.response.data.errors, loading: false, open: true }}))
+	}
+
+	backFromFinish = () => {
+		this.setState({ step: 2, data: { ...this.state.data, receiver:{} }});
 	}
 
 	render(){
@@ -111,11 +118,14 @@ class OrderPageNew extends React.Component {
 					loading={loading}
 					errors={errors.fee}
 				/> }
-				{ step === 5 && <Message
-				    icon='check'
-				    header='Proses order sukses'
-				    content={'Order berhasil, berikut adalah nomor order anda ' +this.state.idorder}
-				/> }
+				{ step === 5 && <React.Fragment>
+					<Message
+				    	icon='check'
+				    	header='Proses order sukses'
+				    	content={'Order berhasil, berikut adalah nomor order anda ' +this.state.idorder+'. Klik tombol dibawah untuk melakukan order dengan PO yang sama'}
+					/>
+					<Button color='red' fluid onClick={this.backFromFinish}>Tambah</Button>
+				</React.Fragment> }
 			</Navbar>
 		);
 	}

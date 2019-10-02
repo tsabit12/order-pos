@@ -13,7 +13,7 @@ class SenderForm extends React.Component {
 			senderProv: this.props.dataSender.senderProv,
 			senderPos: this.props.dataSender.senderPos,
 			senderPhone: this.props.dataSender.senderPhone,
-			senederMail: this.props.dataSender.emailPic
+			senderMail: this.props.dataSender.senderMail
 		},
 		errors: {},
 		checked: true
@@ -32,9 +32,9 @@ class SenderForm extends React.Component {
 	handleClick = () => {
 		const { checked } = this.state;
 		if (checked) {
-			this.setState({ checked: false, data: { ...this.state.data, senederMail: '' } });
+			this.setState({ checked: false, data: { ...this.state.data, senderMail: '' } });
 		}else{
-			this.setState({ checked: true, data: { ...this.state.data, senederMail: this.props.dataSender.emailPic } });
+			this.setState({ checked: true, data: { ...this.state.data, senderMail: this.props.dataSender.emailPic } });
 		}
 	}
 
@@ -47,7 +47,7 @@ class SenderForm extends React.Component {
 		if (!data.senderProv) errors.senderProv = "Provinsi tidak boleh kosong";
 		if (!data.senderPos) errors.senderPos = "Kodepos tidak boleh kosong";
 		if (!data.senderPhone) errors.senderPhone = "Nomor handphone harap di isi";
-		if (!data.senederMail) errors.senederMail = "Email harap di isi";
+		if (!data.senderMail) errors.senderMail = "Email harap di isi";
 
 		return errors;
 	}
@@ -81,13 +81,13 @@ class SenderForm extends React.Component {
 								/>
 							</label>
 							<Form.Input
-								name="senederMail"
-								id="senederMail"
+								name="senderMail"
+								id="senderMail"
 								type="text"
 								placeholder="Masukan alamat email"
-								value={data.senederMail}
+								value={data.senderMail}
 								onChange={this.onChange}
-								error={errors.senederMail}
+								error={errors.senderMail}
 								disabled={this.state.checked}
 							/>
 						</Form.Field>
