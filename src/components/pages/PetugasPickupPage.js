@@ -2,7 +2,7 @@ import React from "react";
 import PropTypes from "prop-types";
 import { connect } from "react-redux";
 import Navbar from "../menu/Navbar";
-import { Header, Divider, Icon, Button, Modal, Form, Select, Message } from "semantic-ui-react";
+import { Button, Modal, Form, Select, Message } from "semantic-ui-react";
 import ListPetugasPickup from "../list/ListPetugasPickup";
 import { setProgressBar } from "../../actions/progress";
 import { fetchPetugasPickup, addPetugas } from "../../actions/petugas";
@@ -119,12 +119,7 @@ class PetugasPickupPage extends React.Component {
 			        />
 			      </Modal.Actions>
 			    </Modal>
-				<Header as='h2'>
-				    <Icon name='users' />
-				    <Header.Content>Petugas Pickup</Header.Content>
-				</Header>
-				<Divider clearing />
-				<Button primary onClick={this.onClickTambah}>Tambah</Button>
+				<Button primary onClick={this.onClickTambah}>Tambah Petugas</Button>
 				<ListPetugasPickup
 					listdata={this.props.listPetugas}
 				/>
