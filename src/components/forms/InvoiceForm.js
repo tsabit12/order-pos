@@ -2,12 +2,13 @@ import React from "react";
 import { Form, Button, Dropdown, Message } from "semantic-ui-react";
 import InlineError from "../InlineError";
 import PropTypes from "prop-types";
+import { DatesRangeInput } from "semantic-ui-calendar-react";
 
 class InvoiceForm extends React.Component {
 	state = {
 		data: {
-			tanggal: '',
-			kantor: ''
+			kantor: '',
+			datesRange: ''
 		},
 		errors: {},
 		loading: false,
@@ -15,7 +16,6 @@ class InvoiceForm extends React.Component {
 	}
 
 	onChange = (e, { value }) => this.setState({ data: {...this.state.data, kantor: value} })
-
 
 	onSubmit = () => {
 		const errors = this.validate(this.state.data);
@@ -34,13 +34,11 @@ class InvoiceForm extends React.Component {
 
 	validate = (data) => {
 		const errors = {};
-		if (!data.tanggal) errors.tanggal = "Periode order harap di isi";
 		if (!data.kantor) errors.kantor = "Kantor belum dipilih";
 		return errors;
 	}
 
-	handleChange = (e) => this.setState({ data: { ...this.state.data, tanggal: e.target.value } });
-
+	handleChangeDate = (e, {name, value}) => this.setState({ data: { ...this.state.data, [name]: value }})
 
 	render(){
 		const { data, errors, loading } = this.state;
@@ -55,14 +53,17 @@ class InvoiceForm extends React.Component {
 				<Form.Group widths='equal'>
 					<Form.Field>
 						<label>Periode</label>
-						<Form.Input 
-							name="tanggal"
-							id="tanggal"
-							placeholder="YYYY-MM"
-							value={data.tanggal}
-							onChange={this.handleChange}
-							error={errors.tanggal}
-						/>
+						<DatesRangeInput
+				          name="datesRange"
+				          placeholder="From - To"
+				          iconPosition="left"
+				          closeOnMouseLeave={false}
+				          closable={true}
+				          value={data.datesRange}
+				          onChange={this.handleChangeDate}
+				          dateFormat="YYYY/MM/DD"
+				          autoComplete="off"
+				        />
 					</Form.Field>
 					<Form.Field>
 						<label>Kantor</label>

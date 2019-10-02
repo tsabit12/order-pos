@@ -2,7 +2,6 @@ import React from "react";
 import Navbar from "../menu/Navbar";
 import PropTypes from "prop-types";
 import { Link } from "react-router-dom";
-import { Header, Divider, Icon } from "semantic-ui-react";
 import InvoiceForm from "../forms/InvoiceForm";
 import { connect } from "react-redux";
 import { getKantor } from "../../actions/order";
@@ -16,8 +15,9 @@ class InvoicePage extends React.Component {
 	}
 
 	componentDidMount(){
+		const { nopend } = this.props;
 		this.props.setProgressBar(true);
-		this.props.getKantor().then(() => this.props.setProgressBar(false));
+		this.props.getKantor(nopend).then(() => this.props.setProgressBar(false));
 	}
 	
 	onSubmit = (data) => api.invoice.cetak(data).then(res => {
@@ -38,11 +38,6 @@ class InvoicePage extends React.Component {
 		const { success } = this.state;
 		return(
 			<Navbar>
-			    <Header as='h2'>
-				    <Icon name='paste' />
-				    <Header.Content>Cetak Invoice</Header.Content>
-				</Header>
-				<Divider clearing />
 				{ success && <div className="ui icon message">
 					  <i aria-hidden="true" className="check icon"></i>
 					  <div className="content">
@@ -57,12 +52,14 @@ class InvoicePage extends React.Component {
 }
 
 InvoicePage.propTypes = {
-	listkantor: PropTypes.array.isRequired
+	listkantor: PropTypes.array.isRequired,
+	nopend: PropTypes.string.isRequired
 }
 
 function mapStateProps(state) {
 	return {
-		listkantor: state.order.kantor
+		listkantor: state.order.kantor,
+		nopend: state.user.nopend
 	}
 }
 

@@ -25,8 +25,10 @@ export default {
 			axios.post(`${process.env.REACT_APP_API}/order/pickupHandover`, { data }).then(res => res.data.result),
 		entri_po: (data) =>
 			axios.post(`${process.env.REACT_APP_API}/entriPo`, { data }).then(res => res.data.result),
-		get_kantor: () =>
-			axios.post(`${process.env.REACT_APP_API}/order/getKantor`).then(res => res.data.result),
+		get_kantor: (nopend) =>
+			axios.post(`${process.env.REACT_APP_API}/order/getKantor`, {
+				nopend: nopend
+			}).then(res => res.data.result),
 		fetch_assigment: (nopend) =>
 			axios.post(`${process.env.REACT_APP_API}/order/getAssigment`, { 
 				nopend: nopend
@@ -86,7 +88,7 @@ export default {
 		cetak: (data) => 
 			axios.post(`${process.env.REACT_APP_API}/invoice/cetak`, {
 				kantor: data.kantor,
-				periode: data.tanggal
+				periode: data.datesRange
 			}),
 		download: (noinvoice) =>
 			axios.get(`${process.env.REACT_APP_API}/invoice/download`, {

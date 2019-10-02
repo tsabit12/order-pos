@@ -21,7 +21,8 @@ class SignupForm extends React.Component {
 	}
 
 	componentDidMount(){
-		this.props.getKantor();
+		const nopend = '0';
+		this.props.getKantor(nopend);
 	}
 
 	onChange = e => this.setState({ 
