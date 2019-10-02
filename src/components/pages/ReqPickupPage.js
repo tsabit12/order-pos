@@ -12,14 +12,21 @@ import { Header, Icon, Divider, Dimmer, Loader, Message, Modal, Button, Form, Dr
 class ReqPickupPage extends React.Component{
 	state = {
 		loading: false,
+		loadingModal: false,
 		errors: {},
 		open: false,
 		data: {},
-		errorsPin: {},
-		value: '',
+		value: '', //kantor
+		nopend: this.props.nopend,
+		officename: '',
 		options: [],
+		optionsNopend: [
+			{ key: this.props.nopend, text: 'Default', value: this.props.nopend },
+			{ key: 'lain', text: 'Lainnya', value: 'lain' },
+		],
 		loadingSearch: false,
-		success: false
+		success: false,
+		defaultoptions: true
 	}
 
 	componentDidMount() {
@@ -28,7 +35,17 @@ class ReqPickupPage extends React.Component{
 	}
 
 	submit = (data) => {
-		this.setState({ open: true, data: data, value: '' });
+		this.setState({ loading: true });
+		axios.post(`${process.env.REACT_APP_API}/kurir/getKantorName`, {
+			nopend: this.props.nopend
+		}).then(res => {
+			this.setState({ 
+				officename: this.props.nopend+' - '+res.data.namakantor, 
+				open: true, data: data,
+				loading: false, 
+				value: '' //reset kantor when modal open
+			});	
+		}).catch(() => this.setState({ loading: false }));
 	}
 
 	close = () => this.setState({ open: false })
@@ -37,21 +54,33 @@ class ReqPickupPage extends React.Component{
 		const errors = this.validate(this.state.value);
 		this.setState({ errors });
 		if (Object.keys(errors).length === 0) {
-			this.setState({ loading: true, open: false });
-			const datatosend = { data: this.state.data, kantor: this.state.value }
-			
+			this.setState({ loadingModal: true });
+			//need to set value if default options is true
+			const { defaultoptions }  = this.state;
+			const datatosend = {
+				data: this.state.data
+			};
+
+			if (defaultoptions) {
+				datatosend.kantor = this.state.nopend;
+			}else{
+				datatosend.kantor = this.state.value;
+			}
+
 			this.props.pickup(datatosend)
 			.then(() => {
 				window.scrollTo(0, 0);
-				this.setState({ loading: false, success: true })
+				this.setState({ loadingModal: false, success: true, open: false  })
 			})
-			.catch(err => this.setState({ loading: false, errors: err.response.data.errors, success: false }));
+			.catch(err => this.setState({ loadingModal: false, errors: err.response.data.errors, success: false, open: false }));
 		}
 	}
 
 	validate = (value) => {
 		const errors = {};
-		if (!value) errors.kantor = "Kantor harap dipilih";
+		const { defaultoptions } = this.state;
+		//only validate when default options is false
+		if (!defaultoptions && !value) errors.kantor = "Kantor tidak boleh kosong";
 		return errors;
 	}
 	
@@ -74,9 +103,9 @@ class ReqPickupPage extends React.Component{
 			const options = [];
 			result.forEach(result => {
 				options.push({
-					key: result.kantorid,
-					value: result.kantorid,
-					text: result.namakantor
+					key: result.nopend,
+					value: result.nopend,
+					text: result.NamaKtr
 				})
 			});
 			this.setState({ loadingSearch: false, options });
@@ -86,30 +115,51 @@ class ReqPickupPage extends React.Component{
 
 	onChangeKantor = (e, data) => this.setState({ value: data.value }) 
 
+	onChangeOptions = (e, { value }) => {
+		this.setState({ nopend: value });
+		if (value === this.props.nopend) {
+			this.setState({ defaultoptions: true });
+		}else{
+			this.setState({ defaultoptions: false });
+		}
+	}
+
 	render(){
-		const { errors, open, success } = this.state;
+		const { errors, open, success, defaultoptions } = this.state;
 		
 		return(
 			<Navbar>
 				<Modal size="tiny" open={open}>
-		          <Modal.Header>Cari Kantor</Modal.Header>
+		          <Modal.Header>Kantor Pickup</Modal.Header>
 		          <Modal.Content>
-		            <Form onSubmit={this.sumbitdata}>
-		            	<Form.Field error={!!errors.kantor}>
-		            		<label>Kantor</label>
-		            		<Dropdown
-						        placeholder='Cari kantor pickup..'
-						        search
-						        selection
-						        fluid
-						        allowAdditions
-						        value={this.state.value}
-				    			onSearchChange={this.onSearchChange}
-				    			loading={this.state.loadingSearch}
-				    			options={this.state.options}
-				    			onChange={this.onChangeKantor}
-						    />
-		            	</Form.Field>
+		            <Form onSubmit={this.sumbitdata} loading={this.state.loadingModal}>
+		            	<Form.Group widths='equal'>
+		            		<Form.Field>
+			            		<Dropdown
+						            onChange={this.onChangeOptions}
+						            options={this.state.optionsNopend}
+						            placeholder='Choose an option'
+						            selection
+						            value={this.state.nopend}
+						          />
+			            	</Form.Field>
+			            	<Form.Field>
+			            		{ defaultoptions ? <Form.Input value={this.state.officename} /> : 
+			            		<Dropdown
+							        placeholder='Cari kantor pickup..'
+							        search
+							        selection
+							        fluid
+							        allowAdditions
+							        value={this.state.value}
+					    			onSearchChange={this.onSearchChange}
+					    			loading={this.state.loadingSearch}
+					    			options={this.state.options}
+					    			onChange={this.onChangeKantor}
+					    			error={!!errors.kantor}
+							    /> }
+			            	</Form.Field>
+		            	</Form.Group>
 		            </Form>
 		          </Modal.Content>
 		          <Modal.Actions>
@@ -150,7 +200,14 @@ class ReqPickupPage extends React.Component{
 
 ReqPickupPage.propTypes = {
 	fetchPickup: PropTypes.func.isRequired,
-	pickup: PropTypes.func.isRequired
+	pickup: PropTypes.func.isRequired,
+	nopend: PropTypes.string.isRequired
 }
 
-export default connect(null, { fetchPickup, pickup, setProgressBar })(ReqPickupPage);
+function mapStateProps(state) {
+	return{
+		nopend: state.user.nopendPos
+	}
+}
+
+export default connect(mapStateProps, { fetchPickup, pickup, setProgressBar })(ReqPickupPage);
