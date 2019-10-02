@@ -27,8 +27,10 @@ export default {
 			axios.post(`${process.env.REACT_APP_API}/entriPo`, { data }).then(res => res.data.result),
 		get_kantor: () =>
 			axios.post(`${process.env.REACT_APP_API}/order/getKantor`).then(res => res.data.result),
-		fetch_assigment: () =>
-			axios.post(`${process.env.REACT_APP_API}/order/getAssigment`, config).then(res => res.data.result),
+		fetch_assigment: (nopend) =>
+			axios.post(`${process.env.REACT_APP_API}/order/getAssigment`, { 
+				nopend: nopend
+			}, config).then(res => res.data.result),
 		add_assigment: (data, name) => 
 			axios.post(`${process.env.REACT_APP_API}/postAssigment`,  {
 				nopickup: data.nopickup,
@@ -40,7 +42,18 @@ export default {
 	},
 	petugas: {
 		fetc_petugas: () =>
-			axios.post(`${process.env.REACT_APP_API}/petugas/getPetugas`).then(res => res.data.petugas)
+			axios.post(`${process.env.REACT_APP_API}/petugas/getPetugas`).then(res => res.data.petugas),
+		fetch_petugaspickup: (nopend) =>
+			axios.post(`${process.env.REACT_APP_API}/petugas/getPetugasPickup`, {
+				nopend: nopend
+			}).then(res => res.data.petugas),
+		add_petugas: (data) => 
+			axios.post(`${process.env.REACT_APP_API}/petugas/addPetugasPickup`, {
+				nama: data.namapetugas,
+				status: data.status,
+				nopend: data.nopend,
+				nippos: data.nippos
+			}, config).then(res => res.data.petugas)
 	},
 	dashboard: {
 		get_polimit: () =>

@@ -30,8 +30,8 @@ export const entriPo = (data) => dispatch =>
 export const getKantor = () => dispatch => 
 	api.order.get_kantor().then(res => dispatch(kantorIsGet(res)));
 
-export const fetchAssigment = () => dispatch => 
-	api.order.fetch_assigment()
+export const fetchAssigment = (nopend) => dispatch => 
+	api.order.fetch_assigment(nopend)
 	.then(res => dispatch(assigmentFetched(res)));
 
 export const addAssigment = (data, name) => dispatch =>

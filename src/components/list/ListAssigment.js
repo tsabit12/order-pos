@@ -122,9 +122,10 @@ class ListAssigment extends React.Component{
 				    <Table.Header>
 				      <Table.Row>
 				        <Table.HeaderCell>NOMOR PICKUP</Table.HeaderCell>
-				        <Table.HeaderCell>TANGGAL ORDER</Table.HeaderCell>
+				        <Table.HeaderCell>TANGGAL REQUEST</Table.HeaderCell>
 				        <Table.HeaderCell>KANTOR</Table.HeaderCell>
 				        <Table.HeaderCell>KOTA</Table.HeaderCell>
+				        <Table.HeaderCell>JUMLAH</Table.HeaderCell>
 				        <Table.HeaderCell>ACTION</Table.HeaderCell>
 				      </Table.Row>
 				    </Table.Header>
@@ -137,9 +138,10 @@ class ListAssigment extends React.Component{
 			      		listdata.map(order => 
 			  			<Table.Row key={order.no_pickup}>			      			
 					        <Table.Cell>{order.no_pickup}</Table.Cell>
-					        <Table.Cell>{order.tgl_order}</Table.Cell>
+					        <Table.Cell>{order.tgl_request}</Table.Cell>
 					        <Table.Cell>{order.namakantor}</Table.Cell>
 					        <Table.Cell>{order.city}</Table.Cell>
+					        <Table.Cell>{order.jumlah} item</Table.Cell>
 					        <Table.Cell>
 					        	<Popup content='Assigment' trigger={
 					        		<Button secondary icon='check' onClick={() => this.handleClick(order.no_pickup)} />

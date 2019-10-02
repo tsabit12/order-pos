@@ -12,8 +12,13 @@ const Kurir = () => (
 		        <Dropdown.Item as={NavLink} to="/invoice/laporan">Laporan Invoice</Dropdown.Item>
 			</Dropdown.Menu>
 		</Dropdown>
-		<Menu.Item as={NavLink} to="/handover">Handover</Menu.Item>
-		<Menu.Item as={NavLink} to="/petugas">User</Menu.Item>
+		<Dropdown item simple text='Menu Lain'>
+			<Dropdown.Menu>
+				<Dropdown.Item as={NavLink} to="/pickup/petugas">Petugas Pickup</Dropdown.Item>
+				<Dropdown.Item as={NavLink} to="/petugas">User</Dropdown.Item>
+				<Dropdown.Item as={NavLink} to="/handover">Handover</Dropdown.Item>
+			</Dropdown.Menu>
+		</Dropdown>
 	</React.Fragment>
 );
 

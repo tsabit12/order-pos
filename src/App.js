@@ -21,6 +21,7 @@ import PageListPo from "./components/pages/PageListPo";
 import ListInvoicePage from "./components/pages/ListInvoicePage";
 import HomePage from "./components/pages/HomePage";
 import KurirPage from "./components/pages/KurirPage";
+import PetugasPickupPage from "./components/pages/PetugasPickupPage";
 
 const App = ({ location }) =>
   <div>
@@ -42,6 +43,7 @@ const App = ({ location }) =>
     <UserRoute location={location} path="/list_po" exact component={PageListPo} />
     <UserRoute location={location} path="/invoice/laporan" exact component={ListInvoicePage} />
     <UserRoute location={location} path="/kurir" exact component={KurirPage} />
+    <UserRoute location={location} path="/pickup/petugas" exact component={PetugasPickupPage} />
   </div>;  
 
 

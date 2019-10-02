@@ -15,7 +15,7 @@ class AssigmentPage extends React.Component{
 
 	componentDidMount(){
 		this.props.setProgressBar(true);
-		this.props.fetchAssigment().then(() => this.props.setProgressBar(false));
+		this.props.fetchAssigment(this.props.nopend).then(() => this.props.setProgressBar(false));
 	}
 
 	submit = (data) => this.props.addAssigment(data, this.props.nama);
@@ -44,13 +44,15 @@ AssigmentPage.propTypes = {
 	fetchAssigment: PropTypes.func.isRequired,
 	listdata: PropTypes.array.isRequired,
 	addAssigment: PropTypes.func.isRequired,
-	nama: PropTypes.string.isRequired
+	nama: PropTypes.string.isRequired,
+	nopend: PropTypes.string.isRequired
 }
 
 function mapStateToProps(state) {
 	return{
 		listdata: state.order.assigment,
-		nama: state.user.nama
+		nama: state.user.nama,
+		nopend: state.user.nopend
 	}
 }
 

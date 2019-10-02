@@ -6,9 +6,10 @@ const Kurir = () => (
 	<React.Fragment>
 		<Menu.Item style={{textAlign: 'left'}} as={NavLink} to="/dashboard">Dashboard</Menu.Item>
 		<Menu.Item style={{textAlign: 'left'}} as={NavLink} to="/assigment">Assigment Pickup</Menu.Item>
-		<Menu.Item style={{textAlign: 'left'}} as={NavLink} to="/handover">Handover Pickup</Menu.Item>
 		<Menu.Item style={{textAlign: 'left'}} as={NavLink} to="/invoice">Invoice</Menu.Item>
 		<Menu.Item style={{textAlign: 'left'}} as={NavLink} to="/invoice/laporan">Laporan Invoice</Menu.Item>
+		<Menu.Item style={{textAlign: 'left'}} as={NavLink} to="/handover">Handover Pickup</Menu.Item>
+		<Menu.Item style={{textAlign: 'left'}} as={NavLink} to="/pickup/petugas">Petugas Pickup</Menu.Item>
 		<Menu.Item style={{textAlign: 'left'}} as={NavLink} to="/petugas">User</Menu.Item>
 	</React.Fragment>
 );
