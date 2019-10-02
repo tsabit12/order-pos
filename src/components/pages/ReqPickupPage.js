@@ -6,8 +6,7 @@ import ListReqPickup from "../list/ListReqPickup";
 import { connect } from "react-redux";
 import { fetchPickup, pickup } from "../../actions/handover";
 import { setProgressBar } from "../../actions/progress";
-import { Header, Icon, Divider, Dimmer, Loader, Message, Modal, Button, Form, Dropdown } from "semantic-ui-react";
-
+import { Header, Icon, Divider, Dimmer, Loader, Message, Modal, Button, Form, Dropdown, Checkbox } from "semantic-ui-react";
 
 class ReqPickupPage extends React.Component{
 	state = {
@@ -25,8 +24,14 @@ class ReqPickupPage extends React.Component{
 			{ key: 'lain', text: 'Lainnya', value: 'lain' },
 		],
 		loadingSearch: false,
+		loadingSearch2: false,
 		success: false,
-		defaultoptions: true
+		defaultoptions: true,
+		checked: true,
+		nopendMitra: this.props.nopendMitra,
+		optionsMitra: [
+			{ key: this.props.nopendMitra, text: this.props.nopendMitra, value: this.props.nopendMitra }
+		]
 	}
 
 	componentDidMount() {
@@ -58,7 +63,8 @@ class ReqPickupPage extends React.Component{
 			//need to set value if default options is true
 			const { defaultoptions }  = this.state;
 			const datatosend = {
-				data: this.state.data
+				data: this.state.data,
+				kantorMitra: this.state.nopendMitra
 			};
 
 			if (defaultoptions) {
@@ -70,7 +76,7 @@ class ReqPickupPage extends React.Component{
 			this.props.pickup(datatosend)
 			.then(() => {
 				window.scrollTo(0, 0);
-				this.setState({ loadingModal: false, success: true, open: false  })
+				this.setState({ loadingModal: false, success: true, open: false, data: {}  })
 			})
 			.catch(err => this.setState({ loadingModal: false, errors: err.response.data.errors, success: false, open: false }));
 		}
@@ -105,7 +111,7 @@ class ReqPickupPage extends React.Component{
 				options.push({
 					key: result.nopend,
 					value: result.nopend,
-					text: result.NamaKtr
+					text: result.nopend+' - '+result.NamaKtr
 				})
 			});
 			this.setState({ loadingSearch: false, options });
@@ -124,17 +130,84 @@ class ReqPickupPage extends React.Component{
 		}
 	}
 
+	handleClick = () => {
+		const { checked } = this.state;
+		if (checked) {
+			const optionsMitra = [];
+			this.setState({ checked: false, nopendMitra: '', optionsMitra });
+		}else{
+			const optionsMitra = [{ key: this.props.nopendMitra, text: this.props.nopendMitra, value: this.props.nopendMitra }];
+			this.setState({ checked: true, nopendMitra: this.props.nopendMitra, optionsMitra });
+		}
+	}
+
+	onSearchChangeMitra = (e, data) => {
+		clearTimeout(this.timer);
+		this.setState({ nopendMitra: data.searchQuery });
+		this.timer = setTimeout(this.fetchKantorMitra, 500);
+	}
+
+	fetchKantorMitra = () => {
+		if (!this.state.nopendMitra) return;
+		this.setState({ loadingSearch2: true });
+		axios.post(`${process.env.REACT_APP_API}/Provinsi/getKantorMitra`, {
+			kantor: this.state.nopendMitra
+		})
+		.then(res => res.data.result)
+		.then(result => {
+			const optionsMitra = [];
+			result.forEach(result => {
+				optionsMitra.push({
+					key: result.nopend,
+					value: result.nopend,
+					text: result.nopend+' - '+result.NamaKtr
+				})
+			});
+			this.setState({ loadingSearch2: false, optionsMitra });
+		})
+		.catch(err => console.log(err));
+	}
+
+	onChangeKantorMitra = (e, data) => this.setState({ nopendMitra: data.value }) 
+
+
 	render(){
-		const { errors, open, success, defaultoptions } = this.state;
+		const { errors, open, success, defaultoptions, checked } = this.state;
 		
 		return(
 			<Navbar>
 				<Modal size="tiny" open={open}>
-		          <Modal.Header>Kantor Pickup</Modal.Header>
+		          <Modal.Header>Notifikasi</Modal.Header>
 		          <Modal.Content>
 		            <Form onSubmit={this.sumbitdata} loading={this.state.loadingModal}>
 		            	<Form.Group widths='equal'>
 		            		<Form.Field>
+		            			<label>
+		            				Diambil di kantor? &nbsp; &nbsp;  
+		            				<Checkbox 
+		            					label='Default' 
+		            					checked={checked}
+		            					onClick={this.handleClick}
+		            				/>
+		            			</label>
+		            			<Dropdown
+							        placeholder='Cari kantor..'
+							        search
+							        selection
+							        fluid
+							        allowAdditions
+							        disabled={checked}
+							        value={this.state.nopendMitra}
+					    			options={this.state.optionsMitra}
+					    			onSearchChange={this.onSearchChangeMitra}
+					    			loading={this.state.loadingSearch2}
+					    			onChange={this.onChangeKantorMitra}
+							    />
+		            		</Form.Field>
+		            	</Form.Group>
+		            	<Form.Group widths='equal'>
+		            		<Form.Field>
+		            			<label>Dipickup oleh?</label>
 			            		<Dropdown
 						            onChange={this.onChangeOptions}
 						            options={this.state.optionsNopend}
@@ -144,6 +217,7 @@ class ReqPickupPage extends React.Component{
 						          />
 			            	</Form.Field>
 			            	<Form.Field>
+			            		<label>&nbsp;</label>
 			            		{ defaultoptions ? <Form.Input value={this.state.officename} /> : 
 			            		<Dropdown
 							        placeholder='Cari kantor pickup..'
@@ -201,12 +275,14 @@ class ReqPickupPage extends React.Component{
 ReqPickupPage.propTypes = {
 	fetchPickup: PropTypes.func.isRequired,
 	pickup: PropTypes.func.isRequired,
-	nopend: PropTypes.string.isRequired
+	nopend: PropTypes.string.isRequired,
+	nopendMitra: PropTypes.string.isRequired
 }
 
 function mapStateProps(state) {
 	return{
-		nopend: state.user.nopendPos
+		nopend: state.user.nopendPos,
+		nopendMitra: state.user.nopend
 	}
 }
 
