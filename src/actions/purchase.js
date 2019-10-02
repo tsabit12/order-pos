@@ -1,5 +1,5 @@
 import api from "../api";
-import { GET_ID_PO, FETCH_PO, ADD_PO, FETCH_LIST_PO, FETCH_INVOICE } from "../types";
+import { GET_ID_PO, FETCH_PO, ADD_PO, FETCH_LIST_PO, FETCH_INVOICE, CLEAR_INVOICE } from "../types";
 
 export const poFetched = (po) => ({
 	type: FETCH_PO,
@@ -26,6 +26,10 @@ export const invoiceFetched = (invoice) => ({
 	invoice
 })
 
+export const cleared = () => ({
+	type: CLEAR_INVOICE
+})
+
 export const getPoByid = (id) => dispatch =>
 	api.po.get_pobyid(id).then(res => dispatch(idpoFetched(res)))
 
@@ -41,3 +45,4 @@ export const fetchListpo = (id) => dispatch =>
 export const getInvoice = (values) => dispatch =>
 	api.invoice.laporan(values).then(res => dispatch(invoiceFetched(res)));
 	
+export const clearInvoice = () => dispatch => dispatch(cleared());

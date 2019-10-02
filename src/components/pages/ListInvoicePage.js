@@ -1,8 +1,8 @@
 import React from "react";
 import PropTypes from "prop-types";
 import Navbar from "../menu/Navbar";
-import { Header, Icon, Divider, Form, Input, Table } from "semantic-ui-react";
-import { getInvoice } from "../../actions/purchase";
+import { Icon, Form, Input, Table } from "semantic-ui-react";
+import { getInvoice, clearInvoice } from "../../actions/purchase";
 import { setProgressBar } from "../../actions/progress";
 import { connect } from "react-redux";
 import ListInvoice from "../list/ListInvoice";
@@ -38,7 +38,7 @@ class ListInvoicePage extends React.Component {
 				this.setState({ errors: {} });
 			}).catch(err => {
 				this.props.setProgressBar(false);
-				this.setState({ errors: err.response.data.errors });
+				this.props.clearInvoice();
 			});
 	}
 
@@ -54,7 +54,10 @@ class ListInvoicePage extends React.Component {
 			};
 			this.props.getInvoice(values)
 				.then(() => this.props.setProgressBar(false))
-				.catch(() => this.props.setProgressBar(false))
+				.catch(() => {
+					this.props.clearInvoice();
+					this.props.setProgressBar(false);
+				})
 		}
 	}
 
@@ -79,20 +82,16 @@ class ListInvoicePage extends React.Component {
 		const { dataInvoice } = this.props;
 		return(
 			<Navbar>
-			    <Header as='h2'>
-				    <Icon name='file' />
-				    <Header.Content>Laporan Invoice</Header.Content>
-				</Header>
-				<Divider clearing />
 				<Form onSubmit={this.onSubmit}>
 					<Form.Field error={!!errors.tanggal}>
 						<Input 
-							label="Tanggal Generate"
+							label="Tanggal Cetak"
 						 	fluid 
 						 	name="tanggal"
 							id="tanggal"
 						 	icon={<Icon name='search' link onClick={this.onSubmit}/>}
-						 	placeholder='Search...' 
+						 	placeholder='YYYY-MM-DD'
+						 	autoComplete="off" 
 						 	value={this.state.tanggal}
 							onChange={this.onChange}
 						/>
@@ -124,7 +123,8 @@ class ListInvoicePage extends React.Component {
 ListInvoicePage.propTypes = {
 	getInvoice: PropTypes.func.isRequired,
 	setProgressBar: PropTypes.func.isRequired,
-	dataInvoice: PropTypes.array.isRequired
+	dataInvoice: PropTypes.array.isRequired,
+	clearInvoice: PropTypes.func.isRequired
 }
 
 function mapStateProps(state) {
@@ -133,4 +133,4 @@ function mapStateProps(state) {
 	}
 }
 
-export default connect(mapStateProps, { getInvoice, setProgressBar })(ListInvoicePage);
+export default connect(mapStateProps, { getInvoice, setProgressBar, clearInvoice })(ListInvoicePage);
