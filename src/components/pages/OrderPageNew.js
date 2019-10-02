@@ -40,7 +40,6 @@ class OrderPageNew extends React.Component {
 	}
 
 	onClickPO = (data) => {
-		window.scrollTo(0, 0);
 		const { nomorPo, user } = data;
 		this.setState({ loading: true, data: { ...this.state.data, nomorPo: nomorPo } });
 		axios.post(`${process.env.REACT_APP_API}/order/searchPO`, { idpo: nomorPo, user: user })
@@ -50,7 +49,8 @@ class OrderPageNew extends React.Component {
 					step: 2, 
 					errors: {...this.state.errors, po: {} },
 					data: { ...this.state.data, sender: results.data }
-				})
+				});
+				window.scrollTo(0, 0);
 			})
 			.catch(err => this.setState({ 
 				errors: { ...this.state.errors, po: err.response.data.errors },

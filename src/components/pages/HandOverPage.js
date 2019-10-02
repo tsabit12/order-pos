@@ -2,26 +2,23 @@ import React from "react";
 import Navbar from "../menu/Navbar";
 import { connect } from "react-redux";
 import PropTypes from "prop-types";
-import { Header, Divider, Icon } from "semantic-ui-react";
 import FormHandOver from "../forms/FormHandOver";
 import ListHandOver from "../list/ListHandOver";
 import { getHandover } from "../../actions/handover";
 
 class HandOverPage extends React.Component {
+	state = {
+		nomorpickup: ''
+	}
 
-	submit = (data) => this.props.getHandover(data)
+	submit = (data) => this.props.getHandover(data).then(() => this.setState({ nomorpickup: data.nopickup }));
 
 	render(){
-		const { handoverisget } = this.props;
+		const { handoverisget, nopend } = this.props;
 		return(
 			<Navbar>
-				<Header as='h2'>
-				    <Icon name='american sign language interpreting' />
-				    <Header.Content>Handover Pickup</Header.Content>
-				</Header>
-				<Divider clearing />
-				<FormHandOver submit={this.submit} />
-				{ handoverisget.length === 0 ? <React.Fragment /> : <ListHandOver listdata={this.props.handoverisget} /> }
+				<FormHandOver submit={this.submit} nopend={nopend} />
+				{ handoverisget.length === 0 ? <React.Fragment /> : <ListHandOver listdata={this.props.handoverisget} nomorpickup={this.state.nomorpickup} /> }
 			</Navbar>
 		);
 	}
@@ -29,12 +26,14 @@ class HandOverPage extends React.Component {
 
 HandOverPage.propTypes = {
 	getHandover: PropTypes.func.isRequired,
-	handoverisget: PropTypes.array.isRequired
+	handoverisget: PropTypes.array.isRequired,
+	nopend: PropTypes.string.isRequired
 }
 
 function mapStateToProps(state){
 	return {
-		handoverisget: state.gethandover
+		handoverisget: state.gethandover,
+		nopend: state.user.nopend
 	}
 }
 

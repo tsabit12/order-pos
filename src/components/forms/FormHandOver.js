@@ -7,7 +7,8 @@ class FormHandOver extends React.Component{
 		loading: false,
 		errors: {},
 		pin: '',
-		nopickup: ''
+		nopickup: '',
+		nopend: this.props.nopend
 	}
 
 	onChange = e => this.setState({ [e.target.name]: e.target.value })
@@ -20,7 +21,8 @@ class FormHandOver extends React.Component{
 			this.setState({ loading: true });
 			const data = {
 				pin: this.state.pin,
-				nopickup: this.state.nopickup
+				nopickup: this.state.nopickup,
+				nopend: this.state.nopend
 			};
 
 			this.props.submit(data)
@@ -78,7 +80,8 @@ class FormHandOver extends React.Component{
 }
 
 FormHandOver.propTypes = {
-	submit: PropTypes.func.isRequired
+	submit: PropTypes.func.isRequired,
+	nopend: PropTypes.string.isRequired
 }
 
 export default FormHandOver;

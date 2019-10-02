@@ -1,14 +1,13 @@
 import React from "react";
 import PropTypes from "prop-types";
-import { Segment, Table, Message } from "semantic-ui-react";
-import { Link } from "react-router-dom";
+import { Table, Message } from "semantic-ui-react";
 
-export default function ListHandOver({ listdata }){
+export default function ListHandOver({ listdata, nomorpickup }){
 	return(
-		<Segment>
+		<React.Fragment>
 			<Message positive>
 			    <Message.Header>Sukses</Message.Header>
-			    Silahkan klik <Link to="/download">disini</Link> untuk mendownload file pdf 
+			    Handover berhasil di proses, berikut data order berdasarkan nomor pickup {nomorpickup}
 			</Message>
 			<Table celled>
 			    <Table.Header>
@@ -35,11 +34,12 @@ export default function ListHandOver({ listdata }){
 			      </Table.Row>)}
 			    </Table.Body>
 			  </Table>
-		</Segment>
+		</React.Fragment>
 	);
 }
 
 
 ListHandOver.propTypes = {
-	listdata: PropTypes.array.isRequired
+	listdata: PropTypes.array.isRequired,
+	nomorpickup: PropTypes.string.isRequired
 }
