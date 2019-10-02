@@ -35,6 +35,7 @@ class InvoiceForm extends React.Component {
 	validate = (data) => {
 		const errors = {};
 		if (!data.kantor) errors.kantor = "Kantor belum dipilih";
+		if (!data.datesRange) errors.datesRange = "Periode harap di isi";
 		return errors;
 	}
 
@@ -63,7 +64,9 @@ class InvoiceForm extends React.Component {
 				          onChange={this.handleChangeDate}
 				          dateFormat="YYYY/MM/DD"
 				          autoComplete="off"
+				          error={!!errors.datesRange}
 				        />
+				        { errors.datesRange && <InlineError text={errors.datesRange} /> }
 					</Form.Field>
 					<Form.Field>
 						<label>Kantor</label>
