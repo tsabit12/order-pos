@@ -34,6 +34,7 @@ class AssigmentPage extends React.Component{
 			    <ListAssigment 
 			    	listdata={this.props.listdata} 
 			    	submit={this.submit}
+			    	nopend={this.props.nopend}
 			    />
 			</Navbar>
 		);

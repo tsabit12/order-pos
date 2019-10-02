@@ -18,9 +18,10 @@ class ListAssigment extends React.Component{
 
 	handleClick = (data) => {
 	    this.setState({ open: true, nopickup: data });
-	    axios.post(`${process.env.REACT_APP_API}/order/getPetugasPickup`)
-	    	.then(res => res.data.result)
-	    	.then(result => {
+	    axios.post(`${process.env.REACT_APP_API}/order/getPetugasPickup`, {
+	    	nopend: this.props.nopend
+	    }).then(res => res.data.result)
+	      .then(result => {
 	    		this.setState({ dataPetugas: result })
 	    	})
 	}
@@ -42,7 +43,8 @@ class ListAssigment extends React.Component{
 			};
 			this.props.submit(data)
 				.then(res => {
-					this.setState({ open: false, loading: false, errors: {}, success: true })
+					this.setState({ open: false, loading: false, errors: {}, success: true });
+					this.download();
 				})
 				.catch(err => 
 					this.setState({ errors: err.response.data.errors, loading: false, success: false }))
@@ -113,7 +115,7 @@ class ListAssigment extends React.Component{
 					  <i aria-hidden="true" className="check icon"></i>
 					  <div className="content">
 					    <div className="header">Assigment Sukses!</div>
-					    <p>Klik <Link to="/assigment" onClick={this.download}>disini</Link> untuk cetak surat tugas.</p>
+					    <p>Pdf tidak muncul? Klik <Link to="/assigment" onClick={this.download}>disini</Link> untuk cetak ulang surat tugas.</p>
 					  </div>
 					</div>
 		        }
@@ -157,7 +159,8 @@ class ListAssigment extends React.Component{
 
 ListAssigment.propTypes = {
 	listdata: PropTypes.array.isRequired,
-	submit: PropTypes.func.isRequired
+	submit: PropTypes.func.isRequired,
+	nopend: PropTypes.string.isRequired
 }
 
 export default ListAssigment;
