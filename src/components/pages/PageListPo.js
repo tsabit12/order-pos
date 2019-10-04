@@ -9,13 +9,17 @@ import { setProgressBar } from "../../actions/progress";
 
 class PageListPo extends React.Component {
 	state = {
-		info: []
+		loading: false
 	}
 
 	componentDidMount(){
 		this.props.setProgressBar(true);
 		const { userid } = this.props.user;
 		this.props.fetchListpo(userid).then(() => this.props.setProgressBar(false));
+	}
+
+	getDetailOrder = (idpo) => {
+		this.setState({ loading: true });
 	}
 
 	render(){
@@ -26,7 +30,7 @@ class PageListPo extends React.Component {
 				    <Header.Content>List purchase order</Header.Content>
 				</Header>
 				<Divider clearing />
-				<ListData />
+				<ListData detailOrder={this.getDetailOrder} />
 			</Navbar>
 		);
 	}

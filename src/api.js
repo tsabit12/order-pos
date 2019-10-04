@@ -82,7 +82,11 @@ export default {
 		fetch_listpo: (id) => 
 			axios.post(`${process.env.REACT_APP_API}/getPoUser`, { 
 				userid: id 
-			}, config).then(res => res.data.result)
+			}, config).then(res => res.data.result),
+		getDetailPo: (id) => 
+			axios.post(`${process.env.REACT_APP_API}/PurchaseOrder/getDetailOrder`, {
+				nomor_po: id
+			}).then(res => res.data.result)
 	},
 	invoice: {
 		cetak: (data) => 
