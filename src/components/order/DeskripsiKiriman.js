@@ -52,7 +52,7 @@ class DeskripsiKiriman extends React.Component {
 
 	handleChangeBerat = (e) => {
 		const value = e.target.value;
-		if (value >= 3000) {
+		if (value > 2000) {
 			this.setState({ data: { ...this.state.data, itemtypeid: '1', weight: value, disabled: true } }); //set to paket
 		}else{
 			this.setState({ data: { ...this.state.data, itemtypeid: '', weight: value, disabled: false } });
