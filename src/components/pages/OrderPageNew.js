@@ -3,6 +3,7 @@ import Navbar from "../menu/Navbar";
 import StepOrder from "../order/StepOrder";
 import CariPoForm from "../order/CariPoForm";
 import SenderForm from "../order/SenderForm";
+import DeskripsiKiriman from "../order/DeskripsiKiriman";
 import ReceiverForm from "../order/ReceiverForm";
 import FeeForm from "../order/FeeForm";
 import { Message, Button } from "semantic-ui-react";
@@ -19,7 +20,8 @@ class OrderPageNew extends React.Component {
 		data: {
 			nomorPo: '',
 			sender: {},
-			receiver: {}
+			receiver: {},
+			deskripsi: {}
 		},
 		open: false,
 		idorder: '',
@@ -82,13 +84,17 @@ class OrderPageNew extends React.Component {
 		const { data } = this.state;
 		axios.post(`${process.env.REACT_APP_API}/orderPost`, { other: data, fee: datafee })
 		.then(res => {
-			this.setState({ errors: {...this.state.errors, fee: {} }, loading: false, open: false, step: 5, idorder: res.data.orderId })
+			this.setState({ errors: {...this.state.errors, fee: {} }, loading: false, open: false, step: 6, idorder: res.data.orderId })
 		})
 		.catch(err => this.setState({ errors: { ...this.state.errors, fee: err.response.data.errors, loading: false, open: true }}))
 	}
 
 	backFromFinish = () => {
 		this.setState({ step: 2, data: { ...this.state.data, receiver:{} }});
+	}
+
+	submitDesc = (step, data) => {
+		this.setState({ step: step+1, data: {...this.state.data, deskripsi: data }});
 	}
 
 	render(){
@@ -109,16 +115,22 @@ class OrderPageNew extends React.Component {
 					dataReceiver={data.receiver}
 					dataOptions={this.state.dataOptions}
 				/> }
-				{ step === 4 && <FeeForm 
+				{ step === 4 && <DeskripsiKiriman 
+					dataDeskripsi={data.deskripsi} 
+					onClickBack={this.onClickBack} 
+					submitDesc={this.submitDesc}
+				/> }
+				{ step === 5 && <FeeForm 
 					onClickBack={this.onClickBack} 
 					dataReceiver={data.receiver} 
 					dataSender={data.sender} 
+					dataDeskripsi={data.deskripsi}
 					onClickFee={this.submitFee} 
 					openModal={this.state.open}
 					loading={loading}
 					errors={errors.fee}
 				/> }
-				{ step === 5 && <React.Fragment>
+				{ step === 6 && <React.Fragment>
 					<Message
 				    	icon='check'
 				    	header='Proses order sukses'

@@ -28,6 +28,14 @@ const StepOrder = ({ step, disabled }) => (
 	    </Step>
 
 	    <Step active={step === 4 ? true : false}>
+	      <Icon name='cogs' />
+	      <Step.Content>
+	        <Step.Title>Deskripsi</Step.Title>
+	        <Step.Description>Isi data deskripsi kiriiman</Step.Description>
+	      </Step.Content>
+	    </Step>
+
+	    <Step active={step === 5 ? true : false}>
 	      <Icon name='credit card' />
 	      <Step.Content>
 	        <Step.Title>Tarif</Step.Title>
@@ -35,7 +43,7 @@ const StepOrder = ({ step, disabled }) => (
 	      </Step.Content>
 	    </Step>
 
-	    <Step active={step === 5 ? true : false}>
+	    <Step active={step === 6 ? true : false}>
 	      <Icon name='info' />
 	      <Step.Content>
 	        <Step.Title>Summary</Step.Title>

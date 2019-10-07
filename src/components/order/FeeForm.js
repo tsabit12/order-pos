@@ -7,9 +7,12 @@ import ListFee from "../list/ListFee";
 
 class FeeForm extends React.Component {
 	state = {
-		step: 4,
+		step: 5,
 		shipperzipcode: this.props.dataSender.senderPos,
 		receiverzipcode: this.props.dataReceiver.receiverPos,
+		valuegoods: this.props.dataDeskripsi.valuegoods,
+		itemtypeid: this.props.dataDeskripsi.itemtypeid,
+		weight: this.props.dataDeskripsi.weight,
 		loading: true,
 		success: false,
 		fee: [],
@@ -33,7 +36,10 @@ class FeeForm extends React.Component {
 		this.setState({ loading: true });
 		axios.post(`${process.env.REACT_APP_API}/getFee`, {
 			  shipperzipcode: this.state.shipperzipcode,
-			  receiverzipcode: this.state.receiverzipcode
+			  receiverzipcode: this.state.receiverzipcode,
+			  weight: this.state.weight,
+			  valuegoods: this.state.valuegoods,
+			  itemtypeid: this.state.itemtypeid
 		})
 		.then(res => res.data.result)
 		.then(result => {
@@ -123,6 +129,7 @@ FeeForm.propTypes = {
 	onClickBack: PropTypes.func.isRequired,
 	dataReceiver: PropTypes.object.isRequired,
 	dataSender: PropTypes.object.isRequired,
+	dataDeskripsi: PropTypes.object.isRequired,
 	onClickFee: PropTypes.func.isRequired,
 	openModal: PropTypes.bool.isRequired,
 	loading: PropTypes.bool.isRequired,
