@@ -18,6 +18,7 @@ class ReqPickupPage extends React.Component{
 		value: '', //kantor
 		nopend: this.props.nopend,
 		officename: '',
+		officenameMitra: '',
 		options: [],
 		optionsNopend: [
 			{ key: this.props.nopend, text: 'Default', value: this.props.nopend },
@@ -29,15 +30,25 @@ class ReqPickupPage extends React.Component{
 		defaultoptions: true,
 		checked: true,
 		nopendMitra: this.props.nopendMitra,
-		optionsMitra: [
-			{ key: this.props.nopendMitra, text: this.props.nopendMitra, value: this.props.nopendMitra }
-		]
+		optionsMitra: []
 	}
 
 	componentDidMount() {
 		this.props.setProgressBar(true);
 		const { nopendMitra } = this.props;
-	    this.props.fetchPickup(nopendMitra).then(() => this.props.setProgressBar(false));
+	    this.props.fetchPickup(nopendMitra).then(() => {
+	    	this.props.setProgressBar(false);
+	    	axios.post(`${process.env.REACT_APP_API}/kurir/getKantorNameMitra`, {
+	    		idkantor: this.props.nopendMitra
+	    	}).then(res => this.setState({ 
+	    		officenameMitra: res.data, 
+	    		optionsMitra: [{ 	
+	    			key: this.props.nopendMitra, 
+					text: this.props.nopendMitra+' - '+res.data, 
+					value: this.props.nopendMitra 
+				}] 
+	    	})).catch(err => console.log(err))
+	    });
 	}
 
 	submit = (data) => {
@@ -138,7 +149,11 @@ class ReqPickupPage extends React.Component{
 			const optionsMitra = [];
 			this.setState({ checked: false, nopendMitra: '', optionsMitra });
 		}else{
-			const optionsMitra = [{ key: this.props.nopendMitra, text: this.props.nopendMitra, value: this.props.nopendMitra }];
+			const optionsMitra = [
+				{ 	key: this.props.nopendMitra, 
+					text: this.props.nopendMitra+' - '+this.state.officenameMitra, 
+					value: this.props.nopendMitra }
+			];
 			this.setState({ checked: true, nopendMitra: this.props.nopendMitra, optionsMitra });
 		}
 	}
