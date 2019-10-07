@@ -20,9 +20,10 @@ import GuestRoute from "./routes/GuestRoute";
 import PageListPo from "./components/pages/PageListPo"; 
 import ListInvoicePage from "./components/pages/ListInvoicePage";
 import HomePage from "./components/pages/HomePage";
-import KurirPage from "./components/pages/KurirPage";
+import UserPage from "./components/pages/UserPage";
 import PetugasPickupPage from "./components/pages/PetugasPickupPage";
 import DetailPo from "./components/po/DetailPo";
+import AddUserPage from "./components/pages/AddUserPage";
 
 const App = ({ location }) =>
   <div>
@@ -44,7 +45,8 @@ const App = ({ location }) =>
     <UserRoute location={location} path="/list_po" exact component={PageListPo} />
     <UserRoute location={location} path="/list_po/:id" exact component={DetailPo} />
     <UserRoute location={location} path="/invoice/laporan" exact component={ListInvoicePage} />
-    <UserRoute location={location} path="/kurir" exact component={KurirPage} />
+    <UserRoute location={location} path="/user" exact component={UserPage} />
+    <UserRoute location={location} path="/user/add" exact component={AddUserPage} />
     <UserRoute location={location} path="/pickup/petugas" exact component={PetugasPickupPage} />
   </div>;  
 

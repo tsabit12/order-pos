@@ -10,12 +10,6 @@ const User = () => (
           <Menu.Menu>
             <Menu.Item
             	style={{textAlign:"left"}}
-              	name='Entri'
-              	as={NavLink}
-              	to="/po"
-            />
-            <Menu.Item
-            	style={{textAlign:"left"}}
               	name='Topup'
               	as={NavLink}
               	to="/topup"

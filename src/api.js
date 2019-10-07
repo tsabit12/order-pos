@@ -110,7 +110,16 @@ export default {
 		get_kurir: (data) =>
 			axios.post(`${process.env.REACT_APP_API}/kurir`, {
 				regional: data.reg,
-				kprk: data.kprk
+				kprk: data.kprk,
+				level: data.level
+			}).then(res => res.data.result),
+		add_kurir: (data) => 
+			axios.post(`${process.env.REACT_APP_API}/kurir/add`, {
+				nama: data.nama,
+				email: data.email,
+				level: data.level,
+				kprk: data.kprk,
+				nohp: data.nohp
 			}).then(res => res.data.result)
 	}
 }

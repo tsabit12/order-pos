@@ -6,7 +6,6 @@ const User = () => (
 	<React.Fragment>
 		<Menu.Item as={NavLink} to="/dashboard" title="dashboard">Dashboard</Menu.Item>
 		<Menu.Item as={NavLink} to="/order" title="Add Posting">Order</Menu.Item>
-		<Menu.Item as={NavLink} to="/po" title="Lacak Kiriman">Entri PO</Menu.Item>
 		<Dropdown item simple text='Laporan'>
 			<Dropdown.Menu>
 	          <Dropdown.Item as={NavLink} to="/laporan/pickup">Pickup</Dropdown.Item>

@@ -5,10 +5,10 @@ import { Menu, Dropdown } from "semantic-ui-react";
 const Admin = () => (
 	<React.Fragment>
 		<Menu.Item as={NavLink} to="/dashboard" title="dashboard">Dashboard</Menu.Item>
-		<Dropdown item simple text='Kurir'>
+		<Dropdown item simple text='User'>
 			<Dropdown.Menu>
-		        <Dropdown.Item as={NavLink} to="/kurir">Data Kurir</Dropdown.Item>
-		        <Dropdown.Item as={NavLink} to="/kurir/kelola">Kelola Kurir</Dropdown.Item>
+		        <Dropdown.Item as={NavLink} to="/user">Data User</Dropdown.Item>
+		        <Dropdown.Item as={NavLink} to="/user/add">Kelola User</Dropdown.Item>
 			</Dropdown.Menu>
 		</Dropdown>
 	</React.Fragment>

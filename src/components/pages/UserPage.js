@@ -2,13 +2,13 @@ import React from "react";
 import PropTypes from "prop-types";
 import Navbar from "../menu/Navbar";
 import { connect } from "react-redux";
-import { getKurir, clearKurir } from "../../actions/kurir";
+import { getKurir } from "../../actions/kurir";
 import { setProgressBar } from "../../actions/progress";
 import { Segment, Form, Button, Select } from "semantic-ui-react";
 import axios from "axios";
 import ListKurir from "../list/ListKurir";
 
-class KurirPage extends React.Component {
+class UserPage extends React.Component {
 	state = {
 		optionsKprk: [
 			{ key: '01', value: '01', text: 'SEMUA KPRK' }
@@ -16,9 +16,13 @@ class KurirPage extends React.Component {
 		optionsReg: [
 			{ key: '00', value: '00', text: 'NASIONAL' }
 		],
+		optionsLevel: [
+			{ key: '00', value: '00', text: 'SEMUA LEVEL' }
+		],
 		data: {
 			reg: '00',
-			kprk: ''
+			kprk: '01',
+			level: '00'
 		},
 		loading: false
 	}
@@ -70,6 +74,25 @@ class KurirPage extends React.Component {
 			.then(() => this.setState({ loading: false }))
 	}
 
+	getRefLevel = () => {
+		axios.post(`${process.env.REACT_APP_API}/kurir/getLevel`)
+			.then(res => res.data.result)
+			.then(data => {
+				const optionsLevel = [{ key: '00', value: '00', text: 'SEMUA LEVEL' }];
+				data.forEach(list => {
+					optionsLevel.push({
+						key: list.id_level,
+						value: list.id_level,
+						text: list.deskripsi.toUpperCase()
+					})
+				});
+				this.setState({ optionsLevel });
+			})
+			.catch(err => alert(err));
+	}
+
+	onChangeLevel = (e, { value }) => this.setState({ data: { ...this.state.data, level: value } });
+
 	render(){
 		const { listKurir } = this.props;
 		console.log(this.state.data);
@@ -100,6 +123,17 @@ class KurirPage extends React.Component {
 					    				onChange={this.onChangeKprk}
 					    			/>
 					    		</Form.Field>
+					    		<Form.Field>
+					    			<label>LEVEL USER</label>
+					    			<Select 
+					    				name='level'
+					    				id='level'
+					    				defaultValue={this.state.data.level}
+					    				options={this.state.optionsLevel}
+					    				onChange={this.onChangeLevel}
+					    				onClick={this.getRefLevel}
+					    			/>
+					    		</Form.Field>
 				    		</Form.Group>
 				    		<Button primary fluid>Tampilkan</Button>
 				    	</Form>
@@ -113,11 +147,10 @@ class KurirPage extends React.Component {
 	}
 }
 
-KurirPage.propTypes = {
+UserPage.propTypes = {
 	setProgressBar: PropTypes.func.isRequired,
 	getKurir: PropTypes.func.isRequired,
-	listKurir: PropTypes.array.isRequired,
-	clearKurir: PropTypes.func.isRequired
+	listKurir: PropTypes.array.isRequired
 }
 
 function mapStateProps(state) {
@@ -126,4 +159,4 @@ function mapStateProps(state) {
 	}
 }
 
-export default connect(mapStateProps, { getKurir, setProgressBar, clearKurir })(KurirPage);
+export default connect(mapStateProps, { getKurir, setProgressBar })(UserPage);

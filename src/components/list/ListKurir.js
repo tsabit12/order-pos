@@ -18,6 +18,7 @@ const ListKurir = ({ listdata }) => {
 		        <Table.Cell>{list.email}</Table.Cell>
 		        <Table.Cell>{list.nohp}</Table.Cell>
 		        <Table.Cell>{list.jumlah}</Table.Cell>
+		        <Table.Cell>{list.deskripsi}</Table.Cell>
 		      </Table.Row> )}
 		</React.Fragment>
 	);
@@ -33,6 +34,7 @@ const ListKurir = ({ listdata }) => {
 		        <Table.HeaderCell>EMAIL</Table.HeaderCell>
 		        <Table.HeaderCell>NO HP</Table.HeaderCell>
 		        <Table.HeaderCell>JUMLAH KANTOR</Table.HeaderCell>
+		        <Table.HeaderCell>LEVEL</Table.HeaderCell>
 		      </Table.Row>
 		    </Table.Header>
 

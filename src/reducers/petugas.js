@@ -1,4 +1,4 @@
-import { PETUGAS_FETCHED, FETCH_KURIR, CLEAR_KURIR, FETCH_PETUGAS_PICKUP, ADD_PETUGAS_PICKUP } from "../types";
+import { PETUGAS_FETCHED, FETCH_KURIR, CLEAR_KURIR, FETCH_PETUGAS_PICKUP, ADD_PETUGAS_PICKUP, ADD_KURIR } from "../types";
 
 const initialState = {
 	petugas: [],
@@ -27,6 +27,10 @@ export default function petugas(state=initialState, action={}){
 		case ADD_PETUGAS_PICKUP: 
 			return {
 				...state, pickup: [ action.petugas ]
+			}
+		case ADD_KURIR:
+			return {
+				...state, kurir: [ ...state.kurir, action.result ]
 			}
 		default: return state;
 	}

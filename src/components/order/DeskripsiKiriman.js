@@ -10,7 +10,7 @@ class DeskripsiKiriman extends React.Component {
 			contendesc: this.props.dataDeskripsi.contendesc,
 			itemtypeid: this.props.dataDeskripsi.itemtypeid,
 			weight: this.props.dataDeskripsi.weight,
-			valuegoods: this.props.dataDeskripsi.valuegoods,
+			valuegoods: this.props.dataDeskripsi.valuegoods ? this.props.dataDeskripsi.valuegoods : 0,
 			diameter: this.props.dataDeskripsi.diameter,
 			height: this.props.dataDeskripsi.height ? this.props.dataDeskripsi.height : 0,
 			length: this.props.dataDeskripsi.length ? this.props.dataDeskripsi.length : 0,
@@ -42,7 +42,7 @@ class DeskripsiKiriman extends React.Component {
 		if (!data.contendesc) errors.contendesc = "Deskripsi kiriman harap di isi";
 		if (!data.itemtypeid) errors.itemtypeid = "Jenis kiriman belum dipilih";
 		if (!data.weight) errors.weight = "Berat harap di isi";
-		if (!data.valuegoods) errors.valuegoods = "Nilai barang harap di isi";
+		if (!data.valuegoods && data.itemtypeid === '1') errors.valuegoods = "Kiriman paket, Nilai barang harap di isi";
 		if (!data.width && data.itemtypeid === '1') errors.width = "Kiriman paket, lebar tidak boleh kosong"; //only validate when jenis is paket
 		if (!data.length && data.itemtypeid === '1') errors.length = "Kiriman paket, panjang tidak boleh kosong";
 		if (!data.height && data.itemtypeid === '1') errors.height = "Kiriman paket, tinggi tidak boleh kosong";
@@ -95,7 +95,7 @@ class DeskripsiKiriman extends React.Component {
 						</Form.Field>
 						<Form.Field error={!!errors.valuegoods}>
 							<Form.Input 
-								label='Nilai barang *'
+								label='Nilai barang'
 								name='valuegoods'
 								id='valuegoods'
 								type='number'

@@ -9,6 +9,7 @@ import Logo from "../../logosampoerna.png";
 import User from "./routes/mobile/User";
 import Kurir from "./routes/mobile/Kurir";
 import Admin from "./routes/mobile/Admin";
+import Ae from "./routes/mobile/Ae";
 
 const contextRef = createRef();
 
@@ -46,6 +47,7 @@ const NavbarMobile = ({ children, onPusherClick, onToggle, visible, logout, leve
 						{ level === '01' && <Kurir /> }
 						{ level === '02' && <User /> } 
 						{ level === '03' && <Admin /> } 
+						{ level === '04' && <Ae /> } 
 					</Sidebar>
 				</Sticky>
 				<Sidebar.Pusher

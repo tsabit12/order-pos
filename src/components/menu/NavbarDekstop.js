@@ -8,6 +8,7 @@ import Logo from "../../logosampoerna.png";
 import User from "./routes/dekstop/User";
 import Kurir from "./routes/dekstop/Kurir";
 import Admin from "./routes/dekstop/Admin";
+import Ae from "./routes/dekstop/Ae";
 
 const NavbarDekstop = ({ isAuthenticated, logout, level }) => (
 	<Menu fixed="top" inverted>
@@ -17,6 +18,7 @@ const NavbarDekstop = ({ isAuthenticated, logout, level }) => (
 		{ level === '02' && <User/> }
 		{ level === '01' && <Kurir /> } 
 		{ level === '03' && <Admin /> }
+		{ level === '04' && <Ae /> }
 
 		<Menu.Menu position="right">
 			{ isAuthenticated && <Menu.Item as="a" title="Logout" onClick={() => logout() }>Logout</Menu.Item> }
