@@ -1,10 +1,13 @@
 import React from "react";
+import PropTypes from "prop-types";
 import Navbar from "../menu/Navbar";
 import { Input, Grid, Divider, Form, Message } from "semantic-ui-react";
 import Validator from "validator";
 import InlineError from "../InlineError";
 import axios from "axios";
-import FormEntriPo from "../forms/FormEntriPo"
+import FormEntriPo from "../forms/FormEntriPo";
+import { connect } from "react-redux";
+import PageNotFound from "./PageNotFound";
 
 class EntriPoPage extends React.Component {
 	state = {
@@ -45,39 +48,51 @@ class EntriPoPage extends React.Component {
 
 	render(){
 		const { data, loading, errors, success, message } = this.state;
-
+		const { level } = this.props;
 		return(
-			<Navbar>
-				<Grid>
-				   <Grid.Column mobile={16} tablet={8} computer={8} floated='right'>
-				   <Form onSubmit={this.handleClick}>
-				       	<Input 
-			    			action={{
-			    				loading: loading,
-					        	icon: 'search', 
-					        	color: 'red',
-					        	onClick: () => this.handleClick(),
-					    	}} 
-					    	fluid
-					    	error={!!errors.email}
-					    	value={data.email}
-							onChange={this.handleInputChange}
-							placeholder='Masukan email mitra...'
-						/>
-						{ errors.email && <InlineError text={errors.email} /> }
-					</Form>
-			      </Grid.Column>
-				</Grid>
-				<Divider />
-				{ success && <FormEntriPo email={data.userid} entriSuccess={this.selesai} />}
-				{ message && <Message
-				    icon='check'
-				    header='Sukses'
-				    content='Purchase order berhasil di buat'
-				  /> }
-			</Navbar>
+			<React.Fragment>
+				{ level === '04' ? <Navbar>
+					<Grid>
+					   <Grid.Column mobile={16} tablet={8} computer={8} floated='right'>
+					   <Form onSubmit={this.handleClick}>
+					       	<Input 
+				    			action={{
+				    				loading: loading,
+						        	icon: 'search', 
+						        	color: 'red',
+						        	onClick: () => this.handleClick(),
+						    	}} 
+						    	fluid
+						    	error={!!errors.email}
+						    	value={data.email}
+								onChange={this.handleInputChange}
+								placeholder='Masukan email mitra...'
+							/>
+							{ errors.email && <InlineError text={errors.email} /> }
+						</Form>
+				      </Grid.Column>
+					</Grid>
+					<Divider />
+					{ success && <FormEntriPo email={data.userid} entriSuccess={this.selesai} />}
+					{ message && <Message
+					    icon='check'
+					    header='Sukses'
+					    content='Purchase order berhasil di buat'
+					  /> }
+				</Navbar> : <PageNotFound />}
+			</React.Fragment>
 		);
 	}
 }
 
-export default EntriPoPage;
+EntriPoPage.propTypes = {
+	level: PropTypes.string.isRequired
+}
+
+function mapStateProps(state) {
+	return {
+		level: state.user.level
+	}
+}
+
+export default connect(mapStateProps, null)(EntriPoPage);
