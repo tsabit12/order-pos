@@ -5,7 +5,7 @@ import NavbarMobile from "./NavbarMobile";
 import Footer from "./Footer";
 
 const NavbarChildren = ({ children }) => (
-	<Container style={{paddingBottom: "4em" }}>{children}</Container>
+	<Container style={{paddingBottom: "3em", paddingTop: "1em" }}>{children}</Container>
 )
 
 class Navbar extends React.Component {
@@ -38,26 +38,29 @@ class Navbar extends React.Component {
 		const { visible } = this.state;
 		const { children } = this.props;
 		return(
-			<div>
-				<Responsive {...Responsive.onlyMobile}>
-					<NavbarMobile
-						onPusherClick={this.handlePusher}
-						onToggle={this.handleToggle}
-						visible={visible}
-					>
-						<NavbarChildren>
-							<div style={{marginTop: '19px'}}>{children}</div>
-						</NavbarChildren>
-					</NavbarMobile>
-				</Responsive>
-				<Responsive minWidth={Responsive.onlyTablet.minWidth}>
-					<NavbarDekstop />
-					<Segment raised style={{minHeight: "50em", top:"45px"}}>
-						<NavbarChildren>{children}</NavbarChildren>
-					</Segment>
-				</Responsive>
+			<React.Fragment>
+				<div style={{minHeight: '92vh'}}>
+					<Responsive {...Responsive.onlyMobile}>
+						<NavbarMobile
+							onPusherClick={this.handlePusher}
+							onToggle={this.handleToggle}
+							visible={visible}
+						>
+							<NavbarChildren>
+								<div style={{marginTop: '19px'}}>{children}</div>
+							</NavbarChildren>
+						</NavbarMobile>
+					</Responsive>
+					<Responsive minWidth={Responsive.onlyTablet.minWidth}>
+						<NavbarDekstop />
+						<Segment vertical style={{top:"57px", minHeight: "92vh", backgroundColor: "#fff"}}>
+							<NavbarChildren>{children}</NavbarChildren>
+						</Segment>
+						<div style={{ paddingBottom: '15px'}} />
+					</Responsive>
+				</div>
 				<Footer />
-			</div>
+			</React.Fragment>
 		);
 	}
 }

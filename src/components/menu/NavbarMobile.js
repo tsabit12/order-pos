@@ -33,8 +33,10 @@ const NavbarMobile = ({ children, onPusherClick, onToggle, visible, logout, leve
 				</Menu.Menu>
 			</React.Fragment>}
 		</Menu>
+		<br/>
+		<br/>
 		<Ref innerRef={contextRef}>
-			<Sidebar.Pushable as={Segment} style={{left: '-1px', top:'43px', transform: "none"}}>
+			<Sidebar.Pushable as={Segment} style={{left: '-1px', transform: "none"}}>
 				<Sticky context={contextRef}>
 					<Sidebar
 						as={Menu}
@@ -51,9 +53,9 @@ const NavbarMobile = ({ children, onPusherClick, onToggle, visible, logout, leve
 					</Sidebar>
 				</Sticky>
 				<Sidebar.Pusher
+					style={{ minHeight: '84.6vh' }}
 					dimmed={visible}
-					onClick={onPusherClick}
-					style={{minHeight: '100vh'}}>
+					onClick={onPusherClick}>
 					{ children }
 				</Sidebar.Pusher>
 			</Sidebar.Pushable>
