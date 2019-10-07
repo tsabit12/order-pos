@@ -44,7 +44,7 @@ const App = ({ location }) =>
     <UserRoute location={location} path="/invoice" exact component={InvoicePage} />
     <UserRoute location={location} path="/list_po" exact component={PageListPo} />
     <UserRoute location={location} path="/list_po/:id" exact component={DetailPo} />
-    <UserRoute location={location} path="/invoice/laporan" exact component={ListInvoicePage} />
+    <UserRoute location={location} path="/laporan_invoice" exact component={ListInvoicePage} />
     <UserRoute location={location} path="/user" exact component={UserPage} />
     <UserRoute location={location} path="/user/add" exact component={AddUserPage} />
     <UserRoute location={location} path="/pickup/petugas" exact component={PetugasPickupPage} />
