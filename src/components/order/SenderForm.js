@@ -34,7 +34,7 @@ class SenderForm extends React.Component {
 		if (checked) {
 			this.setState({ checked: false, data: { ...this.state.data, senderMail: '' } });
 		}else{
-			this.setState({ checked: true, data: { ...this.state.data, senderMail: this.props.dataSender.emailPic } });
+			this.setState({ checked: true, data: { ...this.state.data, senderMail: this.props.dataSender.senderMail } });
 		}
 	}
 
