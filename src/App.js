@@ -24,6 +24,7 @@ import UserPage from "./components/pages/UserPage";
 import PetugasPickupPage from "./components/pages/PetugasPickupPage";
 import DetailPo from "./components/po/DetailPo";
 import AddUserPage from "./components/pages/AddUserPage";
+import PageNotFound from "./components/pages/PageNotFound";
 
 const App = ({ location }) =>
   <div>
@@ -48,6 +49,7 @@ const App = ({ location }) =>
     <UserRoute location={location} path="/user" exact component={UserPage} />
     <UserRoute location={location} path="/user/add" exact component={AddUserPage} />
     <UserRoute location={location} path="/pickup/petugas" exact component={PetugasPickupPage} />
+    <UserRoute location={location} path="*" exact component={PageNotFound} />
   </div>;  
 
 
