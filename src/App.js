@@ -1,5 +1,6 @@
 import React from 'react';
 import PropTypes from "prop-types";
+import { Switch } from "react-router-dom";
 import LoginPage from "./components/pages/LoginPage";
 import DashboardPage from "./components/pages/DashboardPage";
 // import OrderPage from "./components/pages/OrderPage";
@@ -27,7 +28,7 @@ import AddUserPage from "./components/pages/AddUserPage";
 import PageNotFound from "./components/pages/PageNotFound";
 
 const App = ({ location }) =>
-  <div>
+  <Switch>
     <GuestRoute location={location} path="/" exact component={HomePage} />
     <GuestRoute location={location} path="/login" exact component={LoginPage} />
     <GuestRoute location={location} path="/signup" exact component={SignupPage} />
@@ -50,7 +51,7 @@ const App = ({ location }) =>
     <UserRoute location={location} path="/user/add" exact component={AddUserPage} />
     <UserRoute location={location} path="/pickup/petugas" exact component={PetugasPickupPage} />
     <UserRoute location={location} path="*" exact component={PageNotFound} />
-  </div>;  
+  </Switch>;  
 
 
 App.propTypes = {
