@@ -36,7 +36,8 @@ class ReqPickupPage extends React.Component{
 
 	componentDidMount() {
 		this.props.setProgressBar(true);
-	    this.props.fetchPickup().then(() => this.props.setProgressBar(false));
+		const { nopendMitra } = this.props;
+	    this.props.fetchPickup(nopendMitra).then(() => this.props.setProgressBar(false));
 	}
 
 	submit = (data) => {

@@ -52,6 +52,7 @@ class ListReqPickup extends React.Component {
 				      <Table.Row>
 				        <Table.HeaderCell /> 
 				        <Table.HeaderCell>ID ORDER</Table.HeaderCell>
+				        <Table.HeaderCell>NOMOR PO</Table.HeaderCell>
 				        <Table.HeaderCell>PENGIRIM NAMA/ALAMAT</Table.HeaderCell>
 				        <Table.HeaderCell>PENERIMA NAMA/ALAMAT</Table.HeaderCell>
 				        <Table.HeaderCell>TANNGAL ORDER</Table.HeaderCell>
@@ -76,6 +77,7 @@ class ListReqPickup extends React.Component {
 					          />
 					        </Table.Cell>		
 					        <Table.Cell>{order.id_order}</Table.Cell>
+					        <Table.Cell>{order.id_po}</Table.Cell>
 					        <Table.Cell>{order.nama_p} / {order.alamat_p}</Table.Cell>
 					        <Table.Cell>{order.nama_s} / {order.alamat_s}</Table.Cell>
 					        <Table.Cell>{order.tgl_order}</Table.Cell>
@@ -85,7 +87,7 @@ class ListReqPickup extends React.Component {
 				    <Table.Footer fullWidth>
 				      <Table.Row>
 				        <Table.HeaderCell />
-				        <Table.HeaderCell colSpan='5'>
+				        <Table.HeaderCell colSpan='6'>
 				          <Button
 				            floated='left'
 				            icon

@@ -19,8 +19,10 @@ export default {
 			}).then(res => res.data.user)
 	},
 	order: {
-		hand_over: () =>
-			axios.post(`${process.env.REACT_APP_API}/order/fetchHandover`).then(res => res.data.result),
+		hand_over: (kantorid) =>
+			axios.post(`${process.env.REACT_APP_API}/order/fetchHandover`, {
+				kantorid: kantorid
+			}).then(res => res.data.result),
 		pickup: (data) =>
 			axios.post(`${process.env.REACT_APP_API}/order/pickupHandover`, { data }).then(res => res.data.result),
 		entri_po: (data) =>

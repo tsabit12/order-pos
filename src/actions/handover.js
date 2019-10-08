@@ -16,8 +16,8 @@ export const reqPickupFecthed = data => ({
 	data
 })
 
-export const fetchPickup = () => dispatch => 
-	api.order.hand_over().then(res => dispatch(reqPickupFecthed(res)));
+export const fetchPickup = (kantorid) => dispatch => 
+	api.order.hand_over(kantorid).then(res => dispatch(reqPickupFecthed(res)));
 
 export const pickup = (data) => dispatch => 
 	api.order.pickup(data).then(res => dispatch(isPickup(res)));
