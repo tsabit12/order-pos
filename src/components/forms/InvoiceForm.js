@@ -1,5 +1,5 @@
 import React from "react";
-import { Form, Button, Dropdown, Message } from "semantic-ui-react";
+import { Form, Button, Message } from "semantic-ui-react";
 import InlineError from "../InlineError";
 import PropTypes from "prop-types";
 import { DatesRangeInput } from "semantic-ui-calendar-react";
@@ -7,8 +7,8 @@ import { DatesRangeInput } from "semantic-ui-calendar-react";
 class InvoiceForm extends React.Component {
 	state = {
 		data: {
-			kantor: '',
-			datesRange: ''
+			datesRange: '',
+			nopend: this.props.nopend
 		},
 		errors: {},
 		loading: false,
@@ -34,7 +34,6 @@ class InvoiceForm extends React.Component {
 
 	validate = (data) => {
 		const errors = {};
-		if (!data.kantor) errors.kantor = "Kantor belum dipilih";
 		if (!data.datesRange) errors.datesRange = "Periode harap di isi";
 		return errors;
 	}
@@ -43,7 +42,6 @@ class InvoiceForm extends React.Component {
 
 	render(){
 		const { data, errors, loading } = this.state;
-		const { datakantor } = this.props;
 
 		return(
 			<Form loading={loading} onSubmit={this.onSubmit}>
@@ -68,23 +66,6 @@ class InvoiceForm extends React.Component {
 				        />
 				        { errors.datesRange && <InlineError text={errors.datesRange} /> }
 					</Form.Field>
-					<Form.Field>
-						<label>Kantor</label>
-						<Dropdown 
-							selection
-							placeholder="Pilih kantor"
-							options={
-		        				datakantor.map(data => ({
-		        					key: data.kantorid,
-		        					value: data.kantorid,
-		        					text: data.namakantor
-		        				})
-		        			)}
-		        			onChange={this.onChange} 
-		        			error={!!errors.kantor}
-						/>
-						{ errors.kantor && <InlineError text={errors.kantor} /> }
-					</Form.Field>
 				</Form.Group>
 				<Button secondary fluid>Cetak</Button>
 			</Form>
@@ -93,7 +74,6 @@ class InvoiceForm extends React.Component {
 }
 
 InvoiceForm.propTypes = {
-	datakantor: PropTypes.array.isRequired,
 	submit: PropTypes.func.isRequired,
 	remove: PropTypes.func.isRequired
 }

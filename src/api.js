@@ -91,7 +91,7 @@ export default {
 	invoice: {
 		cetak: (data) => 
 			axios.post(`${process.env.REACT_APP_API}/invoice/cetak`, {
-				kantor: data.kantor,
+				nopend: data.nopend,
 				periode: data.datesRange
 			}),
 		download: (noinvoice) =>

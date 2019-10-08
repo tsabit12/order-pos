@@ -4,20 +4,12 @@ import PropTypes from "prop-types";
 import { Link } from "react-router-dom";
 import InvoiceForm from "../forms/InvoiceForm";
 import { connect } from "react-redux";
-import { getKantor } from "../../actions/order";
-import { setProgressBar } from "../../actions/progress";
 import api from "../../api";
 
 class InvoicePage extends React.Component {
 	state = {
 		success: false,
 		noinvoice: ''
-	}
-
-	componentDidMount(){
-		const { nopend } = this.props;
-		this.props.setProgressBar(true);
-		this.props.getKantor(nopend).then(() => this.props.setProgressBar(false));
 	}
 	
 	onSubmit = (data) => api.invoice.cetak(data).then(res => {
@@ -45,22 +37,25 @@ class InvoicePage extends React.Component {
 					    <p>Hasil pdf tidak muncul? Klik <Link to="/invoice" onClick={() => this.cetak(this.state.noinvoice)}>disini</Link> untuk cetak ulang</p>
 					  </div>
 					</div> }
-				<InvoiceForm datakantor={this.props.listkantor} submit={this.onSubmit} remove={this.handleSuccess} />
+				<InvoiceForm 
+					datakantor={this.props.listkantor} 
+					submit={this.onSubmit} 
+					remove={this.handleSuccess} 
+					nopend={this.props.nopend}
+				/>
 			</Navbar>
 		);
 	}
 }
 
 InvoicePage.propTypes = {
-	listkantor: PropTypes.array.isRequired,
 	nopend: PropTypes.string.isRequired
 }
 
 function mapStateProps(state) {
 	return {
-		listkantor: state.order.kantor,
 		nopend: state.user.nopend
 	}
 }
 
-export default connect(mapStateProps, { getKantor, setProgressBar } )(InvoicePage);
+export default connect(mapStateProps,  null)(InvoicePage);

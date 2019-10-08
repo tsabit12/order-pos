@@ -106,7 +106,7 @@ class ListInvoicePage extends React.Component {
 				        <Table.HeaderCell>Uraian</Table.HeaderCell>
 				        <Table.HeaderCell>Kuantiti</Table.HeaderCell>
 				        <Table.HeaderCell>Bsu</Table.HeaderCell>
-				        <Table.HeaderCell>Cetak</Table.HeaderCell>
+				        <Table.HeaderCell style={{ textAlign: 'center'}}>ACTION</Table.HeaderCell>
 				      </Table.Row>
 				    </Table.Header>
 				   	<Table.Body>
