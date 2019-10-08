@@ -12,16 +12,16 @@ class DeskripsiKiriman extends React.Component {
 			weight: this.props.dataDeskripsi.weight,
 			valuegoods: this.props.dataDeskripsi.valuegoods,
 			diameter: this.props.dataDeskripsi.diameter,
-			height: this.props.dataDeskripsi.height,
-			length: this.props.dataDeskripsi.length,
-			width: this.props.dataDeskripsi.width
+			height: this.props.dataDeskripsi.height ? this.props.dataDeskripsi.height : 0,
+			length: this.props.dataDeskripsi.length ? this.props.dataDeskripsi.length : 0,
+			width: this.props.dataDeskripsi.width ? this.props.dataDeskripsi.width : 0,
+			disabled: this.props.dataDeskripsi.disabled ? this.props.dataDeskripsi.disabled : false,
 		},
 		options: [
 			{ key: '0', value: '0', text: 'Surat' },
   			{ key: '1', value: '1', text: 'Paket' },
 		],
-		errors: {},
-		disabled: false
+		errors: {}
 	}
 
 	onChange = (e) => this.setState({data: {...this.state.data, [e.target.name] : e.target.value }})
@@ -43,18 +43,19 @@ class DeskripsiKiriman extends React.Component {
 		if (!data.itemtypeid) errors.itemtypeid = "Jenis kiriman belum dipilih";
 		if (!data.weight) errors.weight = "Berat harap di isi";
 		if (!data.valuegoods) errors.valuegoods = "Nilai barang harap di isi";
-		if (!data.width) errors.width = "Lebar harap di isi";
-		if (!data.height) errors.height = "Tinggi harap di isi";
-		if (!data.length) errors.length = "Lebar harap di isi";
+		if (!data.width && data.itemtypeid === '1') errors.width = "Kiriman paket, lebar tidak boleh kosong"; //only validate when jenis is paket
+		if (!data.length && data.itemtypeid === '1') errors.length = "Kiriman paket, panjang tidak boleh kosong";
+		if (!data.height && data.itemtypeid === '1') errors.height = "Kiriman paket, tinggi tidak boleh kosong";
+
 		return errors;
 	}
 
 	handleChangeBerat = (e) => {
 		const value = e.target.value;
 		if (value >= 3000) {
-			this.setState({ data: { ...this.state.data, itemtypeid: '1', weight: value }, disabled: true }); //set to paket
+			this.setState({ data: { ...this.state.data, itemtypeid: '1', weight: value, disabled: true } }); //set to paket
 		}else{
-			this.setState({ data: { ...this.state.data, itemtypeid: '', weight: value }, disabled: false });
+			this.setState({ data: { ...this.state.data, itemtypeid: '', weight: value, disabled: false } });
 		}
 	}
 
@@ -65,7 +66,7 @@ class DeskripsiKiriman extends React.Component {
 				<Form onSubmit={this.onSubmit}>
 					<Form.Field error={!!errors.contendesc}>
 						<Form.Input 
-							label='Deskripsi Kiriman'
+							label='Deskripsi Kiriman *'
 							name='contendesc'
 							id='contendesc'
 							type='text'
@@ -78,9 +79,9 @@ class DeskripsiKiriman extends React.Component {
 					</Form.Field>
 					<Form.Group widths="equal">
 						<Form.Field error={!!errors.weight}>
-							<label>Berat</label>
+							<label>Berat *</label>
 							<Input 
-								label={{ basic: true, content: 'cm' }}
+								label={{ basic: true, content: 'gram' }}
 								labelPosition='right'
 								name='weight'
 								id='weight'
@@ -92,19 +93,9 @@ class DeskripsiKiriman extends React.Component {
 							/>
 							{ errors.weight && <InlineError text={errors.weight} /> }
 						</Form.Field>
-						<Form.Field error={!!errors.itemtypeid}>
-							<label>Jenis Kiriman</label>
-							<Select 
-								disabled={this.state.disabled}
-								placeholder='Pilih jenis kiriman' 
-								value={data.itemtypeid}
-								onChange={this.handleChange}
-								options={options} />
-							{ errors.itemtypeid && <InlineError text={errors.itemtypeid} /> }	
-						</Form.Field>
 						<Form.Field error={!!errors.valuegoods}>
 							<Form.Input 
-								label='Nilai barang'
+								label='Nilai barang *'
 								name='valuegoods'
 								id='valuegoods'
 								type='number'
@@ -114,6 +105,16 @@ class DeskripsiKiriman extends React.Component {
 								onChange={this.onChange}
 							/>
 							{ errors.valuegoods && <InlineError text={errors.valuegoods} /> }
+						</Form.Field>
+						<Form.Field error={!!errors.itemtypeid}>
+							<label>Jenis Kiriman *</label>
+							<Select 
+								disabled={data.disabled}
+								placeholder='Pilih jenis kiriman' 
+								value={data.itemtypeid}
+								onChange={this.handleChange}
+								options={options} />
+							{ errors.itemtypeid && <InlineError text={errors.itemtypeid} /> }	
 						</Form.Field>
 					</Form.Group>
 					<Form.Group widths="equal">
@@ -130,7 +131,7 @@ class DeskripsiKiriman extends React.Component {
 								onChange={this.onChange}
 								placeholder="Panjang barang kiriman..."
 							/>
-							{ errors.length && <InlineError text={errors.length} /> }
+							{ errors.length && <InlineError text={errors.length} /> }	
 						</Form.Field>
 						<Form.Field error={!!errors.width}>
 							<label>Lebar</label>
@@ -145,7 +146,7 @@ class DeskripsiKiriman extends React.Component {
 								onChange={this.onChange}
 								placeholder="Lebar barang kiriman..."
 							/>
-							{ errors.width && <InlineError text={errors.width} /> }
+							{ errors.width && <InlineError text={errors.width} /> }	
 						</Form.Field>
 						<Form.Field error={!!errors.height}>
 							<label>Tinggi</label>
@@ -160,7 +161,7 @@ class DeskripsiKiriman extends React.Component {
 								onChange={this.onChange}
 								placeholder="Tinggi barang kiriman..."
 							/>
-							{ errors.height && <InlineError text={errors.height} /> }
+							{ errors.height && <InlineError text={errors.height} /> }	
 						</Form.Field>
 					</Form.Group>
 				</Form>
