@@ -6,7 +6,7 @@ import { Card, Button, Grid } from "semantic-ui-react";
 
 const UserDashboard = ({ listlimit }) => {
 	const empty = (
-		<p>List kosong</p>
+		<React.Fragment />
 	);	
 
 	const list = (
