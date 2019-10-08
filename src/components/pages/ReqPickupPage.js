@@ -6,7 +6,7 @@ import ListReqPickup from "../list/ListReqPickup";
 import { connect } from "react-redux";
 import { fetchPickup, pickup } from "../../actions/handover";
 import { setProgressBar } from "../../actions/progress";
-import { Header, Icon, Divider, Dimmer, Loader, Message, Modal, Button, Form, Dropdown, Checkbox } from "semantic-ui-react";
+import { Dimmer, Loader, Message, Modal, Button, Form, Dropdown, Checkbox } from "semantic-ui-react";
 
 class ReqPickupPage extends React.Component{
 	state = {
@@ -65,7 +65,8 @@ class ReqPickupPage extends React.Component{
 			const { defaultoptions }  = this.state;
 			const datatosend = {
 				data: this.state.data,
-				kantorMitra: this.state.nopendMitra
+				kantorMitra: this.state.nopendMitra,
+				kantorDefault: this.props.nopendMitra //always default by session
 			};
 
 			if (defaultoptions) {
@@ -248,10 +249,6 @@ class ReqPickupPage extends React.Component{
 		            />
 		          </Modal.Actions>
 		        </Modal>
-		        <Header as='h2'>
-				    <Icon name='envelope' />
-				    <Header.Content>Request Pickup</Header.Content>
-				</Header>
 
 		        { success && <Message positive>
 					<Message.Header>Sukses!</Message.Header>
@@ -262,8 +259,6 @@ class ReqPickupPage extends React.Component{
 					<Message.Header>Maaf!</Message.Header>
 					<p>{errors.global}</p>
 				</Message> }
-
-				<Divider/>
 				<Dimmer active={this.state.loading} inverted>
 			        <Loader inverted size='medium'>Loading</Loader>
 			    </Dimmer>
