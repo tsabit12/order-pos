@@ -13,6 +13,9 @@ class FeeForm extends React.Component {
 		valuegoods: this.props.dataDeskripsi.valuegoods,
 		itemtypeid: this.props.dataDeskripsi.itemtypeid,
 		weight: this.props.dataDeskripsi.weight,
+		height: this.props.dataDeskripsi.height,
+		length: this.props.dataDeskripsi.length,
+		width: this.props.dataDeskripsi.width,
 		loading: true,
 		success: false,
 		fee: [],
@@ -39,7 +42,10 @@ class FeeForm extends React.Component {
 			  receiverzipcode: this.state.receiverzipcode,
 			  weight: this.state.weight,
 			  valuegoods: this.state.valuegoods,
-			  itemtypeid: this.state.itemtypeid
+			  itemtypeid: this.state.itemtypeid,
+			  width: this.state.width,
+			  height: this.state.height,
+			  length: this.state.length
 		})
 		.then(res => res.data.result)
 		.then(result => {

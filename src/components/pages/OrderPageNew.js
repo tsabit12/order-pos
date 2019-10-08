@@ -102,42 +102,40 @@ class OrderPageNew extends React.Component {
 		
 		return(
 			<Navbar>
-				<Message
-				    header='Halaman Order'
-				    content='Silahkan lengkapi tahap-tahap dibawah ini untuk melakukan order'
-				/>
-				<StepOrder step={step} />
-				{ step === 1 && <CariPoForm submitPO={this.onClickPO} errors={ errors.po } loading={loading} nomorPo={data.nomorPo}/> }
-				{ step === 2 && <SenderForm submitSender={this.submitSender} onClickBack={this.onClickBack} dataSender={data.sender}/> }
-				{ step === 3 && <ReceiverForm 
-					onClickBack={this.onClickBack} 
-					submitReceiver={this.submitReceiver} 
-					dataReceiver={data.receiver}
-					dataOptions={this.state.dataOptions}
-				/> }
-				{ step === 4 && <DeskripsiKiriman 
-					dataDeskripsi={data.deskripsi} 
-					onClickBack={this.onClickBack} 
-					submitDesc={this.submitDesc}
-				/> }
-				{ step === 5 && <FeeForm 
-					onClickBack={this.onClickBack} 
-					dataReceiver={data.receiver} 
-					dataSender={data.sender} 
-					dataDeskripsi={data.deskripsi}
-					onClickFee={this.submitFee} 
-					openModal={this.state.open}
-					loading={loading}
-					errors={errors.fee}
-				/> }
-				{ step === 6 && <React.Fragment>
-					<Message
-				    	icon='check'
-				    	header='Proses order sukses'
-				    	content={'Order berhasil, berikut adalah nomor order anda ' +this.state.idorder+'. Klik tombol dibawah untuk melakukan order dengan PO yang sama'}
-					/>
-					<Button color='red' fluid onClick={this.backFromFinish}>Tambah</Button>
-				</React.Fragment> }
+				<div style={{marginTop: '10px'}}>
+					<StepOrder step={step} />
+					{ step === 1 && <CariPoForm submitPO={this.onClickPO} errors={ errors.po } loading={loading} nomorPo={data.nomorPo}/> }
+					{ step === 2 && <SenderForm submitSender={this.submitSender} onClickBack={this.onClickBack} dataSender={data.sender}/> }
+					{ step === 3 && <ReceiverForm 
+						onClickBack={this.onClickBack} 
+						submitReceiver={this.submitReceiver} 
+						dataReceiver={data.receiver}
+						dataOptions={this.state.dataOptions}
+					/> }
+					{ step === 4 && <DeskripsiKiriman 
+						dataDeskripsi={data.deskripsi} 
+						onClickBack={this.onClickBack} 
+						submitDesc={this.submitDesc}
+					/> }
+					{ step === 5 && <FeeForm 
+						onClickBack={this.onClickBack} 
+						dataReceiver={data.receiver} 
+						dataSender={data.sender} 
+						dataDeskripsi={data.deskripsi}
+						onClickFee={this.submitFee} 
+						openModal={this.state.open}
+						loading={loading}
+						errors={errors.fee}
+					/> }
+					{ step === 6 && <React.Fragment>
+						<Message
+					    	icon='check'
+					    	header='Proses order sukses'
+					    	content={'Order berhasil, berikut adalah nomor order anda ' +this.state.idorder+'. Klik tombol dibawah untuk melakukan order dengan PO yang sama'}
+						/>
+						<Button color='red' fluid onClick={this.backFromFinish}>Tambah</Button>
+					</React.Fragment> }
+				</div>
 			</Navbar>
 		);
 	}

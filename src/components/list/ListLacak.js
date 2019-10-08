@@ -38,6 +38,7 @@ const ListLacak = ({ listdata }) => (
 						{ data.eventName === 'SELESAI ANTAR' && <p>Selesai antar di {firstCapital(data.officeName.toLowerCase())} </p> }
 						{ data.eventName === 'PROSES ANTAR' && <p>Proses antar di {firstCapital(data.officeName.toLowerCase())} </p>}
 						{ data.eventName === 'MANIFEST SERAH' && <p>Diteruskan ke {getKantorTujuan(data.description)} </p> }
+						{ data.eventName === 'MANIFEST TERIMA' && <p>Diterima di {getKantorTujuan(data.description)} </p> }
 					</div>
 				</div>
 			</li>) }
