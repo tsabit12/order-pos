@@ -23,6 +23,7 @@ const ListData = ({ listdata, detailOrder }) => {
 		{ listdata.map(list => <Table.Row key={list.id_po}>
 				<Table.Cell>{no++}</Table.Cell>
 				<Table.Cell>{list.id_po}</Table.Cell>
+				<Table.Cell>{list.keterangan}</Table.Cell>
 				<Table.Cell>{list.tgl_awal}</Table.Cell>
 				<Table.Cell>{list.tgl_akhir}</Table.Cell>
 				<Table.Cell style={{textAlign: 'right'}}>{list.jml_topup}</Table.Cell>
@@ -43,6 +44,7 @@ const ListData = ({ listdata, detailOrder }) => {
 			      <Table.Row>
 			        <Table.HeaderCell>No</Table.HeaderCell>
 			        <Table.HeaderCell>Nomor Po</Table.HeaderCell>
+			        <Table.HeaderCell>Deskripsi</Table.HeaderCell>
 			        <Table.HeaderCell>Mulai</Table.HeaderCell>
 			        <Table.HeaderCell>Sampai</Table.HeaderCell>
 			        <Table.HeaderCell style={{textAlign: 'right'}}>Jumlah Topup</Table.HeaderCell>

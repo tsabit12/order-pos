@@ -1,7 +1,6 @@
 import React from "react";
 import PropTypes from "prop-types";
 import Navbar from "../menu/Navbar";
-import { Header, Icon, Divider } from "semantic-ui-react";
 import ListData from "../po/ListData";
 import { connect } from "react-redux";
 import { fetchListpo } from "../../actions/purchase";
@@ -25,11 +24,6 @@ class PageListPo extends React.Component {
 	render(){
 		return(
 			<Navbar>
-		    	<Header as='h2'>
-				    <Icon name='book' />
-				    <Header.Content>List purchase order</Header.Content>
-				</Header>
-				<Divider clearing />
 				<ListData detailOrder={this.getDetailOrder} />
 			</Navbar>
 		);
