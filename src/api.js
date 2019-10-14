@@ -104,6 +104,10 @@ export default {
 		laporan: (values) => 
 			axios.post(`${process.env.REACT_APP_API}/invoice/laporan`, {
 				tanggal: values.tanggal
+			}).then(res => res.data.result),
+		detail: (id) => 
+			axios.post(`${process.env.REACT_APP_API}/invoice/laporanDetail`, {
+				noinvoice: id
 			}).then(res => res.data.result)
 	},
 	kurir: {

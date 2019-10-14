@@ -25,6 +25,7 @@ import UserPage from "./components/pages/UserPage";
 import PetugasPickupPage from "./components/pages/PetugasPickupPage";
 import DetailPo from "./components/po/DetailPo";
 import AddUserPage from "./components/pages/AddUserPage";
+import DetailInvoicePage from "./components/pages/DetailInvoicePage";
 import PageNotFound from "./components/pages/PageNotFound";
 
 const App = ({ location }) =>
@@ -50,6 +51,7 @@ const App = ({ location }) =>
     <UserRoute location={location} path="/user" exact component={UserPage} />
     <UserRoute location={location} path="/user/add" exact component={AddUserPage} />
     <UserRoute location={location} path="/pickup/petugas" exact component={PetugasPickupPage} />
+    <UserRoute location={location} path="/detail_invoice/:noinvoice" exact component={DetailInvoicePage} />
     <UserRoute location={location} path="*" exact component={PageNotFound} />
   </Switch>;  
 
