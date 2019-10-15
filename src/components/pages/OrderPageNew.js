@@ -90,7 +90,20 @@ class OrderPageNew extends React.Component {
 	}
 
 	backFromFinish = () => {
-		this.setState({ step: 2, data: { ...this.state.data, receiver:{} }});
+		this.setState({ step: 2, 
+			data: { 
+				...this.state.data, 
+					receiver:{},
+					deskripsi: {}
+			},
+			dataOptions: {
+				...this.state.dataOptions,
+					options: [],
+					optionsKab: [],
+					optionsKec: [],
+					optionPostal: []
+			}
+		});
 	}
 
 	submitDesc = (step, data) => {
