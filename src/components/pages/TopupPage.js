@@ -1,10 +1,14 @@
 import React from "react";
 import PropTypes from "prop-types";
 import { connect } from "react-redux";
-import { Message, Form, Button, Grid } from "semantic-ui-react";
+import { Message, Form, Button, Grid, Icon } from "semantic-ui-react";
 import Navbar from "../menu/Navbar";
 import { getPoByid, addTopup } from "../../actions/purchase";
 import { setProgressBar } from "../../actions/progress";
+import { Link } from "react-router-dom";
+import ReCAPTCHA from "react-google-recaptcha";
+
+const recaptchaRef = React.createRef();
 
 class TopupPage extends React.Component{
 	state = {
@@ -19,7 +23,9 @@ class TopupPage extends React.Component{
 		},
 		changed: false,
 		jmlAwal: '',
-		loading: false
+		loading: false,
+		added: false,
+		captcha: false
 
 	}
 
@@ -73,10 +79,16 @@ class TopupPage extends React.Component{
 		const errors = this.validate(this.state.data);
 		this.setState({ errors });
 		if (Object.keys(errors).length === 0) {
-			this.setState({ loading: true });
-			this.props.addTopup(this.state.data)
-				.then(() => this.props.history.push("/dashboard"))
-				.catch(err => this.setState({ errors: err.response.data.errors, loading: false }))
+			if (!this.state.captcha) {
+				alert("Mohon konfirmasi bahwa anda bukan robot");
+			}else{
+				this.setState({ loading: true });
+				this.props.addTopup(this.state.data)
+					.then(() => {
+						this.setState({ added: true, loading: false });
+					})
+					.catch(err => this.setState({ errors: err.response.data.errors, loading: false, added: false }))
+			}
 		}
 	}
 
@@ -86,14 +98,16 @@ class TopupPage extends React.Component{
 		return errors;
 	}
 
+	handleChange = () => this.setState({ captcha: true });
+
 	render(){
 		const { id } = this.props.match.params;
-		const { errors, success, items, data, changed, loading } = this.state;
+		const { errors, success, items, data, changed, loading, added } = this.state;
 		return(
 			<Navbar>
 				<br/>
 				<Grid>
-					{ errors.global && <Grid.Column mobile={16} tablet={16} computer={10} style={{margin: "auto"}}>
+					{ errors.global && <Grid.Column width={16}>
 						<Message
 							negative
 					    	icon='times'
@@ -101,6 +115,16 @@ class TopupPage extends React.Component{
 					    	content={errors.global}
 					  	/>
 					</Grid.Column> }
+
+					{ added && <Grid.Column width={16}>
+						<Message icon positive>
+							<Icon name='check' />
+							<Message.Content>
+								<Message.Header>Sukses</Message.Header>
+								Topup berhasil, saldo akan bertambah setelah ada konfirmasi dari PT POS INDONESIA. klik <Link to="/dashboard">disini</Link> untuk kembali ke halaman dashboard
+							</Message.Content>
+						</Message>
+					</Grid.Column>}
 
 					{ success && <React.Fragment>
 						<Grid.Column mobile={16} tablet={16} computer={12}>
@@ -127,7 +151,14 @@ class TopupPage extends React.Component{
 						          autoComplete="off"
 						          error={errors.jumlah}
 						        />
-						      <Button color='blue'>Submit</Button>
+
+						        <ReCAPTCHA
+						        	style={{paddingBottom: '12px'}}
+							    	sitekey={process.env.REACT_APP_SITEKEY}
+							    	ref={recaptchaRef}
+							    	onChange={this.handleChange}
+							 	/>
+						      <Button fluid color='blue'>Submit</Button>
 						    </Form>
 					    </Grid.Column>
 					    <Grid.Column mobile={16} tablet={16} computer={4}>
