@@ -1,8 +1,11 @@
 import React from "react";
+import PropTypes from "prop-types";
 import { Responsive, Container, Segment } from "semantic-ui-react";
 import NavbarDekstop from "./NavbarDekstop";
 import NavbarMobile from "./NavbarMobile";
 import Footer from "./Footer";
+import { connect } from "react-redux";
+import { getTopup } from "../../actions/notifikasi";
 
 const NavbarChildren = ({ children }) => (
 	<Container style={{paddingBottom: "3em", paddingTop: "1em" }}>{children}</Container>
@@ -11,6 +14,10 @@ const NavbarChildren = ({ children }) => (
 class Navbar extends React.Component {
 	state = { 
 		visible: false
+	}
+
+	componentDidMount(){
+		this.props.getTopup();
 	}
 
 	componentWillUpdate(nextProps, nextState) {
@@ -65,4 +72,8 @@ class Navbar extends React.Component {
 	}
 }
 
-export default Navbar;
+Navbar.propTypes = {
+	getTopup: PropTypes.func.isRequired
+}
+
+export default connect(null, { getTopup })(Navbar);

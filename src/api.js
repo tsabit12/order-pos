@@ -125,5 +125,17 @@ export default {
 				kprk: data.kprk,
 				nohp: data.nohp
 			}).then(res => res.data.result)
+	},
+	notifikasi: {
+		get_jumlah: () => 
+			axios.post(`${process.env.REACT_APP_API}/notifikasi/getJumlahTopup`).then(res => res.data.jumlah),
+		get_data_topup: () =>
+			axios.post(`${process.env.REACT_APP_API}/notifikasi/getDataToup`).then(res => res.data.result),
+		confirm_topup: (data, id) =>
+			axios.post(`${process.env.REACT_APP_API}/notifikasi/confirmTopup`, {
+				idpo: data.idpo,
+				nomor: data.nomor,
+				userid: id
+			}).then(res => res.data.result)
 	}
 }
