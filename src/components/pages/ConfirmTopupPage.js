@@ -5,6 +5,7 @@ import { connect } from "react-redux";
 import { getDataTopup, submitTopup } from "../../actions/notifikasi"; 
 import { setProgressBar } from "../../actions/progress";
 import { Grid, Card, Button, Message, Divider, Modal, Dimmer, Loader } from "semantic-ui-react";
+import PageNotFound from "./PageNotFound";
 
 class ConfirmTopupPage extends React.Component {
 	state = {
@@ -52,76 +53,77 @@ class ConfirmTopupPage extends React.Component {
 	}
 
 	render(){
-		const { listdata } = this.props;
+		const { listdata, level } = this.props;
 		const { success, loading, open, data, error } = this.state;
 
 		return(
-			<Navbar>
-				<Modal size="mini" open={open}>
-		          <Modal.Header>Apakah anda yakin?</Modal.Header>
-		          <Dimmer active={this.state.loadingModal} inverted>
-			        <Loader inverted>Loading</Loader>
-			      </Dimmer>
-		          <Modal.Content>
-		            <p>Saldo PO akan ditambah sebesar <strong>Rp {this.numberWithCommas(data.bsu)}</strong></p>
-		          </Modal.Content>
-		          <Modal.Actions>
-		            <Button negative onClick={this.closeModal}>Batal</Button>
-		            <Button
-		              positive
-		              icon='checkmark'
-		              labelPosition='right'
-		              content='Ya'
-		              onClick={this.submit}
-		            />
-		          </Modal.Actions>
-		        </Modal>
-				{ success && !loading && <React.Fragment>
-						{ error.global && <Message
-							negative
-					    	icon='times'
-					    	header='Oppps!'
-					    	content='Terdapat kesalahan... saat ini sedang kami perbaiki, mohon cobalagi beberapa saat lagi'
-					  	/> }
-						<Grid>
-						{ listdata.map((data, i) => <Grid.Column mobile={16} tablet={8} computer={5} key={i}>
-							<Card fluid>
-								<Card.Content> 
-									<Card.Header>{data.id_po}</Card.Header>
-									<Divider />
-									<Card.Description>
-										<table>
-											<tbody>
-												<tr>
-													<td width='100'>Email</td><td>: {data.email}</td>
-												</tr>
-												<tr>
-													<td>Besar Uang</td><td>: {this.numberWithCommas(data.bsu)}</td>
-												</tr>
-												<tr>
-													<td>Tanggal</td><td>: {data.tanggal_topup}</td>
-												</tr>
-												<tr>
-													<td>Jam</td><td>: {data.waktu}</td>
-												</tr>
-											</tbody>
-										</table>
-									</Card.Description>
-								</Card.Content>
-								<Button primary fluid onClick={() => this.handleClick(data.id_po, data.nomor_urut, data.bsu) }>Konfirmasi</Button>
-							</Card>
-						</Grid.Column> )}
-					</Grid>
-				</React.Fragment> }
+			<React.Fragment>
+				{ level === '04' ?  <Navbar>
+					<Modal size="mini" open={open}>
+			          <Modal.Header>Apakah anda yakin?</Modal.Header>
+			          <Dimmer active={this.state.loadingModal} inverted>
+				        <Loader inverted>Loading</Loader>
+				      </Dimmer>
+			          <Modal.Content>
+			            <p>Saldo PO akan ditambah sebesar <strong>Rp {this.numberWithCommas(data.bsu)}</strong></p>
+			          </Modal.Content>
+			          <Modal.Actions>
+			            <Button negative onClick={this.closeModal}>Batal</Button>
+			            <Button
+			              positive
+			              icon='checkmark'
+			              labelPosition='right'
+			              content='Ya'
+			              onClick={this.submit}
+			            />
+			          </Modal.Actions>
+			        </Modal>
+					{ success && !loading && <React.Fragment>
+							{ error.global && <Message
+								negative
+						    	icon='times'
+						    	header='Oppps!'
+						    	content='Terdapat kesalahan... saat ini sedang kami perbaiki, mohon cobalagi beberapa saat lagi'
+						  	/> }
+							<Grid>
+							{ listdata.map((data, i) => <Grid.Column mobile={16} tablet={8} computer={5} key={i}>
+								<Card fluid>
+									<Card.Content> 
+										<Card.Header>{data.id_po}</Card.Header>
+										<Divider />
+										<Card.Description>
+											<table>
+												<tbody>
+													<tr>
+														<td width='100'>Email</td><td>: {data.email}</td>
+													</tr>
+													<tr>
+														<td>Besar Uang</td><td>: {this.numberWithCommas(data.bsu)}</td>
+													</tr>
+													<tr>
+														<td>Tanggal</td><td>: {data.tanggal_topup}</td>
+													</tr>
+													<tr>
+														<td>Jam</td><td>: {data.waktu}</td>
+													</tr>
+												</tbody>
+											</table>
+										</Card.Description>
+									</Card.Content>
+									<Button primary fluid onClick={() => this.handleClick(data.id_po, data.nomor_urut, data.bsu) }>Konfirmasi</Button>
+								</Card>
+							</Grid.Column> )}
+						</Grid>
+					</React.Fragment> }
 
-				{ !success && !loading && <Message
-					negative
-			    	icon='times'
-			    	header='Oppps!'
-			    	content='Terdapat kesalahan... saat ini sedang kami perbaiki, mohon cobalagi beberapa saat lagi'
-			  	/> }
-
-			</Navbar>
+					{ !success && !loading && <Message
+						negative
+				    	icon='times'
+				    	header='Oppps!'
+				    	content='Terdapat kesalahan... saat ini sedang kami perbaiki, mohon cobalagi beberapa saat lagi'
+				  	/> }
+				</Navbar> : <PageNotFound />}
+			</React.Fragment>
 		);
 	}
 }
@@ -130,13 +132,15 @@ ConfirmTopupPage.propTypes = {
 	getDataTopup: PropTypes.func.isRequired,
 	setProgressBar: PropTypes.func.isRequired,
 	submitTopup: PropTypes.func.isRequired,
-	userid: PropTypes.string.isRequired
+	userid: PropTypes.string.isRequired,
+	level: PropTypes.string.isRequired
 }
 
 function mapStateToProps(state){
 	return{
 		listdata: state.notifikasi.topup.data,
-		userid: state.user.userid
+		userid: state.user.userid,
+		level: state.user.level
 	}
 }
 

@@ -16,7 +16,7 @@ const NavbarDekstop = ({ isAuthenticated, logout, user, notif, topup, show, remo
 
 	const trigger = (
 	  <span>
-	  	{ notif && show && <Label circular color='red' empty /> }
+	  	{ notif && show && user.level === '04' && <Label circular color='red' empty /> }
 	    <Icon name='user' /> {user.nama}
 	  </span>
 	);
@@ -37,13 +37,14 @@ const NavbarDekstop = ({ isAuthenticated, logout, user, notif, topup, show, remo
 				{ isAuthenticated && <Menu.Item>
 					<Dropdown trigger={trigger} onClick={() => removeNotif() }>
 						<Dropdown.Menu>
-							<Dropdown.Item disabled>Login sebagai <strong>{user.username}</strong></Dropdown.Item>
+							<Dropdown.Item disabled><strong>{user.username}</strong></Dropdown.Item>
 							<Dropdown.Divider />
-							<Dropdown.Item as={NavLink} to="/notifikasi/topup" >
-								Topup &nbsp;
-								{ notif && <Label color='red' circular size='mini'>{topup.total}</Label> }
-							</Dropdown.Item>
-							
+							{ user.level === '04' && <React.Fragment>
+								<Dropdown.Item as={NavLink} to="/notifikasi/topup" >
+									Topup &nbsp;
+									{ notif && <Label color='red' circular size='mini'>{topup.total}</Label> }
+								</Dropdown.Item>
+							</React.Fragment> }							
 						
 							<Dropdown.Item>Ganti Password</Dropdown.Item>
 							<Dropdown.Item onClick={() => logout() }>Sign Out</Dropdown.Item>
