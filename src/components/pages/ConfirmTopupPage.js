@@ -120,7 +120,7 @@ class ConfirmTopupPage extends React.Component {
 						negative
 				    	icon='times'
 				    	header='Oppps!'
-				    	content='Terdapat kesalahan... saat ini sedang kami perbaiki, mohon cobalagi beberapa saat lagi'
+				    	content='Data request pickup kosong'
 				  	/> }
 				</Navbar> : <PageNotFound />}
 			</React.Fragment>
