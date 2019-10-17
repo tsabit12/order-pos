@@ -1,4 +1,4 @@
-import { USER_LOGGED_IN, USER_LOGGED_OUT } from "../types";
+import { USER_LOGGED_IN, USER_LOGGED_OUT, CONFIRM_ACCOUNT } from "../types";
 import api from "../api";
 
 export const userLoggedOut = () => ({
@@ -8,6 +8,10 @@ export const userLoggedOut = () => ({
 export const userLoggedIn = (user) => ({
 	type: USER_LOGGED_IN,
 	user
+})
+
+export const confirmed = () => ({
+	type: CONFIRM_ACCOUNT
 })
 
 export const login = credentials => dispatch =>
@@ -26,3 +30,11 @@ export const signup = (data) => dispatch =>
 		localStorage.sampoernaToken = user.token;
 		dispatch(userLoggedIn(user));
 	});
+
+export const confirmation = (payload) => dispatch =>
+	api.user.confirmation(payload)
+		.then(token => {
+			//replace token token
+			localStorage.sampoernaToken = token;
+			dispatch(confirmed())
+		});

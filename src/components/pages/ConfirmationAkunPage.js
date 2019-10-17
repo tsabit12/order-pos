@@ -2,8 +2,9 @@ import React from "react";
 import PropTypes from "prop-types";
 import decode from "jwt-decode";
 import { Container, Message, Icon } from "semantic-ui-react";
-import api from "../../api";
 import { Link } from "react-router-dom";
+import { connect } from "react-redux";
+import { confirmation } from "../../actions/auth";
 
 class ConfirmationAkunPage extends React.Component{
 	state = {
@@ -14,13 +15,8 @@ class ConfirmationAkunPage extends React.Component{
 	componentDidMount(){
 		const { token } = this.props.match.params;
 		const payload = decode(token);
-		api.user.confirmation(payload) 
-			.then(res => {
-				//remove token
-				localStorage.removeItem('sampoernaToken');
-				localStorage.sampoernaToken = res;
-				this.setState({ loading: false, success: true });
-			})
+		this.props.confirmation(payload)
+			.then(() => this.setState({ loading: false, success: true }))
 			.catch(() => this.setState({ loading: false, success: false }));
 	}
 
@@ -64,9 +60,8 @@ ConfirmationAkunPage.propTypes = {
 		params: PropTypes.shape({
 			token: PropTypes.string.isRequired
 		}).isRequired
-	}).isRequired
+	}).isRequired,
+	confirmation: PropTypes.func.isRequired
 }
 
-
-
-export default ConfirmationAkunPage;
+export default connect(null, { confirmation })(ConfirmationAkunPage);
