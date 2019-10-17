@@ -2,12 +2,15 @@ import React from "react";
 import PropTypes from "prop-types";
 import { Form, Button, Message } from "semantic-ui-react";
 import { connect } from "react-redux";
+import ReCAPTCHA from "react-google-recaptcha";
+
+const recaptchaRef = React.createRef();
 
 class BsuTopup extends React.Component { 
 	state = {
 		item: [
-			'Saldo yang tersisa '+ this.props.detailPO.bsu,
-			'Total order pengiriman '+ this.props.detailPO.fee_akhir,
+			'Saldo yang tersisa '+ this.props.detailPO.bsu.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ","),
+			'Total order pengiriman '+ this.props.detailPO.fee_akhir.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ","),
 			'Persentase '+ Math.round(this.props.detailPO.persentase)+'%'
 		],
 		data: {
@@ -18,7 +21,8 @@ class BsuTopup extends React.Component {
 		},
 		changed: false,
 		errors: {},
-		loading: false
+		loading: false,
+		captcha: false
 	}
 
 	onChange = (e) => this.setState({ 
@@ -37,9 +41,13 @@ class BsuTopup extends React.Component {
 		const errors = this.validate(this.state.data.jumlah);
 		this.setState({ errors });
 		if (Object.keys(errors).length === 0) {
-			this.setState({ loading: true });
-			this.props.submit(this.state.data)
-				.catch(err => this.setState({ errors: err.response.data.errors, loading: false, changed: false }));
+			if (!this.state.captcha) {
+				alert("Mohon konfirmasi bahwa anda bukan robot");
+			}else{
+				this.setState({ loading: true });
+				this.props.submit(this.state.data)
+					.catch(err => this.setState({ errors: err.response.data.errors, loading: false, changed: false }));
+			}
 		}
 	}
 
@@ -49,13 +57,15 @@ class BsuTopup extends React.Component {
 		return errors;
 	}
 
+	handleChange = () => this.setState({ captcha: true });
+
 	render(){
 		const { data, changed, errors, loading } = this.state;
 		const { idpo } = this.props;
 
 		return(
 			<React.Fragment>
-				<Message header={'Info Purchase Order' + idpo} list={this.state.item} />
+				<Message header={'Info Purchase Order ' + idpo} list={this.state.item} />
 				<Form onSubmit={this.onSubmit} loading={loading}>
 					{ errors.global && <Message
 							negative
@@ -74,6 +84,14 @@ class BsuTopup extends React.Component {
 						autoComplete="off"
 						error={errors.jumlah}
 					/>
+
+					<ReCAPTCHA
+			        	style={{paddingBottom: '12px'}}
+				    	sitekey={process.env.REACT_APP_SITEKEY}
+				    	ref={recaptchaRef}
+				    	onChange={this.handleChange}
+				 	/>
+
 					<Button color='red' fluid>Topup</Button>
 					{ changed && <Message info>
 			    		<Message.Content>

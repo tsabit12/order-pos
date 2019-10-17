@@ -7,7 +7,8 @@ import InlineError from "../InlineError";
 class ChoosePo extends React.Component {
 	state = {
 		idpo: '',
-		errors: {}
+		errors: {},
+		loading: false
 	}
 
 	onChange = (e, {value}) => this.setState({ idpo: value })
@@ -16,11 +17,12 @@ class ChoosePo extends React.Component {
 		const errors = this.validate(this.state.idpo);
 		this.setState({ errors });
 		if (Object.keys(errors).length === 0) {
+			this.setState({ loading: true });
 			const data = {
 				id_po: this.state.idpo,
 				userid: this.props.userid
 			}
-			this.props.submit(data);
+			this.props.submit(data).then(() => this.setState({ loading: false }))
 		}
 	}
 
@@ -32,10 +34,10 @@ class ChoosePo extends React.Component {
 
 	render(){
 		const { listPo } = this.props;
-		const { errors } = this.state;
+		const { errors, loading } = this.state;
 
 		return(
-			<Form onSubmit={this.onSubmit}>
+			<Form onSubmit={this.onSubmit} loading={loading}>
 				<Form.Field error={!!errors.idpo}>
 					<label>Nomor Purchase Order</label>
 					<Select 
