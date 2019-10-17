@@ -4,7 +4,6 @@ import { Menu, Dropdown } from "semantic-ui-react";
 
 const User = () => (
 	<React.Fragment>
-		<Menu.Item as={NavLink} to="/dashboard" title="dashboard">Dashboard</Menu.Item>
 		<Menu.Item as={NavLink} to="/order" title="Add Posting">Order</Menu.Item>
 		<Dropdown item simple text='Laporan'>
 			<Dropdown.Menu>

@@ -15,8 +15,18 @@ export default {
 				username: data.username,
 				nopend: data.nopend,
 				password: data.password,
-				nama: data.nama
-			}).then(res => res.data.user)
+				nama: data.nama,
+				nohp: data.nohp
+			}).then(res => res.data.user),
+		sendEmail: (email) =>
+			axios.post(`${process.env.REACT_APP_API}/auth/sendEmail`, {
+				email: email
+			}),
+		confirmation: (payload) => 
+			axios.post(`${process.env.REACT_APP_API}/auth/confirmationAkun`,{
+				email: payload.email,
+				userid: payload.userid
+			}).then(res => res.data.response)
 	},
 	order: {
 		hand_over: (kantorid) =>

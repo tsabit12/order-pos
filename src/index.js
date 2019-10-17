@@ -29,7 +29,8 @@ if (localStorage.sampoernaToken) {
 			nama: payload.nama, 
 			userid: payload.userid, 
 			level: payload.level,
-			nopendPos: payload.nopend_pos
+			nopendPos: payload.nopendPos,
+			confirmed: payload.confirmed
 	};
 	store.dispatch(userLoggedIn(user));
 }

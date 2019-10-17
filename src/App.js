@@ -28,6 +28,7 @@ import AddUserPage from "./components/pages/AddUserPage";
 import DetailInvoicePage from "./components/pages/DetailInvoicePage";
 import PageNotFound from "./components/pages/PageNotFound";
 import ConfirmTopupPage from "./components/pages/ConfirmTopupPage";
+import ConfirmationAkunPage from "./components/pages/ConfirmationAkunPage";
 
 
 const App = ({ location }) =>
@@ -55,6 +56,7 @@ const App = ({ location }) =>
     <UserRoute location={location} path="/pickup/petugas" exact component={PetugasPickupPage} />
     <UserRoute location={location} path="/detail_invoice/:noinvoice" exact component={DetailInvoicePage} />
     <UserRoute location={location} path="/notifikasi/topup" exact component={ConfirmTopupPage} />
+    <UserRoute location={location} path="/confirmation/akun/:token" exact component={ConfirmationAkunPage} />
     <UserRoute location={location} path="*" exact component={PageNotFound} />
   </Switch>;  
 

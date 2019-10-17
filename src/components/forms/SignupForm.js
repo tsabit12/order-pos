@@ -14,7 +14,9 @@ class SignupForm extends React.Component {
 			nama: '',
 			username: '',
 			nopend: '',
-			password: ''
+			password: '',
+			nohp: '',
+			confPass: ''
 		},
 		loading: false,
 		errors: {}
@@ -48,7 +50,9 @@ class SignupForm extends React.Component {
 		if (!data.username) errors.username = "Email masih kosong, harap diisi";
 		if (!data.nopend) errors.nopend = "Kantor harap di pilih";
 		if (!data.password) errors.password = "Password tidak boleh kosong";
+		if (!data.nohp) errors.nohp = "Nomor handphone harap di isi";
 		if (!Validator.isEmail(data.username)) errors.username = "Email tidak valid";
+		if (data.password !== data.confPass) errors.confPass = "Password tidak sama";
 
 		return errors;
 	}
@@ -112,17 +116,45 @@ class SignupForm extends React.Component {
 			        	/>
 			        	{ errors.nopend && <InlineError text={errors.nopend} /> }
 			        </Form.Field>
+			        <Form.Group widths='equal'>
+				        <Form.Field>
+					        <Form.Input
+					          fluid
+					          type="password"
+					          name="password"
+					          id="password"
+					          label='Password'
+					          value={data.password}
+					          onChange={this.onChange}
+					          placeholder='Masukan password anda'
+					          error={errors.password}
+					        />
+				        </Form.Field>
+				        <Form.Field>
+					        <Form.Input
+					          fluid
+					          type="password"
+					          name="confPass"
+					          id="confPass"
+					          label='Konfirmasi Password'
+					          value={data.confPass}
+					          onChange={this.onChange}
+					          placeholder='Konfirmasi password'
+					          error={errors.confPass}
+					        />
+				        </Form.Field>
+			        </Form.Group>
 			        <Form.Field>
 				        <Form.Input
 				          fluid
-				          type="password"
-				          name="password"
-				          id="password"
-				          label='Password'
-				          value={data.password}
+				          type="text"
+				          name="nohp"
+				          id="nohp"
+				          label='Nomor Handphone'
+				          value={data.nohp}
 				          onChange={this.onChange}
-				          placeholder='Masukan password anda'
-				          error={errors.password}
+				          placeholder='Masukan Nomor Handphone'
+				          error={errors.nohp}
 				        />
 			        </Form.Field>
 			        <Button color='blue' type='submit'>Signup</Button>

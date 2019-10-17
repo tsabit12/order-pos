@@ -38,16 +38,18 @@ const NavbarMobile = ({ children, onPusherClick, onToggle, visible, logout, user
 							<Dropdown trigger={trigger}>
 								<Dropdown.Menu>
 									<Dropdown.Item disabled><strong>{user.username}</strong></Dropdown.Item>
-									{ user.level === '04' && <React.Fragment>
-										<Dropdown.Item as={NavLink} to="/notifikasi/topup" >
-											Topup &nbsp;
-											{ notif && <Label color='red' circular size='mini'>{topup.total}</Label> }
-										</Dropdown.Item>
+									{ user.confirmed && <React.Fragment>
+										{ user.level === '04' && <React.Fragment>
+											<Dropdown.Item as={NavLink} to="/notifikasi/topup" >
+												Topup &nbsp;
+												{ notif && <Label color='red' circular size='mini'>{topup.total}</Label> }
+											</Dropdown.Item>
+										</React.Fragment> }
+
+										<Dropdown.Item>Ganti Password</Dropdown.Item>
 									</React.Fragment> }
 
-									<Dropdown.Item>Ganti Password</Dropdown.Item>
 									<Dropdown.Item onClick={() => logout() }>Sign Out</Dropdown.Item>
-
 								</Dropdown.Menu>
 							</Dropdown>
 						</Menu.Item>
@@ -72,10 +74,11 @@ const NavbarMobile = ({ children, onPusherClick, onToggle, visible, logout, user
 							inverted
 							vertical
 							visible={visible}>
-							{ user.level === '01' && <Kurir /> }
-							{ user.level === '02' && <User /> } 
-							{ user.level === '03' && <Admin /> } 
-							{ user.level === '04' && <Ae /> } 
+							<Menu.Item style={{textAlign: 'left'}} as={NavLink} to="/dashboard">Dashboard</Menu.Item>
+							{ user.level === '01' && user.confirmed && <Kurir /> }
+							{ user.level === '02' && user.confirmed && <User /> } 
+							{ user.level === '03' && user.confirmed && <Admin /> } 
+							{ user.level === '04' && user.confirmed && <Ae /> } 
 						</Sidebar>
 					</Sticky>
 					<Sidebar.Pusher
