@@ -71,7 +71,9 @@ export default {
 	},
 	dashboard: {
 		get_polimit: () =>
-			axios.post(`${process.env.REACT_APP_API}/dashboard/limitPo`).then(res => res.data.result)
+			axios.post(`${process.env.REACT_APP_API}/dashboard/limitPo`).then(res => res.data.result),
+		get_countuser: () =>
+			axios.post(`${process.env.REACT_APP_API}/dashboard/getCountUser`).then(res => res.data.result)
 	},
 	po: {
 		get_pobyid: (data) => 
