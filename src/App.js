@@ -29,6 +29,7 @@ import DetailInvoicePage from "./components/pages/DetailInvoicePage";
 import PageNotFound from "./components/pages/PageNotFound";
 import ConfirmTopupPage from "./components/pages/ConfirmTopupPage";
 import ConfirmationAkunPage from "./components/pages/ConfirmationAkunPage";
+import ChangePasswordPage from "./components/pages/ChangePasswordPage";
 
 
 const App = ({ location }) =>
@@ -57,6 +58,7 @@ const App = ({ location }) =>
     <UserRoute location={location} path="/detail_invoice/:noinvoice" exact component={DetailInvoicePage} />
     <UserRoute location={location} path="/notifikasi/topup" exact component={ConfirmTopupPage} />
     <UserRoute location={location} path="/confirmation/akun/:token" exact component={ConfirmationAkunPage} />
+    <UserRoute location={location} path="/changepassword" exact component={ChangePasswordPage} />
     <UserRoute location={location} path="*" exact component={PageNotFound} />
   </Switch>;  
 

@@ -26,7 +26,12 @@ export default {
 			axios.post(`${process.env.REACT_APP_API}/auth/confirmationAkun`,{
 				email: payload.email,
 				userid: payload.userid
-			}).then(res => res.data.response)
+			}).then(res => res.data.response),
+		ganti_password:(data) =>
+			axios.post(`${process.env.REACT_APP_API}/auth/changePassword`, {
+				userid: data.userid,
+				password: data.password
+			})
 	},
 	order: {
 		hand_over: (kantorid) =>
