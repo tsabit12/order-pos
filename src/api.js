@@ -125,7 +125,12 @@ export default {
 		detail: (id) => 
 			axios.post(`${process.env.REACT_APP_API}/invoice/laporanDetail`, {
 				noinvoice: id
-			}).then(res => res.data.result)
+			}).then(res => res.data.result),
+		downloadDetail: (id) =>
+			axios.get(`${process.env.REACT_APP_API}/invoice/downloadDetail`, { 
+				params: { noinvoice: id },
+				responseType: 'arraybuffer'
+			})
 	},
 	kurir: {
 		get_kurir: (data) =>

@@ -77,6 +77,17 @@ class ListInvoicePage extends React.Component {
 		})
 	}	
 
+	downloadDetail = (noinvoice) => {
+		this.props.setProgressBar(true);
+		api.invoice.downloadDetail(noinvoice).then(res => {
+			console.log(res);
+			this.props.setProgressBar(false);
+			let blob = new Blob([res.data], { type: 'application/pdf' }),
+		  	url = window.URL.createObjectURL(blob)
+		  	window.open(url) 
+		})
+	}
+
 	render(){
 		const { errors } = this.state;
 		const { dataInvoice } = this.props;
@@ -112,7 +123,11 @@ class ListInvoicePage extends React.Component {
 				   	<Table.Body>
 				   		{ dataInvoice.length === 0 ? <Table.Row>
 					      	<Table.Cell colSpan='6'>Data tidak ditemukan</Table.Cell>
-					    </Table.Row> : <ListInvoice listdata={dataInvoice} cetak={this.cetak} /> }
+					    </Table.Row> : <ListInvoice 
+					    	listdata={dataInvoice} 
+					    	cetak={this.cetak} 
+					    	downloadDetail={this.downloadDetail}
+					    /> }
 				   	</Table.Body>
 				</Table>
 			</Navbar>
