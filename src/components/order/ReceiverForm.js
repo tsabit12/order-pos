@@ -274,7 +274,7 @@ class ReceiverForm extends React.Component{
 						<Form.Field>
 					      	<Form.Input
 					          label='Nomor Handphone'
-					          placeholder='Masukan nomor handphone penerima'
+					          placeholder="Masukan nomor handphone (08XX XXXX XXXX)"
 					          type='text'
 					          id="receiverPhone"
 					          name="receiverPhone"

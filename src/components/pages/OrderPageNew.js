@@ -21,8 +21,12 @@ class OrderPageNew extends React.Component {
 		loading: false,
 		data: {
 			nomorPo: '',
-			sender: {},
-			receiver: {},
+			sender: {
+				senderPhone: ''
+			},
+			receiver: {
+				receiverPhone: ''
+			},
 			deskripsi: {}
 		},
 		open: false,

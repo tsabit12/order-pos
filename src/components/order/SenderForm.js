@@ -49,8 +49,9 @@ class SenderForm extends React.Component {
 		if (!data.senderPos) errors.senderPos = "Kodepos tidak boleh kosong";
 		if (!data.senderPhone) errors.senderPhone = "Nomor handphone harap di isi";
 		if (!data.senderMail) errors.senderMail = "Email harap di isi";
+		
 		if (data.senderPhone !== ''){
-			if(!data.senderPhone.match(regex) || data.senderPhone.length < 12) errors.senderPhone = "Nomor handphone tidak valid";
+			if (!data.senderPhone.match(regex) || data.senderPhone.length < 10 || data.senderPhone.length > 13) errors.senderPhone = "Nomor handphone tidak valid";	
 		}
 		
 		return errors;
@@ -167,7 +168,7 @@ class SenderForm extends React.Component {
 								name="senderPhone"
 								id="senderPhone"
 								type="text"
-								placeholder="Masukan nomor handphone"
+								placeholder="Masukan nomor handphone (08XX XXXX XXXX)"
 								label="Nomor Handphone"
 								value={data.senderPhone}
 								onChange={this.onChange}
