@@ -159,5 +159,12 @@ export default {
 				nomor: data.nomor,
 				userid: id
 			}).then(res => res.data.result)
+	},
+	laporan: {
+		get_order: (tanggal, id) => 
+			axios.post(`${process.env.REACT_APP_API}/laporan/getOrder`, {
+				tanggal: tanggal,
+				id: id
+			}).then(res => res.data.result)
 	}
 }

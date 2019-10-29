@@ -13,12 +13,6 @@ const User = () => (
               	as={NavLink}
               	to="/topup"
             />
-            <Menu.Item
-            	style={{textAlign:"left"}}
-              	name='Laporan'
-              	as={NavLink}
-              	to="/list_po"
-            />
           </Menu.Menu>
         </Menu.Item>
 
@@ -56,10 +50,16 @@ const User = () => (
 	        <Menu.Menu>
 	          	<Menu.Item
 	            	style={{textAlign:"left"}}
-	              	name='Pickup'
+	              	name='Order'
 	              	as={NavLink}
-	              	to="/laporan/pickup"
+	              	to="/list_order"
 	            />
+              <Menu.Item
+                style={{textAlign:"left"}}
+                name='Purchase Order'
+                as={NavLink}
+                to="/list_po"
+              />
 	        </Menu.Menu>
         </Menu.Item>
 	</React.Fragment>

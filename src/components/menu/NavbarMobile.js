@@ -46,7 +46,7 @@ const NavbarMobile = ({ children, onPusherClick, onToggle, visible, logout, user
 											</Dropdown.Item>
 										</React.Fragment> }
 
-										<Dropdown.Item>Ganti Password</Dropdown.Item>
+										<Dropdown.Item as={NavLink} to="/changepassword">Ganti Password</Dropdown.Item>
 									</React.Fragment> }
 
 									<Dropdown.Item onClick={() => logout() }>Sign Out</Dropdown.Item>

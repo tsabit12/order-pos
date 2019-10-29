@@ -20,7 +20,7 @@ class Navbar extends React.Component {
 		this.props.getTopup();
 	}
 
-	componentWillUpdate(nextProps, nextState) {
+	UNSAFE_componentWillUpdate(nextProps, nextState) {
 		if (nextState.visible === true) {
       		document.querySelector('.pusher').addEventListener('click', this.handleClick);
 		}

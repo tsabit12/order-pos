@@ -7,7 +7,7 @@ const User = () => (
 		<Menu.Item as={NavLink} to="/order" title="Add Posting">Order</Menu.Item>
 		<Dropdown item simple text='Laporan'>
 			<Dropdown.Menu>
-	          <Dropdown.Item as={NavLink} to="/laporan/pickup">Pickup</Dropdown.Item>
+	          <Dropdown.Item as={NavLink} to="/list_order">List Order</Dropdown.Item>
 	          <Dropdown.Item as={NavLink} to="/list_po">List Purchase Order</Dropdown.Item>
 	        </Dropdown.Menu>
 		</Dropdown>
