@@ -8,6 +8,8 @@ import ReceiverForm from "../order/ReceiverForm";
 import FeeForm from "../order/FeeForm";
 import { Message, Button } from "semantic-ui-react";
 import axios from "axios";
+import { connect } from "react-redux";
+import PropTypes from "prop-types";
 
 class OrderPageNew extends React.Component {
 	state = {
@@ -38,7 +40,14 @@ class OrderPageNew extends React.Component {
 	}
 
 	onClickBack = (step) => {
-		this.setState({ step: step-1 });
+		if (step === 4) {
+			this.setState({ step: step-1, 
+				data: { ...this.state.data, receiver: { ...this.state.data.receiver, receiverPos: '', receiverKec: '', receiverKab: '', receiverProv: '' }},
+				dataOptions: { options: [], optionsKab: [], optionsKec: [], optionPostal: [] }
+			});
+		}else{
+			this.setState({ step: step-1 });
+		}
 	}
 
 	onClickPO = (data) => {
@@ -82,7 +91,8 @@ class OrderPageNew extends React.Component {
 
 	submitFee = (datafee) => {
 		const { data } = this.state;
-		axios.post(`${process.env.REACT_APP_API}/orderPost`, { other: data, fee: datafee })
+		const { userid } = this.props;
+		axios.post(`${process.env.REACT_APP_API}/orderPost`, { other: data, fee: datafee, userid: userid })
 		.then(res => {
 			this.setState({ errors: {...this.state.errors, fee: {} }, loading: false, open: false, step: 6, idorder: res.data.orderId })
 		})
@@ -154,4 +164,14 @@ class OrderPageNew extends React.Component {
 	}
 }
 
-export default OrderPageNew;
+OrderPageNew.propTypes = {
+	userid: PropTypes.string.isRequired
+}
+
+function mapStateToProps(state) {
+	return{
+		userid: state.user.userid
+	}
+}
+
+export default connect(mapStateToProps, null)(OrderPageNew);

@@ -40,6 +40,7 @@ class SenderForm extends React.Component {
 
 	validate = (data) => {
 		const errors = {};
+		var regex	 =/^[0-9]+$/;
 		if (!data.senderName) errors.senderName = "Nama pengirim harus di isi";
 		if (!data.senderAddres) errors.senderAddres = "Alamat pengirim harus di isi";
 		if (!data.senderCity) errors.senderCity = "Kabupaten atau kota harus di isi";
@@ -48,7 +49,10 @@ class SenderForm extends React.Component {
 		if (!data.senderPos) errors.senderPos = "Kodepos tidak boleh kosong";
 		if (!data.senderPhone) errors.senderPhone = "Nomor handphone harap di isi";
 		if (!data.senderMail) errors.senderMail = "Email harap di isi";
-
+		if (data.senderPhone !== ''){
+			if(!data.senderPhone.match(regex) || data.senderPhone.length < 12) errors.senderPhone = "Nomor handphone tidak valid";
+		}
+		
 		return errors;
 	}
 

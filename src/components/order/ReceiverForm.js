@@ -164,7 +164,7 @@ class ReceiverForm extends React.Component{
 
 	validate = (data) => {
 		const errors = {};
-
+		var regex	 =/^[0-9]+$/;
 		if (!data.receiverName) errors.receiverName = "Nama penerima tidak boleh kosong";
 		if (!data.receiverProv) errors.receiverProv = "Provinsi harap di isi";
 		if (!data.receiverKab) errors.receiverKab = "Kabupaten harap di isi";
@@ -172,6 +172,10 @@ class ReceiverForm extends React.Component{
 		if (!data.receiverAddress) errors.receiverAddress = "Alamat tidak boleh kosong";
 		if (!data.receiverPos) errors.receiverPos = "Kodepos tidak boleh kosong";
 		if (!data.receiverPhone) errors.receiverPhone = "Nomor handphone tidak boleh kosong";
+
+		if (data.receiverPhone !== ''){
+			if(!data.receiverPhone.match(regex) || data.receiverPhone.length < 12) errors.receiverPhone = "Nomor handphone tidak valid";
+		}
 
 		return errors;
 	}
