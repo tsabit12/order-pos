@@ -7,7 +7,6 @@ import DashboardPage from "./components/pages/DashboardPage";
 import OrderPageNew from "./components/pages/OrderPageNew";
 import LacakPage from "./components/pages/LacakPage";
 import ReqPickupPage from "./components/pages/ReqPickupPage";
-import RealTransactionPage from "./components/pages/RealTransactionPage";
 import EntriPoPage from "./components/pages/EntriPoPage";
 import SignupPage from "./components/pages/SignupPage";
 import AssigmentPage from "./components/pages/AssigmentPage";
@@ -42,7 +41,6 @@ const App = ({ location }) =>
     <UserRoute location={location} path="/order" exact component={OrderPageNew} />
     <UserRoute location={location} path="/lacak" exact component={LacakPage} />
     <UserRoute location={location} path="/pickup" exact component={ReqPickupPage} />
-    <UserRoute location={location} path="/transaction" exact component={RealTransactionPage} />
     <UserRoute location={location} path="/po" exact component={EntriPoPage} />
     <UserRoute location={location} path="/assigment" exact component={AssigmentPage} />
     <UserRoute location={location} path="/handover" exact component={HandOverPage} />

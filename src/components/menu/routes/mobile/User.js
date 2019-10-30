@@ -37,12 +37,6 @@ const User = () => (
               	as={NavLink}
               	to="/lacak"
             />
-            <Menu.Item
-            	style={{textAlign:"left"}}
-              	name='Real Transaction'
-              	as={NavLink}
-              	to="/transaction"
-            />
           </Menu.Menu>
         </Menu.Item>
         <Menu.Item style={{textAlign:"left"}}>

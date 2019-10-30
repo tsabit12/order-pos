@@ -16,8 +16,6 @@ const User = () => (
 	          <Dropdown.Item as={NavLink} to="/topup">Topup</Dropdown.Item>
 	          <Dropdown.Item as={NavLink} to="/pickup">Request Pickup</Dropdown.Item>
 	          <Dropdown.Item as={NavLink} to="/lacak">Lacak Kiriman</Dropdown.Item>
-	          <Dropdown.Divider />
-	          <Dropdown.Item as={NavLink} to="/transaction">Get Real Transaction</Dropdown.Item>              
 	        </Dropdown.Menu>
 	    </Dropdown>
 	</React.Fragment>
