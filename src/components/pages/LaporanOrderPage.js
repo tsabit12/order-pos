@@ -5,12 +5,12 @@ import { getOrder } from "../../actions/laporan";
 import PropTypes from "prop-types";
 import { Grid, Button, Divider, Form, Message } from "semantic-ui-react";
 import { DateInput } from 'semantic-ui-calendar-react';
-import { setProgressBar } from "../../actions/progress";
 import ListOrder from "../list/ListOrder";
 
 class LaporanOrderPage extends React.Component{
 	state = {
 		show: false,
+		loading: false,
 		tanggal: '',
 		errors: {},
 		tanggalPost: '' //we need this cause child component must only show when submit
@@ -25,15 +25,12 @@ class LaporanOrderPage extends React.Component{
 		this.setState({ errors });
 
 		if (Object.keys(errors).length === 0) {
-			this.setState({ show: true });
-			this.props.setProgressBar(true);
+			this.setState({ show: true, loading: true });
 			this.props.getOrder(tanggal, userid)
 				.then(() => {
-					this.props.setProgressBar(false);
-					this.setState({ errors: {}, tanggalPost: tanggal });
+					this.setState({ errors: {}, tanggalPost: tanggal, loading: false });
 				}).catch(err => {
-					this.props.setProgressBar(false);
-					this.setState({ errors: err.response.data.errors });
+					this.setState({ errors: err.response.data.errors, loading: false });
 				})
 		}
 	}
@@ -49,7 +46,7 @@ class LaporanOrderPage extends React.Component{
 	}
 
 	render(){
-		const { errors, tanggalPost } = this.state;
+		const { errors, tanggalPost, loading } = this.state;
 		
 		return(
 			<Navbar>
@@ -72,7 +69,7 @@ class LaporanOrderPage extends React.Component{
 								    { errors.tanggal && <span style={{ color: "#ae5856", display: 'block', marginTop: '-12px'}}>{errors.tanggal}</span>}
 								</Form.Field>
 							</Form>
-							<Button color='teal' onClick={this.submit} style={{height: 'fit-content'}}>Cari</Button>
+							<Button color='teal' onClick={this.submit} style={{height: 'fit-content'}} loading={loading}>Cari</Button>
 						</div>
 					</Grid.Column>
 				</Grid>
@@ -98,4 +95,4 @@ function mapStateToProps(state) {
 	}
 }
 
-export default connect(mapStateToProps, { getOrder, setProgressBar })(LaporanOrderPage);
+export default connect(mapStateToProps, { getOrder })(LaporanOrderPage);
