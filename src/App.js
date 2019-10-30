@@ -3,8 +3,7 @@ import PropTypes from "prop-types";
 import { Switch } from "react-router-dom";
 import LoginPage from "./components/pages/LoginPage";
 import DashboardPage from "./components/pages/DashboardPage";
-// import OrderPage from "./components/pages/OrderPage";
-import OrderPageNew from "./components/pages/OrderPageNew";
+import OrderPage from "./components/pages/OrderPage";
 import LacakPage from "./components/pages/LacakPage";
 import ReqPickupPage from "./components/pages/ReqPickupPage";
 import EntriPoPage from "./components/pages/EntriPoPage";
@@ -38,7 +37,7 @@ const App = ({ location }) =>
     <GuestRoute location={location} path="/login" exact component={LoginPage} />
     <GuestRoute location={location} path="/signup" exact component={SignupPage} />
     <UserRoute location={location} path="/dashboard" exact component={DashboardPage} />
-    <UserRoute location={location} path="/order" exact component={OrderPageNew} />
+    <UserRoute location={location} path="/order" exact component={OrderPage} />
     <UserRoute location={location} path="/lacak" exact component={LacakPage} />
     <UserRoute location={location} path="/pickup" exact component={ReqPickupPage} />
     <UserRoute location={location} path="/po" exact component={EntriPoPage} />

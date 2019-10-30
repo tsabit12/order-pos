@@ -1,92 +1,174 @@
 import React from "react";
-import PropTypes from "prop-types";
-import { Segment, Header, Divider, Message, Form } from "semantic-ui-react";
 import Navbar from "../menu/Navbar";
-import OrderForm from "../forms/OrderForm";
+import StepOrder from "../order/StepOrder";
+import CariPoForm from "../order/CariPoForm";
+import SenderForm from "../order/SenderForm";
+import DeskripsiKiriman from "../order/DeskripsiKiriman";
+import ReceiverForm from "../order/ReceiverForm";
+import FeeForm from "../order/FeeForm";
+import { Message, Button } from "semantic-ui-react";
 import axios from "axios";
 import { connect } from "react-redux";
+import PropTypes from "prop-types";
 
 class OrderPage extends React.Component {
 	state = {
-		value: '',
-		username: this.props.username,
-		succes: false,
-		errors: {},
+		step: 1,
+		errors: {
+			po: {},
+			fee: {}
+		},
 		loading: false,
-		fee: [],
-		open: false
+		data: {
+			nomorPo: '',
+			sender: {
+				senderPhone: ''
+			},
+			receiver: {
+				receiverPhone: ''
+			},
+			deskripsi: {}
+		},
+		open: false,
+		idorder: '',
+		dataOptions: {
+			options: [],
+			optionsKab: [],
+			optionsKec: [],
+			optionPostal: []
+		}
 	}
 
-	handleClick = () => {
-		const value = this.state.value;
-		const { username } = this.state;
-		this.setState({ loading: true });
-		axios.post('/api_sampoerna/order/searchPO', { idpo: value, user: username })
-			.then(res => res.data.idpo)
-			.then(idpo => {
-				this.setState({ succes: true, loading: false, errors: {} })
-			})
-			.catch(err => this.setState({ succes: false, errors: err.response.data.errors, loading: false }))
+	onClick = (step) => {
+		this.setState({ step: step+1 });
 	}
 
-	handleInputChange = (e) => this.setState({ value: e.target.value })
+	onClickBack = (step) => {
+		this.setState({ step: step-1 });
+	}
 
-	submit = (data) => {
-		const value = this.state.value;
-		axios.post('/api_sampoerna/order/fee', {value, data})
-			.then(res => res.data.fee)
-			.then(fee => this.setState({ fee: fee, loading: false, errors: {}, open: true }))
-			.catch(err => {
-				this.setState({ errors: err.response.data.errors })
+	onClickPO = (data) => {
+		const { nomorPo, user } = data;
+		this.setState({ loading: true, data: { ...this.state.data, nomorPo: nomorPo } });
+		axios.post(`${process.env.REACT_APP_API}/order/searchPO`, { idpo: nomorPo, user: user })
+			.then(results => {
+				this.setState({ 
+					loading: false, 
+					step: 2, 
+					errors: {...this.state.errors, po: {} },
+					data: { ...this.state.data, sender: results.data }
+				});
+				window.scrollTo(0, 0);
 			})
+			.catch(err => this.setState({ 
+				errors: { ...this.state.errors, po: err.response.data.errors },
+				loading: false,
+				data: { ...this.state.data, sender: {} }
+			}))
+	}
+
+	submitSender = (data, step) => {
+		window.scrollTo(0, 0);
+		this.setState({ data: { ...this.state.data, sender: data }, loading: false, step: step+1 });
+	}
+
+	submitReceiver = (data, step, dataOptions) => {
+		window.scrollTo(0, 0);
+		this.setState({ 
+			step: step+1, 
+			dataOptions: {
+				...this.state.dataOptions, 
+				options: dataOptions.options, 
+				optionsKab: dataOptions.optionsKab, 
+				optionsKec: dataOptions.optionsKec,
+				optionPostal: dataOptions.optionPostal
+			}, 
+			data: { ...this.state.data, receiver: data } });
+	}
+
+	submitFee = (datafee) => {
+		const { data } = this.state;
+		const { userid } = this.props;
+		axios.post(`${process.env.REACT_APP_API}/orderPost`, { other: data, fee: datafee, userid: userid })
+		.then(res => {
+			this.setState({ errors: {...this.state.errors, fee: {} }, loading: false, open: false, step: 6, idorder: res.data.orderId })
+		})
+		.catch(err => this.setState({ errors: { ...this.state.errors, fee: err.response.data.errors, loading: false, open: true }}))
+	}
+
+	backFromFinish = () => {
+		this.setState({ step: 2, 
+			data: { 
+				...this.state.data, 
+					receiver:{},
+					deskripsi: {}
+			},
+			dataOptions: {
+				...this.state.dataOptions,
+					options: [],
+					optionsKab: [],
+					optionsKec: [],
+					optionPostal: []
+			}
+		});
+	}
+
+	submitDesc = (step, data) => {
+		this.setState({ step: step+1, data: {...this.state.data, deskripsi: data }});
 	}
 
 	render(){
-		const { succes, errors, loading, fee } = this.state;
+		const { step, errors, loading, data } = this.state;
+		
 		return(
 			<Navbar>
-			 <Segment.Group raised>
-			    <Segment>
-			    	<Header as='h3' floated="left">Halaman Order</Header>
-			    	<Header floated="right" as="h5">
-			    		<Form loading={loading}>
-				    		<Form.Field>
-					    		<Form.Input 
-					    			action={{
-							        	icon: 'search', 
-							        	color: 'red',
-							        	onClick: () => this.handleClick(),
-							    	}} 
-							    	defaultValue={this.state.value}
-		  							onChange={this.handleInputChange}
-		    						placeholder='Cari id purchase order...'
-		    					/>
-	    					</Form.Field>
-    					</Form>
-			    	</Header>
-			    	<Divider clearing />
-			    	
-			    	{ errors.global && <Message negative>
-						<Message.Header>Maaf!</Message.Header>
-						<p>{errors.global}</p>
-					</Message> }
-			    	{ succes && <OrderForm submit={this.submit} loading={loading} fee={fee} open={this.state.open} idpo={this.state.value} /> }
-			    	{ !succes && <p>Silahkan cari id purchase order pada kolom search di atas</p>}
-			    </Segment>
-			  </Segment.Group>
+				<div style={{marginTop: '10px'}}>
+					<StepOrder step={step} />
+					{ step === 1 && <CariPoForm submitPO={this.onClickPO} errors={ errors.po } loading={loading} nomorPo={data.nomorPo}/> }
+					{ step === 2 && <SenderForm submitSender={this.submitSender} onClickBack={this.onClickBack} dataSender={data.sender}/> }
+					{ step === 3 && <ReceiverForm 
+						onClickBack={this.onClickBack} 
+						submitReceiver={this.submitReceiver} 
+						dataReceiver={data.receiver}
+						dataOptions={this.state.dataOptions}
+					/> }
+					{ step === 4 && <DeskripsiKiriman 
+						dataDeskripsi={data.deskripsi} 
+						onClickBack={this.onClickBack} 
+						submitDesc={this.submitDesc}
+					/> }
+					{ step === 5 && <FeeForm 
+						onClickBack={this.onClickBack} 
+						dataReceiver={data.receiver} 
+						dataSender={data.sender} 
+						dataDeskripsi={data.deskripsi}
+						onClickFee={this.submitFee} 
+						openModal={this.state.open}
+						loading={loading}
+						errors={errors.fee}
+					/> }
+					{ step === 6 && <React.Fragment>
+						<Message
+					    	icon='check'
+					    	header='Proses order sukses'
+					    	content={'Order berhasil, berikut adalah nomor order anda ' +this.state.idorder+'. Klik tombol dibawah untuk melakukan order dengan PO yang sama'}
+						/>
+						<Button color='red' fluid onClick={this.backFromFinish}>Tambah</Button>
+					</React.Fragment> }
+				</div>
 			</Navbar>
 		);
 	}
 }
 
 OrderPage.propTypes = {
-	username: PropTypes.string.isRequired
+	userid: PropTypes.string.isRequired
 }
 
-function mapStateProps(state) {
-	return {
-		username: state.user.userid
+function mapStateToProps(state) {
+	return{
+		userid: state.user.userid
 	}
 }
 
-export default connect(mapStateProps, null)(OrderPage);
+export default connect(mapStateToProps, null)(OrderPage);

@@ -33,7 +33,18 @@ class ReceiverForm extends React.Component{
 
 	onSearchChange = (e, data) => 	{
 		clearTimeout(this.timer);
-		this.setState({ data: {...this.state.data, receiverProv: data.searchQuery} });
+		this.setState({ 
+			data: {
+				...this.state.data, 
+				receiverProv: data.searchQuery,
+				receiverKab: '',
+				receiverKec: '',
+				receiverPos: ''
+			},
+			optionsKab: [],
+			optionsKec: [],
+			optionPostal: []
+		});
 		this.timer = setTimeout(this.fetchProp, 500);
 	}
 
@@ -60,7 +71,18 @@ class ReceiverForm extends React.Component{
 
 	onChangeProv = (e, data) => {
 		const { key } = data.options.find(o => o.value === data.value);
-		this.setState({ data: {...this.state.data, receiverProv: data.value, receiverKab: ''}, provCode: key });
+		this.setState({ 
+			data: {
+				...this.state.data, receiverProv: data.value,
+				receiverKab: '',
+				receiverKec: '',
+				receiverPos: ''
+			}, 
+			provCode: key,
+			optionsKab: [],
+			optionsKec: [],
+			optionPostal: []
+		});
 	}
 
 	onSearchChangeKab = (e, data) => {
@@ -268,6 +290,7 @@ class ReceiverForm extends React.Component{
 								selection 
 								additionPosition='bottom'
 								value={data.receiverPos}
+								placeholder="Pilih kode pos"
 								onChange={this.handleChangePos}
 							/>
 						</Form.Field>
