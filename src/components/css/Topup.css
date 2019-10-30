@@ -1,0 +1,28 @@
+.button-del{
+	float: right;
+    margin-right: -29px;
+    border-radius: 0;
+    height: 38px;
+}
+
+[class*="pad-"] {
+  margin-right: 0;
+}
+
+@media only screen and (min-width: 990px) {
+	.pad-rigth-1 { margin-right: 0 }
+}
+
+/*768*/
+@media (min-width: 768px) and (max-width: 1024px) {
+	.pad-right-1 { margin-right: 58px }
+}
+
+
+@media (min-width: 1281px) {
+	.pad-right-1 { margin-right: 71px }  
+}
+
+@media (min-width: 1025px) and (max-width: 1280px) {
+	.pad-right-1 { margin-right: 61px }  
+}
