@@ -54,6 +54,14 @@ class BsuTopup extends React.Component {
 	validate = (jum) => {
 		const errors = {};
 		if (!jum) errors.jumlah = "Jumlah bsu topup tidak boleh kosong";
+		if (jum !== '') {
+			if (jum < 20000) {
+				errors.jumlah = "Minimum top up Rp 20.000";
+			}else if (jum > 10000000) {
+				errors.jumlah = "Maksimum top up Rp 10.000.000";
+			}
+		}
+
 		return errors;
 	}
 

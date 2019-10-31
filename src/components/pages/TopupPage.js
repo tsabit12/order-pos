@@ -95,6 +95,13 @@ class TopupPage extends React.Component{
 	validate = (data) => {
 		const errors = {};
 		if (!data.jumlah) errors.jumlah = "Harap isi jumlah bsu topup";
+		if (data.jumlah !== '') {
+			if (data.jumlah < 20000) {
+				errors.jumlah = "Minimum top up Rp 20.000";
+			}else if (data.jumlah > 10000000) {
+				errors.jumlah = "Maksimum top up Rp 10.000.000";
+			}
+		}
 		return errors;
 	}
 
