@@ -510,7 +510,7 @@ class OrderForm extends React.Component {
 	    				<Modal.Header>Pilih Layanan</Modal.Header>
 						<Modal.Content>
 							{ errors.global && <Message negative>
-								<Message.Header>Maaf!</Message.Header>
+								<Message.Header>Oppps!</Message.Header>
 								<p>{errors.global}</p>
 							</Message> }
 							<Dropdown 

@@ -46,7 +46,7 @@ class CariPoForm extends React.Component {
 			<React.Fragment>
 				<Form loading={loading} onSubmit={this.submit} >
 					{ errors.global && <Message negative>
-						<Message.Header>Maaf!</Message.Header>
+						<Message.Header>Oppps!</Message.Header>
 						<p>{errors.global}</p>
 					</Message> }
 					<Form.Field>

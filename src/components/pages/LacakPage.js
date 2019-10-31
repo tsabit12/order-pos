@@ -77,7 +77,7 @@ class LacakPage extends React.Component {
 				</Form>
 			    <Divider clearing />
 			    { errors.global && <Message negative>
-					<Message.Header>Maaf!</Message.Header>
+					<Message.Header>Oppps!</Message.Header>
 					<p>{errors.global}</p>
 				</Message> }
 				{ trace.length === 0 ? <p>Masukan kode barcode pada kolom pencarian di atas</p> :

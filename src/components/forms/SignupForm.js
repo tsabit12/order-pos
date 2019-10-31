@@ -79,7 +79,7 @@ class SignupForm extends React.Component {
 		return(
 			<React.Fragment>
 			{ errors.global && <Message negative>
-						<Message.Header>Maaf!</Message.Header>
+						<Message.Header>Oppps!</Message.Header>
 						<p>{errors.global}</p>
 					</Message> }
 				<Message

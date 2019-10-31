@@ -52,7 +52,7 @@ class ChangePasswordPage extends React.Component {
 				<Grid verticalAlign='middle' centered columns={1} style={{paddingTop: '40px'}}>
 				    <Grid.Column mobile={16} tablet={12} computer={8}>
 				    	{ errors.global && <Message negative>
-							<Message.Header>Maaf!</Message.Header>
+							<Message.Header>Oppps!</Message.Header>
 							<p>{errors.global}</p>
 						</Message> }
 						{ success && <Message positive>

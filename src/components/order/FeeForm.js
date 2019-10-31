@@ -91,7 +91,7 @@ class FeeForm extends React.Component {
 			      </Dimmer>
 		          <Modal.Content>
 		          	{ errors.global && <Message negative>
-						<Message.Header>Maaf!</Message.Header>
+						<Message.Header>Oppps!</Message.Header>
 						<p>{errors.global}</p>
 					</Message> }
 		            <p>Paket yang anda pilih adalah <strong>{this.state.datafee.serviceName}</strong> dengan total biaya = {this.state.datafee.totalFee}</p>
@@ -117,7 +117,7 @@ class FeeForm extends React.Component {
 				  </Message> }
 
 				{ !loading && !success && <Message negative>
-				    <Message.Header>Maaf Terdapat Kesalahan</Message.Header>
+				    <Message.Header>Oppps!</Message.Header>
 				    <p>Gagal memuat data tarif, klik <Link onClick={this.getFee}>disini</Link> untuk memuat ulang data</p>
 				  </Message> }
 

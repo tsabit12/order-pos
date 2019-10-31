@@ -61,7 +61,7 @@ class FormEntriPo extends React.Component {
 		return(
 			<Segment>
 				 { errors.global && <Message negative>
-					<Message.Header>Maaf!</Message.Header>
+					<Message.Header>Oppps!</Message.Header>
 					<p>{errors.global}</p>
 				</Message> }
 				<Form loading={loading} onSubmit={this.onSubmit}>

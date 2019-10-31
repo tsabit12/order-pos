@@ -61,7 +61,7 @@ class DashboardPage extends React.Component{
 		api.user.sendEmail(username)
 			.then(() => this.setState({ loading: false }))
 			.catch(() => {
-				alert("Maaf");
+				alert("Terdapat kesalahan");
 				this.setState({ loading: false });
 			})	
 	} 

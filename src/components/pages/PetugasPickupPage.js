@@ -67,7 +67,7 @@ class PetugasPickupPage extends React.Component {
 			      <Modal.Header>Tambah Petugas Pickup</Modal.Header>
 			      <Modal.Content>
 			      	{ errors.global && <Message negative>
-						<Message.Header>Maaf!</Message.Header>
+						<Message.Header>Oppps!</Message.Header>
 						<p>{errors.global}</p>
 					</Message> }
 			        <Form onSubmit={this.onSubmit} loading={loading}>

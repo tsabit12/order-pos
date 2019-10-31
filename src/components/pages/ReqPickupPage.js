@@ -271,7 +271,7 @@ class ReqPickupPage extends React.Component{
 				</Message> }
 
 			    { errors.global && <Message negative>
-					<Message.Header>Maaf!</Message.Header>
+					<Message.Header>Oppps!</Message.Header>
 					<p>{errors.global}</p>
 				</Message> }
 				<Dimmer active={this.state.loading} inverted>
