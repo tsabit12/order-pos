@@ -111,7 +111,7 @@ class SignupForm extends React.Component {
 				          autoComplete="off"
 				          value={data.username}
 				          onChange={this.onChange}
-				          placeholder='Masukan email'
+				          placeholder='Masukan email, contoh example@example.com'
 				          error={errors.username}
 				        />
 			        </Form.Field>
