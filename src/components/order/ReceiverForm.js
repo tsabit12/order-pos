@@ -29,7 +29,16 @@ class ReceiverForm extends React.Component{
 
 	}
 
-	onChange = (e) => this.setState({ data: { ...this.state.data, [e.target.name]: e.target.value }})
+	escapeRegExp = (string) => {
+		return string.replace(/[~`_/*+?^${}<>()'"|[\]\\]/g, '');
+	}
+
+	onChange = (e) => {
+		const str 	= e.target.value;
+		const value	= this.escapeRegExp(str);
+
+		this.setState({ data: { ...this.state.data, [e.target.name]: value }})
+	} 
 
 	onSearchChange = (e, data) => 	{
 		clearTimeout(this.timer);
@@ -150,7 +159,8 @@ class ReceiverForm extends React.Component{
 	onChangeKec = (e, data) => {
 		this.setState({ data: {...this.state.data, receiverKec: data.value }, optionPostal: [] });	
 		axios.post(`${process.env.REACT_APP_API}/Provinsi/getKodePos`, {
-			kecamatan: data.value
+			kecamatan: data.value,
+			kabupaten: this.state.kabCode
 		}).then(res => res.data.result)
 			.then(result => {
 				const optionPostal = [];

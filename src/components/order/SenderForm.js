@@ -19,7 +19,22 @@ class SenderForm extends React.Component {
 		checked: true
 	}
 
-	onChange = (e) => this.setState({ data: { ...this.state.data, [e.target.name]: e.target.value }})
+	escapeRegExp = (string, name) => {
+		if (name === 'senderMail') {
+			return string.replace(/[-~`/'"*+?^${}<>()|[\]\\]/g, '');
+		}else if(name === 'senderProv' || name === 'senderKec' || name === 'senderCity'){
+			return string.replace(/[-~`_/'"*+?^${}<>()|[\]\\0-9]/g, '');
+		}else{
+			return string.replace(/[~`_/'"*+?^${}<>()|[\]\\]/g, '');
+		}
+	}
+
+	onChange = (e) => {
+		const str 	= e.target.value;
+		const name 	= e.target.name;
+		const value	= this.escapeRegExp(str, name);
+		this.setState({ data: { ...this.state.data, [e.target.name]: value }})
+	} 
 
 	onSubmit = () => {
 		const errors = this.validate(this.state.data);
@@ -49,7 +64,6 @@ class SenderForm extends React.Component {
 		if (!data.senderPos) errors.senderPos = "Kodepos tidak boleh kosong";
 		if (!data.senderPhone) errors.senderPhone = "Nomor handphone harap di isi";
 		if (!data.senderMail) errors.senderMail = "Email harap di isi";
-		
 		if (data.senderPhone !== ''){
 			if (!data.senderPhone.match(regex) || data.senderPhone.length < 10 || data.senderPhone.length > 13) errors.senderPhone = "Nomor handphone tidak valid";	
 		}

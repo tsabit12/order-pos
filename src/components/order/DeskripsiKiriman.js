@@ -24,7 +24,20 @@ class DeskripsiKiriman extends React.Component {
 		errors: {}
 	}
 
-	onChange = (e) => this.setState({data: {...this.state.data, [e.target.name] : e.target.value }})
+	escapeRegExp = (string, name) => {
+		if (name === 'contendesc') {
+			return string.replace(/[~`/*+'"?^${}<>()|[\]\\]/g, '')
+		}else{
+			return string;
+		}
+	}
+
+	onChange = (e) => {
+		const str 	= e.target.value;
+		const name 	= e.target.name; 
+		const value = this.escapeRegExp(str, name);
+		this.setState({data: {...this.state.data, [e.target.name] : value }})		
+	} 
 
 	handleChange = (e, { value }) => this.setState({ data: { ...this.state.data, itemtypeid: value }})
 

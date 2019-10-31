@@ -28,9 +28,18 @@ class SignupForm extends React.Component {
 		this.props.getKantor(nopend);
 	}
 
-	onChange = e => this.setState({ 
-		data: { ...this.state.data, [e.target.name]: e.target.value }
-	})
+	escapeRegExp = (string) => {
+	  return string.replace(/[~`/*+'"?^${}<>()|[\]\\]/g, '')
+	}
+
+	onChange = e => {
+		const str 	= e.target.value;
+		const value = this.escapeRegExp(str); 
+
+		this.setState({ 
+			data: { ...this.state.data, [e.target.name]: value }
+		})
+	}
 
 	handleChange = (e, { value }) => this.setState({ data: {...this.state.data, nopend: value} })
 
@@ -99,6 +108,7 @@ class SignupForm extends React.Component {
 				          onChange={this.onChange}
 				          placeholder='Masukan nama lengkap'
 				          error={errors.nama}
+				          autoComplete="off"
 				        />
 			        </Form.Field>
 			    	<Form.Field>
@@ -131,34 +141,33 @@ class SignupForm extends React.Component {
 			        	/>
 			        	{ errors.nopend && <InlineError text={errors.nopend} /> }
 			        </Form.Field>
-			        <Form.Group widths='equal'>
-				        <Form.Field>
-					        <Form.Input
-					          fluid
-					          type="password"
-					          name="password"
-					          id="password"
-					          label='Password'
-					          value={data.password}
-					          onChange={this.onChange}
-					          placeholder='Masukan password anda'
-					          error={errors.password}
-					        />
-				        </Form.Field>
-				        <Form.Field>
-					        <Form.Input
-					          fluid
-					          type="password"
-					          name="confPass"
-					          id="confPass"
-					          label='Konfirmasi Password'
-					          value={data.confPass}
-					          onChange={this.onChange}
-					          placeholder='Konfirmasi password'
-					          error={errors.confPass}
-					        />
-				        </Form.Field>
-			        </Form.Group>
+			        <Form.Field>
+				        <Form.Input
+				          fluid
+				          type="password"
+				          name="password"
+				          id="password"
+				          label='Password'
+				          value={data.password}
+				          onChange={this.onChange}
+				          placeholder='Masukan password anda'
+				          error={errors.password}
+				        />
+				        <p style={{marginTop: '-10px', color: 'teal'}}>Gunakan 6 karakter atau lebih dengan gabungan hurup dan angka!</p>
+			        </Form.Field>
+			        <Form.Field>
+				        <Form.Input
+				          fluid
+				          type="password"
+				          name="confPass"
+				          id="confPass"
+				          label='Konfirmasi Password'
+				          value={data.confPass}
+				          onChange={this.onChange}
+				          placeholder='Konfirmasi password'
+				          error={errors.confPass}
+				        />
+			        </Form.Field>
 			        <Form.Field>
 				        <Form.Input
 				          fluid
@@ -168,7 +177,7 @@ class SignupForm extends React.Component {
 				          label='Nomor Handphone'
 				          value={data.nohp}
 				          onChange={this.onChange}
-				          placeholder='Masukan Nomor Handphone contoh 087766661111'
+				          placeholder='contoh 0877xxxxxxxx'
 				          error={errors.nohp}
 				          autoComplete="off"
 				        />

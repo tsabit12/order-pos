@@ -13,9 +13,17 @@ class LoginForm extends React.Component {
 		errors: {}
 	}
 
-	onChange = e => this.setState({ 
-		data: { ...this.state.data, [e.target.name]: e.target.value }
-	})
+	escapeRegExp = (string) => {
+	  return string.replace(/[~`/*'"+?^${}<>()|[\]\\]/g, '')
+	}
+
+	onChange = e => {
+		const str 	= e.target.value;
+		const value = this.escapeRegExp(str); 
+		this.setState({ 
+			data: { ...this.state.data, [e.target.name]: value }
+		})
+	} 
 
 	onSubmit = () => {
 		const errors = this.validate(this.state.data);
