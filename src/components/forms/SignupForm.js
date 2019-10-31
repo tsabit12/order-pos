@@ -5,7 +5,8 @@ import PropTypes from "prop-types";
 import { getKantor } from "../../actions/order";
 import InlineError from "../InlineError";
 import Validator from "validator";
-import { Link } from "react-router-dom"
+import { Link } from "react-router-dom";
+import passwordValidator from "password-validator";
 
 
 class SignupForm extends React.Component {
@@ -45,6 +46,8 @@ class SignupForm extends React.Component {
 
 	validate = (data) => {
 		const errors = {};
+		const schema = new passwordValidator();
+		var regex	 =/^[0-9]+$/;
 
 		if (!data.nama) errors.nama = "Harap isi nama lengkap anda";
 		if (!data.username) errors.username = "Email masih kosong, harap diisi";
@@ -53,6 +56,18 @@ class SignupForm extends React.Component {
 		if (!data.nohp) errors.nohp = "Nomor handphone harap di isi";
 		if (!Validator.isEmail(data.username)) errors.username = "Email tidak valid";
 		if (data.password !== data.confPass) errors.confPass = "Password tidak sama";
+
+		if (data.password !== '') {
+			if (!schema.is().min(6).validate(data.password)){
+				errors.password = "Password minimal 6 karakter";	
+			}else if(!schema.has().not().spaces().validate(data.password)){
+				errors.password = "Password tidak boleh memakai spasi";
+			}
+		}
+
+		if (data.nohp !== '') {
+			if(!data.nohp.match(regex) || data.nohp.length < 12) errors.nohp = "Nomor handphone tidak valid";
+		}
 
 		return errors;
 	}
@@ -153,8 +168,9 @@ class SignupForm extends React.Component {
 				          label='Nomor Handphone'
 				          value={data.nohp}
 				          onChange={this.onChange}
-				          placeholder='Masukan Nomor Handphone'
+				          placeholder='Masukan Nomor Handphone contoh 087766661111'
 				          error={errors.nohp}
+				          autoComplete="off"
 				        />
 			        </Form.Field>
 			        <Button color='blue' type='submit'>Signup</Button>
