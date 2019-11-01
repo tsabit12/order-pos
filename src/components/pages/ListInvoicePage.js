@@ -1,13 +1,13 @@
 import React from "react";
 import PropTypes from "prop-types";
 import Navbar from "../menu/Navbar";
-import { Icon, Form, Input, Table } from "semantic-ui-react";
+import { Form, Table, Button } from "semantic-ui-react";
 import { getInvoice, clearInvoice } from "../../actions/purchase";
 import { setProgressBar } from "../../actions/progress";
 import { connect } from "react-redux";
 import ListInvoice from "../list/ListInvoice";
-import InlineError from "../InlineError";
 import api from "../../api";
+import { DateInput } from "semantic-ui-calendar-react";
 
 const getCurdate = () => {
 	var today = new Date();
@@ -42,7 +42,7 @@ class ListInvoicePage extends React.Component {
 			});
 	}
 
-	onChange = (e) => this.setState({ tanggal: e.target.value })
+	onChange = (e, { value }) => this.setState({ tanggal: value })
 
 	onSubmit = () => {
 		const errors = this.validate(this.state.tanggal);
@@ -94,22 +94,28 @@ class ListInvoicePage extends React.Component {
 		return(
 			<Navbar>
 				<Form onSubmit={this.onSubmit}>
-					<Form.Field error={!!errors.tanggal}>
-						<Input 
-							label="Tanggal Cetak"
-						 	fluid 
-						 	name="tanggal"
-							id="tanggal"
-						 	icon={<Icon name='search' link onClick={this.onSubmit}/>}
-						 	placeholder='YYYY-MM-DD'
-						 	autoComplete="off" 
-						 	value={this.state.tanggal}
-							onChange={this.onChange}
-						/>
-						{ errors.tanggal && <InlineError text={errors.tanggal} />}
-					</Form.Field>
+					<div style={{display: 'flex'}}>
+						<Form.Field onSubmit={this.onSubmit} style={{width: '100%'}}>
+							<label>Tanggal Cetak</label>
+							<DateInput
+						      name="date"
+					          placeholder="Date"
+					          value={this.state.tanggal}
+					          iconPosition="left"
+					          onChange={this.onChange}
+					          closeOnMouseLeave={false}
+					          autoComplete="off"
+					          error={!!errors.tanggal}
+					          dateFormat="YYYY-MM-DD"
+					          closable={true}
+					          style={{width: '101%'}}
+					        />
+					        { errors.tanggal && <span style={{ color: "#ae5856", position: 'absolute', marginTop: '-13px'}}>{errors.tanggal}</span>}
+				        </Form.Field>
+				        <Button secondary style={{height: '38px', marginTop: '23px', borderRadius: '0', zIndex: '1'}}>Cari</Button>
+			        </div>
 				</Form>
-				<Table celled structured>
+				<Table celled structured style={{marginTop: '1px'}}>
 				    <Table.Header>
 				      <Table.Row>
 				        <Table.HeaderCell>Nomor Invoice</Table.HeaderCell>
