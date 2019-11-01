@@ -70,7 +70,7 @@ class LacakPage extends React.Component {
 					    	}} 
 					    	defaultValue={barcode}
 							onChange={this.handleInputChange}
-							placeholder='Masukan kode barcode...'
+							placeholder='Masukan nomor resi atau id order'
 						/>
 					{ errors.barcode && <InlineError text={errors.barcode} /> }
 					</Form.Field>
@@ -80,8 +80,7 @@ class LacakPage extends React.Component {
 					<Message.Header>Oppps!</Message.Header>
 					<p>{errors.global}</p>
 				</Message> }
-				{ trace.length === 0 ? <p>Masukan kode barcode pada kolom pencarian di atas</p> :
-					<ListLacak listdata={trace} /> }
+				{ trace.length > 0 && <ListLacak listdata={trace} /> }
 			</Navbar>
 		);
 	}
