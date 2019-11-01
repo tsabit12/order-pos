@@ -73,6 +73,10 @@ class EntriPoPage extends React.Component {
 				      </Grid.Column>
 					</Grid>
 					<Divider />
+					{ errors.global && <Message negative>
+						<Message.Header>Oppps!</Message.Header>
+						<p>{errors.global}</p>
+					</Message> }
 					{ success && <FormEntriPo email={data.userid} entriSuccess={this.selesai} />}
 					{ message && <Message
 					    icon='check'

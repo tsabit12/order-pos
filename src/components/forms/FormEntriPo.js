@@ -1,16 +1,16 @@
 import React from "react";
 import PropTypes from "prop-types";
 import { Form, Button, Segment, Message } from "semantic-ui-react";
-import { DateInput } from 'semantic-ui-calendar-react';
+import { DatesRangeInput } from 'semantic-ui-calendar-react';
 import { connect } from "react-redux";
 import { entriPo } from "../../actions/order";
+import Validator from "validator";
 
 class FormEntriPo extends React.Component {
 	state = {
 		data: {
 			desc: '',
-			tglStart: '',
-			tglDone: '',
+			datesRange: '',
 			money: '',
 			noPo: '',
 			username: this.props.email,
@@ -45,13 +45,15 @@ class FormEntriPo extends React.Component {
 	validate = (data) => {
 		const errors = {};
 		if (!data.desc) errors.desc = "Deskripsi harap di isi";
-		if (!data.tglStart) errors.tglStart = "Tanggal mulai harap di isi";
-		if (!data.tglDone) errors.tglDone = "Tanggal selesai harap di isi";
+		if (!data.datesRange) errors.tglStart = "Periode harap di isi";
 		if (!data.money) errors.money = "Jumlah uang harap di isi";
 		if (!data.noPo) errors.noPo = "Nomor PO tidak boleh kosong";
 		if (!data.email) errors.email = "Email harap di isi";
 		if (!data.vendorname) errors.vendorname = "Email harap di isi";
 		if (!data.pic) errors.pic = "Nama p.i.c harap di isi";
+		if (data.email !== '') {
+			if (!Validator.isEmail(data.email)) errors.email = "Email tidak valid";
+		}
 		
 		return errors;
 	}
@@ -128,33 +130,18 @@ class FormEntriPo extends React.Component {
 				    </Form.Field>
 				    <Form.Group widths='equal'>
 					    <Form.Field>
-					    	<label>Tanggal Mulai</label>
-						    <DateInput
-					          name="tglStart"
-					          id="tglStart"
-					          placeholder="Masukan tanggal selesai YYYY-MM-DD"
-					          value={data.tglStart}
+					    	<label>Periode</label>
+					    	<DatesRangeInput
+					          name="datesRange"
+					          placeholder="Mulai - sampai"
 					          iconPosition="left"
+					          closeOnMouseLeave={false}
+					          closable={true}
+					          value={data.datesRange}
 					          onChange={this.handleChange}
+					          dateFormat="YYYY/MM/DD"
 					          autoComplete="off"
-					          closable
-					          dateFormat="YYYY-MM-DD"
-					          error={!!errors.tglStart}
-					        />
-					    </Form.Field>
-					    <Form.Field>
-					    	<label>Tanggal Selesai</label>
-						    <DateInput
-					          name="tglDone"
-					          id="tglDone"
-					          placeholder="Masukan tanggal selesai YYYY-MM-DD"
-					          value={data.tglDone}
-					          iconPosition="left"
-					          onChange={this.handleChange}
-					          autoComplete="off"
-					          closable
-					          dateFormat="YYYY-MM-DD"
-					          error={!!errors.tglDone}
+					          error={!!errors.datesRange}
 					        />
 					    </Form.Field>
 					    <Form.Input 
