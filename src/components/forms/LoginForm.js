@@ -14,13 +14,18 @@ class LoginForm extends React.Component {
 		errors: {}
 	}
 
-	escapeRegExp = (string) => {
-	  return string.replace(/[~`/*'"+?^${}<>()|[\]\\]/g, '')
+	escapeRegExp = (string, name) => {
+		if (name === 'password') {
+			return string;
+		}else{
+			return string.replace(/[~`/*'"+?^${}<>()|[\]\\]/g, '');
+		}
 	}
 
 	onChange = e => {
 		const str 	= e.target.value;
-		const value = this.escapeRegExp(str); 
+		const name 	= e.target.name;
+		const value = this.escapeRegExp(str, name); 
 		this.setState({ 
 			data: { ...this.state.data, [e.target.name]: value }
 		})
