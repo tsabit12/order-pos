@@ -2,6 +2,7 @@ import React from "react";
 import PropTypes from "prop-types";
 import { Message, Form, Button } from "semantic-ui-react";
 import { Link } from "react-router-dom";
+import Validator from "validator";
 
 class LoginForm extends React.Component {
 	state = {
@@ -39,6 +40,9 @@ class LoginForm extends React.Component {
 		const errors = {};
 		if (!data.username) errors.username = "Username masih kosong";
 		if (!data.password) errors.password = "Password tidak boleh kosong";
+		if (data.username !== '') {
+			if (!Validator.isEmail(data.username)) errors.username = "Email tidak valid";
+		}
 
 		return errors;
 	}
@@ -64,10 +68,10 @@ class LoginForm extends React.Component {
 				          type="text"
 				          name="username"
 				          id="username"
-				          label='Username'
+				          label='Email'
 				          value={data.username}
 				          onChange={this.onChange}
-				          placeholder='Enter username'
+				          placeholder='Masukan email'
 				          error={errors.username}
 				        />
 			        </Form.Field>
