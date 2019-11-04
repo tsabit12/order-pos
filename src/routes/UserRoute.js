@@ -15,7 +15,7 @@ class UserRoute extends React.Component{
 		return(
 			<Route {...rest} 
 				render={props => isAuthenticated ? 
-				<Component {...props} /> : <Redirect to="/" /> } 
+				<Component {...props} /> : <Redirect to="/login" /> } 
 			/>
 		);
 	}

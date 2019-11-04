@@ -1,6 +1,6 @@
 import React from "react";
 import PropTypes from "prop-types";
-import { Message, Form, Button } from "semantic-ui-react";
+import { Message, Form, Button, Segment } from "semantic-ui-react";
 import { Link } from "react-router-dom";
 import Validator from "validator";
 
@@ -60,44 +60,40 @@ class LoginForm extends React.Component {
 						<Message.Header>Oppps!</Message.Header>
 						<p>{errors.global}</p>
 					</Message> }
-				<Message
-			      attached
-			      positive
-			      header='Halaman Login'
-			      content='Silahkan login terlebih dahulu'
-			    />
-			    <Form className='attached fluid segment' onSubmit={this.onSubmit} loading={loading}>
-			    	<Form.Field error={!!errors.username}>
-				        <Form.Input
-				          fluid
-				          type="text"
-				          name="username"
-				          id="username"
-				          label='Email'
-				          value={data.username}
-				          onChange={this.onChange}
-				          placeholder='Masukan email'
-				          error={errors.username}
-				        />
-			        </Form.Field>
-			        <Form.Field error={!!errors.password}>
-				        <Form.Input
-				          fluid
-				          type="password"
-				          name="password"
-				          id="password"
-				          label='Password'
-				          value={data.password}
-				          onChange={this.onChange}
-				          placeholder='Enter password'
-				          error={errors.password}
-				        />
-			        </Form.Field>
-			      <Button color='blue' type='submit'>Login</Button>
+			    <Form onSubmit={this.onSubmit} loading={loading} size='large'>
+			    	<Segment stacked>
+				    	<Form.Field error={!!errors.username}>
+					        <Form.Input
+					          fluid
+					          type="text"
+					          name="username"
+					          id="username"
+					          label='Email'
+					          value={data.username}
+					          onChange={this.onChange}
+					          placeholder='Masukan email'
+					          error={errors.username}
+					        />
+				        </Form.Field>
+				        <Form.Field error={!!errors.password}>
+					        <Form.Input
+					          fluid
+					          type="password"
+					          name="password"
+					          id="password"
+					          label='Password'
+					          value={data.password}
+					          onChange={this.onChange}
+					          placeholder='Enter password'
+					          error={errors.password}
+					        />
+				        </Form.Field>
+				      <Button fluid color='blue' type='submit'>Login</Button>
+			      	</Segment>
 		     	</Form>
-		     	<Message attached='bottom' warning>
-				      Belum memiliki akun? Registrasi&nbsp;<Link to="/signup">disini</Link>
-				</Message>
+		     	<Message>
+			        Belum memiliki akun? Registrasi&nbsp;<Link to="/signup">disini</Link>
+			    </Message>
 			</React.Fragment>
 		);
 	}

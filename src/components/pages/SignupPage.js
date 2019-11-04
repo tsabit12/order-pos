@@ -10,8 +10,8 @@ class SignupPage extends React.Component{
 
 	render(){
 		return(
-			<Grid verticalAlign='middle' stackable columns={1} centered style={{ height: '100vh', paddingTop: '40px' }}>
-			    <Grid.Column mobile={16} tablet={12} computer={6}>
+			<Grid centered style={{ height: '100vh' }} verticalAlign='middle'>
+				<Grid.Column style={{ maxWidth: 450 }}>
 			        <SignupForm submit={this.submit} /> 
 			    </Grid.Column>
 			</Grid>
