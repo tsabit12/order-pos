@@ -18,10 +18,10 @@ const MenuDashboard = ({ user }) => (
 			 	visible
 			    icon='user'
 			    header={'Selamat datang '+ user.nama }
-			    content='Get the best news in your e-mail every day.'
+			    content='Ini adalah halaman utama anda'
 			/>
 			{ user.level === '01' && <KurirDashboard /> }
-			{ user.level === '02' && <UserDashboard /> }
+			{ user.level === '02' && <UserDashboard userid={user.userid} /> }
 			{ user.level === '03' && <AdminDashboard />}
 		</Grid.Column>
 	</Grid>
