@@ -84,7 +84,7 @@ class ConfirmTopupPage extends React.Component {
 		return error;
 	}
 
-	handleDelete = () => this.setState({ list: this.props.listdata, buttonDel: false })
+	handleDelete = () => this.setState({ list: this.props.listdata, buttonDel: false, textSearch: '' })
 
 	render(){
 		const { level } = this.props;
@@ -176,7 +176,7 @@ class ConfirmTopupPage extends React.Component {
 										<Button primary fluid onClick={() => this.handleClick(data.id_po, data.nomor_urut, data.bsu) }>Konfirmasi</Button>
 									</Card>
 								</Grid.Column> )}
-							</React.Fragment> : <p>Kosong ya kamu</p> }
+							</React.Fragment> : <p>Data tidak ditemukan</p> }
 						</Grid>
 					
 
