@@ -28,7 +28,7 @@ const NavbarDekstop = ({ isAuthenticated, logout, user, notif, topup, show, remo
 			<Menu.Item>
 				<Image size="mini" floated="left" src={Logo} />
 			</Menu.Item>
-			<Menu.Item as={NavLink} to="/dashboard" title="dashboard">Dashboard</Menu.Item>
+			{ isAuthenticated && <Menu.Item as={NavLink} to="/dashboard" title="dashboard">Dashboard</Menu.Item> }
 			{ user.level === '02' && user.confirmed && <User/> }
 			{ user.level === '01' && user.confirmed && <Kurir /> } 
 			{ user.level === '03' && user.confirmed && <Admin /> }
