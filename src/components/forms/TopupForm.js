@@ -19,7 +19,7 @@ class TopupForm extends React.Component {
 		idpo: ''
 	}
 
-	componentWillMount(){
+	UNSAFE_componentWillMount(){
 		this.props.setProgressBar(true);
 		const data = {
 			level: this.props.user.level,

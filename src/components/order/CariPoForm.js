@@ -11,7 +11,7 @@ class CariPoForm extends React.Component {
 		errors: {}
 	}
 
-	componentWillReceiveProps(nextprops){
+	UNSAFE_componentWillReceiveProps(nextprops){
 		if (nextprops.errors) {
 			this.setState({ errors: nextprops.errors, loading: nextprops.loading });
 		}
