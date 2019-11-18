@@ -30,7 +30,13 @@ if (localStorage.sampoernaToken) {
 			userid: payload.userid, 
 			level: payload.level,
 			nopendPos: payload.nopendPos,
-			confirmed: payload.confirmed
+			confirmed: payload.confirmed,
+			nohp: payload.nohp,
+			city: payload.city,
+			address: payload.address,
+			address2: payload.address2,
+			postalCode: payload.postalCode,
+			provinsi: payload.provinsi
 	};
 	store.dispatch(userLoggedIn(user));
 }

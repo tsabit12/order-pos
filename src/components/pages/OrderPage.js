@@ -22,7 +22,14 @@ class OrderPage extends React.Component {
 		data: {
 			nomorPo: '',
 			sender: {
-				senderPhone: ''
+				senderName: this.props.auth.nama,
+				senderAddres: this.props.auth.address,
+				senderCity: this.props.auth.city,
+				senderKec: this.props.auth.address2,
+				senderPos: this.props.auth.postalCode,
+				senderMail: '',
+				senderProv: this.props.auth.provinsi,
+				senderPhone: this.props.auth.nohp 
 			},
 			receiver: {
 				receiverPhone: ''
@@ -56,14 +63,19 @@ class OrderPage extends React.Component {
 					loading: false, 
 					step: 2, 
 					errors: {...this.state.errors, po: {} },
-					data: { ...this.state.data, sender: results.data }
+					data: { 
+						...this.state.data,
+						sender: {
+							...this.state.data.sender,
+							senderMail: results.data.senderMail
+						}
+					}
 				});
 				window.scrollTo(0, 0);
 			})
 			.catch(err => this.setState({ 
 				errors: { ...this.state.errors, po: err.response.data.errors },
-				loading: false,
-				data: { ...this.state.data, sender: {} }
+				loading: false
 			}))
 	}
 
@@ -162,12 +174,14 @@ class OrderPage extends React.Component {
 }
 
 OrderPage.propTypes = {
-	userid: PropTypes.string.isRequired
+	userid: PropTypes.string.isRequired,
+	auth: PropTypes.object.isRequired
 }
 
 function mapStateToProps(state) {
 	return{
-		userid: state.user.userid
+		userid: state.user.userid,
+		auth: state.user
 	}
 }
 
