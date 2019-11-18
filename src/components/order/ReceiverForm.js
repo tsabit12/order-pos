@@ -206,7 +206,7 @@ class ReceiverForm extends React.Component{
 		if (!data.receiverPhone) errors.receiverPhone = "Nomor handphone tidak boleh kosong";
 
 		if (data.receiverPhone !== ''){
-			if(!data.receiverPhone.match(regex) || data.receiverPhone.length < 12) errors.receiverPhone = "Nomor handphone tidak valid";
+			if(!data.receiverPhone.match(regex) || data.receiverPhone.length < 10) errors.receiverPhone = "Nomor handphone tidak valid";
 		}
 
 		return errors;

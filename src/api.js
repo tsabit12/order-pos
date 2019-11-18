@@ -34,9 +34,9 @@ export default {
 			})
 	},
 	order: {
-		hand_over: (kantorid) =>
+		hand_over: (userid) =>
 			axios.post(`${process.env.REACT_APP_API}/order/fetchHandover`, {
-				kantorid: kantorid
+				userid: userid
 			}).then(res => res.data.result),
 		pickup: (data) =>
 			axios.post(`${process.env.REACT_APP_API}/order/pickupHandover`, { data }).then(res => res.data.result),
@@ -50,11 +50,12 @@ export default {
 			axios.post(`${process.env.REACT_APP_API}/order/getAssigment`, { 
 				nopend: nopend
 			}, config).then(res => res.data.result),
-		add_assigment: (data, name) => 
+		add_assigment: (data) => 
 			axios.post(`${process.env.REACT_APP_API}/postAssigment`,  {
-				nopickup: data.nopickup,
-				idpetugas: data.idpetugas,
-				admin: name
+				noreq: data.noreq,
+				idpetugas: data.petugasId,
+				admin: data.nama,
+				nopend: data.nopend
 			}).then(response => response.data.result),
 		get_handover: (data) =>
 			axios.post(`${process.env.REACT_APP_API}/order/getHandover`, { data }).then(res => res.data.result)

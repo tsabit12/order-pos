@@ -75,7 +75,7 @@ class SignupForm extends React.Component {
 		}
 
 		if (data.nohp !== '') {
-			if(!data.nohp.match(regex) || data.nohp.length < 12) errors.nohp = "Nomor handphone tidak valid";
+			if(!data.nohp.match(regex) || data.nohp.length < 10) errors.nohp = "Nomor handphone tidak valid";
 		}
 
 		return errors;

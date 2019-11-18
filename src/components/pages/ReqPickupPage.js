@@ -35,8 +35,8 @@ class ReqPickupPage extends React.Component{
 
 	componentDidMount() {
 		this.props.setProgressBar(true);
-		const { nopendMitra } = this.props;
-	    this.props.fetchPickup(nopendMitra).then(() => {
+		const { userid } = this.props;
+	    this.props.fetchPickup(userid).then(() => {
 	    	this.props.setProgressBar(false);
 	    	axios.post(`${process.env.REACT_APP_API}/kurir/getKantorNameMitra`, {
 	    		idkantor: this.props.nopendMitra
@@ -287,13 +287,15 @@ ReqPickupPage.propTypes = {
 	fetchPickup: PropTypes.func.isRequired,
 	pickup: PropTypes.func.isRequired,
 	nopend: PropTypes.string.isRequired,
-	nopendMitra: PropTypes.string.isRequired
+	nopendMitra: PropTypes.string.isRequired,
+	userid: PropTypes.string.isRequired
 }
 
 function mapStateProps(state) {
 	return{
 		nopend: state.user.nopendPos,
-		nopendMitra: state.user.nopend
+		nopendMitra: state.user.nopend,
+		userid: state.user.userid
 	}
 }
 

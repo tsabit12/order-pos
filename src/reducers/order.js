@@ -1,4 +1,4 @@
-import { PO_ADDED, KANTOR_FETCHED, ASSIGMENT_FETCHED, ASSIGMENT_ADDED } from "../types";
+import { PO_ADDED, KANTOR_FETCHED, FETCH_ASSIGMENT, ASSIGMENT_ADDED } from "../types";
 
 const initialState = {
 	entripo: [],
@@ -12,9 +12,6 @@ export default function order( state = initialState, action={}){
 		case PO_ADDED:
 			return {
 				...state, entripo: [ action.data ], order: []
-				//entripo: [ ...state.entripo, action.data ], 
-				//kantor: [ ... state.kantor ],
-				//assigment: [ ...state.assigment ]
 			}
 		case KANTOR_FETCHED:
 			return {
@@ -23,19 +20,15 @@ export default function order( state = initialState, action={}){
 				kantor: action.kantor, 
 				assigment: [ ...state.assigment ]
 			}
-		case ASSIGMENT_FETCHED:
+		case FETCH_ASSIGMENT:
 			return {
-				entripo: [...state.entripo], 
-				order: [], 
-				kantor: [...state.kantor], 
+				...state,
 				assigment: action.data
 			}
-		case ASSIGMENT_ADDED: 
+		case ASSIGMENT_ADDED:
 			return {
-				entripo: [...state.entripo], 
-				order: [], 
-				kantor: [...state.kantor], 
-				assigment: state.assigment.filter(data => data.no_pickup !== action.result.nopickup)
+				...state,
+				assigment: action.data.data
 			}
 		default: return state;
 	}
