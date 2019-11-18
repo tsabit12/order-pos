@@ -5,7 +5,7 @@ import { Sidebar, Menu, Icon, Image, Segment, Sticky, Ref, Dropdown, Label } fro
 import { connect } from "react-redux";
 import  * as actions from "../../actions/auth";
 import { removeNotif } from "../../actions/notifikasi";
-import Logo from "../../logosampoerna.png";
+import Logo from "../../logosampoerna.jpg";
 
 import User from "./routes/mobile/User";
 import Kurir from "./routes/mobile/Kurir";

@@ -4,7 +4,7 @@ import { Link, NavLink } from "react-router-dom";
 import { Menu, Image, Dropdown, Icon, Label } from "semantic-ui-react";
 import { connect } from "react-redux";
 import  * as actions from "../../actions/auth";
-import Logo from "../../logosampoerna.png";
+import Logo from "../../logosampoerna.jpg";
 import User from "./routes/dekstop/User";
 import Kurir from "./routes/dekstop/Kurir";
 import Admin from "./routes/dekstop/Admin";
