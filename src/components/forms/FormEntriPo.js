@@ -35,7 +35,7 @@ class FormEntriPo extends React.Component {
 		var val = e.target.value.replace(/,/g, '');
 		var x = Number(val);
 		const value = this.numberWithCommas(x);
-		this.setState({ data: {...this.state.data, moneyView: value, money: e.target.value } });
+		this.setState({ data: {...this.state.data, moneyView: value, money: val } });
 	}
 
 	handleChange = (event, {name, value}) => this.setState({ data: { ...this.state.data, [name]: value} })
@@ -61,7 +61,7 @@ class FormEntriPo extends React.Component {
 		if (!data.money) errors.money = "Jumlah uang harap di isi";
 		if (!data.noPo) errors.noPo = "Nomor PO tidak boleh kosong";
 		if (!data.email) errors.email = "Email harap di isi";
-		if (!data.vendorname) errors.vendorname = "Email harap di isi";
+		if (!data.vendorname) errors.vendorname = "Nama vendor harap di isi";
 		if (!data.pic) errors.pic = "Nama p.i.c harap di isi";
 		if (data.email !== '') {
 			if (!Validator.isEmail(data.email)) errors.email = "Email tidak valid";
@@ -80,6 +80,7 @@ class FormEntriPo extends React.Component {
 
 	render(){
 		const { loading, errors, data } = this.state;
+		console.log(data.money);
 		return(
 			<Segment>
 				 { errors.global && <Message negative>
@@ -103,7 +104,7 @@ class FormEntriPo extends React.Component {
 					    	type="text"
 					    	name="email"
 					    	id="email"
-					    	label='Email PIC' 
+					    	label='Email' 
 					    	placeholder='Masukan Email PIC' 
 					    	value={data.email}
 					    	onChange={this.onChange}
@@ -127,7 +128,7 @@ class FormEntriPo extends React.Component {
 					    	type="text"
 					    	name="pic"
 					    	id="pic"
-					    	label='PIC' 
+					    	label='Nama PIC' 
 					    	placeholder='Masukan nama pic' 
 					    	value={data.pic}
 					    	onChange={this.onChange}
