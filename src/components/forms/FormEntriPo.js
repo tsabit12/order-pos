@@ -12,6 +12,7 @@ class FormEntriPo extends React.Component {
 			desc: '',
 			datesRange: '',
 			money: '',
+			moneyView: '',
 			noPo: '',
 			username: this.props.email,
 			email: '',
@@ -25,6 +26,17 @@ class FormEntriPo extends React.Component {
 	onChange = e => this.setState({ 
 		data: { ...this.state.data, [e.target.name]: e.target.value }
 	})
+
+	numberWithCommas = (number) => {
+    	return number.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+	}
+
+	onChangeMoney = (e) => {
+		var val = e.target.value.replace(/,/g, '');
+		var x = Number(val);
+		const value = this.numberWithCommas(x);
+		this.setState({ data: {...this.state.data, moneyView: value, money: e.target.value } });
+	}
 
 	handleChange = (event, {name, value}) => this.setState({ data: { ...this.state.data, [name]: value} })
 
@@ -53,6 +65,14 @@ class FormEntriPo extends React.Component {
 		if (!data.pic) errors.pic = "Nama p.i.c harap di isi";
 		if (data.email !== '') {
 			if (!Validator.isEmail(data.email)) errors.email = "Email tidak valid";
+		}
+
+		if (data.money !== '') {
+			if (data.money < 20000) {
+				errors.money = "Minimum top up Rp 20.000";
+			}else if (data.money > 10000000) {
+				errors.money = "Maksimum top up Rp 10.000.000";
+			}
 		}
 		
 		return errors;
@@ -145,13 +165,13 @@ class FormEntriPo extends React.Component {
 					        />
 					    </Form.Field>
 					    <Form.Input 
-					    	type="number"
+					    	type="text"
 					    	name="money"
 					    	id="money"
 					    	label='Jumlah Uang' 
 					    	placeholder='Masukan jumlah uang' 
-					    	value={data.money}
-					    	onChange={this.onChange}
+					    	value={data.moneyView}
+					    	onChange={this.onChangeMoney}
 					    	error={errors.money}
 					    />
 				    </Form.Group>
