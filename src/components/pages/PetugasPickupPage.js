@@ -2,52 +2,29 @@ import React from "react";
 import PropTypes from "prop-types";
 import { connect } from "react-redux";
 import Navbar from "../menu/Navbar";
-import { Button, Modal, Form, Select, Message } from "semantic-ui-react";
-import ListPetugasPickup from "../list/ListPetugasPickup";
+import { Button, Message, Divider } from "semantic-ui-react";
+// import ListPetugasPickup from "../list/ListPetugasPickup";
 import { setProgressBar } from "../../actions/progress";
 import { fetchPetugasPickup, addPetugas } from "../../actions/petugas";
+import { Link } from "react-router-dom";
+import ReactTable from 'react-table';
+import 'react-table/react-table.css';
+
+const Empty = () => (
+	<Message
+	    warning
+	    header='Kosong'
+	    content='Data assigment tidak ditemukan'
+	/>
+);
 
 class PetugasPickupPage extends React.Component {
-	state = {
-		data: {
-			namapetugas: '',
-			status: '00',
-			nippos: '',
-			nopend: this.props.nopend
-		},
-		open: false,
-		options: [
-			{ key: '00', text: 'Aktif', value: '00' },
-			{ key: '02', text: 'Tidak Aktif', value: '02' }
-		],
-		loading: false,
-		errors: {}
-	}
 
 	componentDidMount(){
 		const { nopend } = this.props;
 		this.props.setProgressBar(true);
 		this.props.fetchPetugasPickup(nopend)
 			.then(() => this.props.setProgressBar(false))
-	}
-
-	onChange = (e) => this.setState({ data: { ...this.state.data, [e.target.name]: e.target.value }})
-
-	handleChange = (e, {value }) => this.setState({ data: {...this.state.data, status: value }})
-
-	close = () => this.setState({ open: false })
-
-	onClickTambah = () => this.setState({ open: true, namapetugas: '', status: '00', errors: {} })
-
-	onSubmit = () => {
-		const errors = this.validate(this.state.data);
-		this.setState({ errors });
-		if (Object.keys(errors).length === 0) {
-			this.setState({ loading: true });
-			this.props.addPetugas(this.state.data)
-				.then(() => this.setState({ open: false, loading: false }))
-				.catch(err => this.setState({ errors: err.response.data.errors, loading: false }));
-		}
 	}
 
 	validate = (data) => {
@@ -58,71 +35,49 @@ class PetugasPickupPage extends React.Component {
 		return errors;
 	}
 
+	convertStatus = (status) => {
+		if (status === '00') {
+			return 'Aktif';
+		}else{
+			return 'Tidak Aktif';
+		}
+	}
+
 	render(){
-		const { open, options, data, loading, errors } = this.state;
+		const { listPetugas } = this.props;
+		var no = 1;
+		const columns = [{
+			Header: 'No',
+			Cell: row => (
+				<p>{no++}</p>
+			)
+		  },{
+		    Header: 'NIPPOS',
+		    accessor: 'id_petugas' // String-based value accessors!
+		  }, {
+		    Header: 'NAMA',
+		    accessor: 'nama_petugas'
+		  }, {
+		    Header: 'TANGGAL INSERT',
+		    accessor: 'tgl'
+		  }, {
+		  	Header: 'STATUS',
+		  	Cell: row => (
+		  		<p>{this.convertStatus(row.original.status)}</p>
+		  	)
+		}];
 
 		return(
 			<Navbar>
-				<Modal size='small' open={open}>
-			      <Modal.Header>Tambah Petugas Pickup</Modal.Header>
-			      <Modal.Content>
-			      	{ errors.global && <Message negative>
-						<Message.Header>Oppps!</Message.Header>
-						<p>{errors.global}</p>
-					</Message> }
-			        <Form onSubmit={this.onSubmit} loading={loading}>
-			        	<Form.Field>
-			        		<Form.Input 
-			        			label='Nippos'
-			        			type='text'
-			        			name='nippos'
-			        			id='nippos'
-			        			autoComplete='off'
-			        			onChange={this.onChange}
-			        			value={data.nippos}
-			        			error={errors.nippos}
-			        		/>
-			        	</Form.Field>
-			        	<Form.Field>
-			        		<Form.Input 
-			        			label='Nama Petugas'
-			        			type='text'
-			        			name='namapetugas'
-			        			id='namapetugas'
-			        			autoComplete='off'
-			        			onChange={this.onChange}
-			        			value={data.namapetugas}
-			        			error={errors.namapetugas}
-			        		/>
-			        	</Form.Field>
-			        	<Form.Field>
-			        		<label>Status</label>
-			        		<Select 
-		            			name="status"
-		            			id="status"
-		            			placeholder='Pilih status' 
-		            			options={options}
-		            			defaultValue={data.status}
-			            		onChange={this.handleChange} 
-			            	/>
-			        	</Form.Field>
-			        </Form>
-			      </Modal.Content>
-			      <Modal.Actions>
-			        <Button negative onClick={this.close}>No</Button>
-			        <Button
-			          positive
-			          icon='checkmark'
-			          labelPosition='right'
-			          content='Yes'
-			          onClick={this.onSubmit}
-			        />
-			      </Modal.Actions>
-			    </Modal>
-				<Button primary onClick={this.onClickTambah}>Tambah Petugas</Button>
-				<ListPetugasPickup
-					listdata={this.props.listPetugas}
-				/>
+				<Button primary as={Link} to="/pickup/petugas/tambah">Tambah Petugas</Button>
+				<Divider />
+				{ listPetugas.length === 0 ? <Empty /> : 
+					<ReactTable
+					    data={listPetugas}
+					    columns={columns}
+					    defaultPageSize={10}
+					    style={{textAlign:"center"}}
+					/> }
 			</Navbar>
 		);
 	}

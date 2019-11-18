@@ -30,7 +30,7 @@ import ConfirmTopupPage from "./components/pages/ConfirmTopupPage";
 import ConfirmationAkunPage from "./components/pages/ConfirmationAkunPage";
 import ChangePasswordPage from "./components/pages/ChangePasswordPage";
 import LaporanOrderPage from "./components/pages/LaporanOrderPage";
-
+import AddPetugasPickupPage from "./components/pages/AddPetugasPickupPage";
 
 const App = ({ location }) =>
   <Switch>
@@ -59,6 +59,7 @@ const App = ({ location }) =>
     <UserRoute location={location} path="/confirmation/akun/:token" exact component={ConfirmationAkunPage} />
     <UserRoute location={location} path="/changepassword" exact component={ChangePasswordPage} />
     <UserRoute location={location} path="/list_order" exact component={LaporanOrderPage} />
+    <UserRoute location={location} path="/pickup/petugas/tambah" exact component={AddPetugasPickupPage} />
     <UserRoute location={location} path="*" exact component={PageNotFound} />
   </Switch>;  
 

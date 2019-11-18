@@ -69,11 +69,16 @@ export default {
 			}).then(res => res.data.petugas),
 		add_petugas: (data) => 
 			axios.post(`${process.env.REACT_APP_API}/petugas/addPetugasPickup`, {
-				nama: data.namapetugas,
+				nama: data.nama,
 				status: data.status,
-				nopend: data.nopend,
-				nippos: data.nippos
-			}, config).then(res => res.data.petugas)
+				nopend: data.kprk,
+				nippos: data.idpetugas
+			}, config).then(res => res.data.petugas),
+		cariPetugas: (nippos, nopend) =>
+			axios.post(`${process.env.REACT_APP_API}/petugas/cariPetugas`, {
+				nippos: nippos,
+				nopend: nopend
+			}).then(res => res.data.petugas)
 	},
 	dashboard: {
 		get_polimit: () =>
