@@ -11,6 +11,7 @@ class DeskripsiKiriman extends React.Component {
 			itemtypeid: this.props.dataDeskripsi.itemtypeid,
 			weight: this.props.dataDeskripsi.weight,
 			valuegoods: this.props.dataDeskripsi.valuegoods ? this.props.dataDeskripsi.valuegoods : 0,
+			valuegoodsView: this.props.dataDeskripsi.valuegoodsView ? this.props.dataDeskripsi.valuegoodsView : 0,
 			diameter: this.props.dataDeskripsi.diameter,
 			height: this.props.dataDeskripsi.height ? this.props.dataDeskripsi.height : 0,
 			length: this.props.dataDeskripsi.length ? this.props.dataDeskripsi.length : 0,
@@ -37,7 +38,18 @@ class DeskripsiKiriman extends React.Component {
 		const name 	= e.target.name; 
 		const value = this.escapeRegExp(str, name);
 		this.setState({data: {...this.state.data, [e.target.name] : value }})		
-	} 
+	}
+
+	numberWithCommas = (number) => {
+    	return number.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+	}
+
+	onChangeMoney = (e) => {
+		var val = e.target.value.replace(/,/g, '');
+		var x = Number(val);
+		const value = this.numberWithCommas(x);
+		this.setState({ data: {...this.state.data, valuegoodsView: value, valuegoods: val } });
+	}
 
 	handleChange = (e, { value }) => this.setState({ data: { ...this.state.data, itemtypeid: value }})
 
@@ -111,11 +123,11 @@ class DeskripsiKiriman extends React.Component {
 								label='Nilai barang'
 								name='valuegoods'
 								id='valuegoods'
-								type='number'
+								type='text'
 								autoComplete="off"
 								placeholder="Masukan nilai barang"
-								value={data.valuegoods}
-								onChange={this.onChange}
+								value={data.valuegoodsView}
+								onChange={this.onChangeMoney}
 							/>
 							{ errors.valuegoods && <InlineError text={errors.valuegoods} /> }
 						</Form.Field>

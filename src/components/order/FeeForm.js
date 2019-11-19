@@ -5,6 +5,10 @@ import { Button, Message, Icon, Modal, Dimmer, Loader } from "semantic-ui-react"
 import axios from "axios";
 import ListFee from "../list/ListFee";
 
+const numberWithCommas = (number) => {
+    return number.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+}
+
 class FeeForm extends React.Component {
 	state = {
 		step: 5,
@@ -20,7 +24,9 @@ class FeeForm extends React.Component {
 		success: false,
 		fee: [],
 		open: false,
-		datafee: {},
+		datafee: {
+			totalFee: 0
+		},
 		errors: {},
 		active: false
 	}
@@ -94,7 +100,7 @@ class FeeForm extends React.Component {
 						<Message.Header>Oppps!</Message.Header>
 						<p>{errors.global}</p>
 					</Message> }
-		            <p>Paket yang anda pilih adalah <strong>{this.state.datafee.serviceName}</strong> dengan total biaya = {this.state.datafee.totalFee}</p>
+		            <p>Paket yang anda pilih adalah <strong>{this.state.datafee.serviceName}</strong> dengan total biaya = {numberWithCommas(this.state.datafee.totalFee)}</p>
 		          </Modal.Content>
 		          <Modal.Actions>
 		            <Button negative onClick={this.closeModal}>Batal</Button>

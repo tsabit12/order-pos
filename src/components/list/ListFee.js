@@ -1,6 +1,10 @@
 import React from "react";
 import { Message, Card, Button, Grid, Segment } from "semantic-ui-react";
 
+const numberWithCommas = (number) => {
+    return number.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+}
+
 export default function ListFee({ listdata, accept }){
 	const empty = (
 		<Message>Data kosong</Message>
@@ -17,7 +21,7 @@ export default function ListFee({ listdata, accept }){
 								<Card.Content>
 									<Card.Header>{data.serviceName}</Card.Header>
 									<Card.Description>
-										Biaya pengiriman = {data.totalFee}
+										Biaya pengiriman = {numberWithCommas(data.totalFee)}
 									</Card.Description>
 								</Card.Content>
 								<Button primary fluid onClick={() => 

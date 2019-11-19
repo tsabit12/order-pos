@@ -80,7 +80,7 @@ class FormEntriPo extends React.Component {
 
 	render(){
 		const { loading, errors, data } = this.state;
-		console.log(data.money);
+		
 		return(
 			<Segment>
 				 { errors.global && <Message negative>
@@ -174,6 +174,7 @@ class FormEntriPo extends React.Component {
 					    	value={data.moneyView}
 					    	onChange={this.onChangeMoney}
 					    	error={errors.money}
+					    	autoComplete='off'
 					    />
 				    </Form.Group>
 				    <Button secondary>Tambah</Button>

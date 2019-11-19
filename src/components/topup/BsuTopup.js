@@ -15,6 +15,7 @@ class BsuTopup extends React.Component {
 		],
 		data: {
 			jumlah: '',
+			jumlahView: '',
 			hasil: '',
 			id_po: this.props.idpo,
 			userid: this.props.userid
@@ -35,6 +36,14 @@ class BsuTopup extends React.Component {
 
 	numberWithCommas = (number) => {
     	return number.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+	}
+
+
+	onChangeMoney = (e) => {
+		var val = e.target.value.replace(/,/g, '');
+		var x = Number(val);
+		const value = this.numberWithCommas(x);
+		this.setState({ data: {...this.state.data, jumlahView: value, jumlah: val } });
 	}
 
 	onSubmit = () => {
@@ -84,11 +93,11 @@ class BsuTopup extends React.Component {
 					<Form.Input 
 						label="Jumlah BSU"
 						placeholder="Masukan jumlah bsu topup"
-						type="number"
+						type="text"
 						id="jumlah"
 						name="jumlah"
-						value={data.jumlah}
-						onChange={this.onChange}
+						value={data.jumlahView}
+						onChange={this.onChangeMoney}
 						autoComplete="off"
 						error={errors.jumlah}
 					/>
