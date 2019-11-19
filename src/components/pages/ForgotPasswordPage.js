@@ -9,7 +9,7 @@ const MessageSucces = () => (
 	    <Icon name='check' />
 	    <Message.Content>
 	      <Message.Header>Email berhasil dikirim</Message.Header>
-	      Silahkan cek email anda untuk melakukan reset password. Pesan hanya berlaku selama <strong>24 jam</strong> dari sekarang. <br/>
+	      Silahkan cek email anda untuk melakukan reset password. Pesan hanya berlaku selama <strong>6 jam</strong> dari sekarang. <br/>
 	      Klik <Link to="/login">disini</Link> untuk kembali login
 	    </Message.Content>
 	</Message>
