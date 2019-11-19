@@ -31,6 +31,7 @@ import ConfirmationAkunPage from "./components/pages/ConfirmationAkunPage";
 import ChangePasswordPage from "./components/pages/ChangePasswordPage";
 import LaporanOrderPage from "./components/pages/LaporanOrderPage";
 import AddPetugasPickupPage from "./components/pages/AddPetugasPickupPage";
+import ForgotPasswordPage from "./components/pages/ForgotPasswordPage";
 
 const App = ({ location }) =>
   <Switch>
@@ -60,6 +61,7 @@ const App = ({ location }) =>
     <UserRoute location={location} path="/changepassword" exact component={ChangePasswordPage} />
     <UserRoute location={location} path="/list_order" exact component={LaporanOrderPage} />
     <UserRoute location={location} path="/pickup/petugas/tambah" exact component={AddPetugasPickupPage} />
+    <GuestRoute location={location} path="/forgot_password" exact component={ForgotPasswordPage} />
     <UserRoute location={location} path="*" exact component={PageNotFound} />
   </Switch>;  
 

@@ -89,6 +89,9 @@ class LoginForm extends React.Component {
 					        />
 				        </Form.Field>
 				      <Button fluid color='blue' type='submit'>Login</Button>
+				      <div style={{paddingTop: '8px'}}>
+				      	<Link to="/forgot_password">Lupa katasandi</Link>
+				      </div>
 			      	</Segment>
 		     	</Form>
 		     	<Message>

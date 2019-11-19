@@ -45,11 +45,10 @@ class PetugasPickupPage extends React.Component {
 
 	render(){
 		const { listPetugas } = this.props;
-		var no = 1;
 		const columns = [{
 			Header: 'No',
 			Cell: row => (
-				<p>{no++}</p>
+				<p>{row.index+1}</p>
 			)
 		  },{
 		    Header: 'NIPPOS',
