@@ -1,13 +1,23 @@
 import React from "react";
 import Navbar from "../menu/Navbar";
 import PropTypes from "prop-types";
-import { Step, Icon, Grid } from "semantic-ui-react";
+import { Step, Icon, Grid, Message } from "semantic-ui-react";
 import { connect } from "react-redux";
 import ChoosePo from "../topup/ChoosePo";
 import BsuTopup from "../topup/BsuTopup";
 import Summary from "../topup/Summary";
 import { getPurchase, getPoByid, addTopup } from "../../actions/purchase";
 import { setProgressBar } from "../../actions/progress";
+
+const EmptyPo = () => (
+	<Message icon warning>
+		<Icon name='info' />
+		<Message.Content>
+		    <Message.Header>Purchase order kosong</Message.Header>
+		    Topup hanya bisa dilakukan oleh pemilik PO itu sendiri. Silahkan konfirmasi kepada pemilik PO untuk melakukan top-up.
+	    </Message.Content>
+	</Message>
+);
 
 class TopupForm extends React.Component {
 	state = {
@@ -44,9 +54,10 @@ class TopupForm extends React.Component {
 
 	render(){
 		const { active } = this.state;
+		const { listPo } = this.props;
 		return(
 			<Navbar>
-				<Grid>
+				{ listPo.length === 0 ? <EmptyPo /> : <Grid>
 					<Grid.Column mobile={16} tablet={16} computer={5}>
 						<Step.Group vertical fluid>
 						    <Step active={active.po} completed={active.bsu}>
@@ -78,7 +89,7 @@ class TopupForm extends React.Component {
 					  	{ active.bsu && <BsuTopup idpo={this.state.idpo} submit={this.submitBsu} />}
 					  	{ active.summary && <Summary idpo={this.state.idpo} />}
 					</Grid.Column>
-				</Grid>
+				</Grid> }
 			</Navbar>
 		);
 	}
@@ -88,12 +99,14 @@ TopupForm.propTypes = {
 	getPurchase: PropTypes.func.isRequired,
 	user: PropTypes.object.isRequired,
 	addTopup: PropTypes.func.isRequired,
-	getPoByid: PropTypes.func.isRequired
+	getPoByid: PropTypes.func.isRequired,
+	listPo: PropTypes.array.isRequired
 }
 
 function mapStateToProps(state) {
 	return{
-		user: state.user
+		user: state.user,
+		listPo: state.purchase
 	}
 }
 
