@@ -47,6 +47,7 @@ const ListCount = ({ list }) => (
 					    <Statistic.Label>{data.keterangan}</Statistic.Label>
 					  </Statistic>
 			      </Card.Content>
+			      <Button secondary fluid size='mini' as={Link} to={data.link}>Cek Detail</Button>
 			    </Card>
 			</Grid.Column> )}
 	    </Grid>

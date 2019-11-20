@@ -188,6 +188,10 @@ export default {
 			axios.post(`${process.env.REACT_APP_API}/laporan/getOrder`, {
 				tanggal: tanggal,
 				id: id
-			}).then(res => res.data.result)
+			}).then(res => res.data.result),
+		get_assigment: (userid) =>
+			axios.post(`${process.env.REACT_APP_API}/laporan/getAssigment`, {
+				userid: userid
+			}).then(res => res.data.assigments)
 	}
 }

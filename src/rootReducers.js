@@ -10,9 +10,11 @@ import pouser from "./reducers/pouser";
 import ui from "./reducers/ui";
 import invoice from "./reducers/invoice";
 import notifikasi from "./reducers/notifikasi";
+import laporan from "./reducers/laporan";
 
 export default combineReducers({
 	ui,
+	laporan,
 	user,
 	handover,
 	order,
