@@ -35,6 +35,7 @@ import ForgotPasswordPage from "./components/pages/ForgotPasswordPage";
 import ForgotPasswordForm from "./components/forms/ForgotPasswordForm";
 import LaporanAssigmentPage from "./components/pages/LaporanAssigmentPage";
 import LaporanHandoverPage from "./components/pages/LaporanHandoverPage";
+import SelesaiAntarPage from "./components/pages/SelesaiAntarPage";
 
 const App = ({ location }) =>
   <Switch>
@@ -68,6 +69,7 @@ const App = ({ location }) =>
     <GuestRoute location={location} path="/change_password/:token" exact component={ForgotPasswordForm} />
     <UserRoute location={location} path="/laporan/assigment" exact component={LaporanAssigmentPage} />
     <UserRoute location={location} path="/laporan/handover" exact component={LaporanHandoverPage} />
+    <UserRoute location={location} path="/laporan/selesai_antar" exact component={SelesaiAntarPage} />
     <UserRoute location={location} path="*" exact component={PageNotFound} />
   </Switch>;  
 

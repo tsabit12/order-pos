@@ -196,6 +196,10 @@ export default {
 		getHandover: (userid) =>
 			axios.post(`${process.env.REACT_APP_API}/laporan/getHandover`, {
 				userid: userid
-			}).then(res => res.data.handover)
+			}).then(res => res.data.handover),
+		getSelesaiAntar: (userid) =>
+			axios.post(`${process.env.REACT_APP_API}/laporan/getSelesaiAntar`, {
+				userid: userid
+			}).then(res => res.data.result)
 	}
 }

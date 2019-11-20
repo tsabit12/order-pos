@@ -66,6 +66,12 @@ const User = () => (
                 as={NavLink}
                 to="/laporan/handover"
               />
+              <Menu.Item
+                style={{textAlign:"left"}}
+                name='Selesai Antar'
+                as={NavLink}
+                to="/laporan/selesai_antar"
+              />
 	        </Menu.Menu>
         </Menu.Item>
 	</React.Fragment>

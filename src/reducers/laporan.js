@@ -1,8 +1,9 @@
-import { FETCH_LAP_ASSIGMENT, FETCH_HANDOVER } from "../types";
+import { FETCH_LAP_ASSIGMENT, FETCH_HANDOVER, FETCH_SELESAI_ANTAR } from "../types";
 
 const initialState = {
 	assigment: [],
-	handover: []
+	handover: [],
+	selesaiAntar: []
 }
 
 export default function laporan(state=initialState, action={}){
@@ -16,6 +17,11 @@ export default function laporan(state=initialState, action={}){
 			return {
 				...state, 
 				handover: action.handover
+			}
+		case FETCH_SELESAI_ANTAR: 
+			return {
+				...state,
+				selesaiAntar: action.result
 			}
 		default: return state;
 	}
