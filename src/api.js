@@ -200,6 +200,10 @@ export default {
 		getSelesaiAntar: (userid) =>
 			axios.post(`${process.env.REACT_APP_API}/laporan/getSelesaiAntar`, {
 				userid: userid
-			}).then(res => res.data.result)
+			}).then(res => res.data.result),
+		getPickup: (userid) =>
+			axios.post(`${process.env.REACT_APP_API}/laporan/getLapPickup`, {
+				userid: userid
+			}).then(res => res.data.pickup)
 	}
 }

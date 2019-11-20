@@ -36,6 +36,7 @@ import ForgotPasswordForm from "./components/forms/ForgotPasswordForm";
 import LaporanAssigmentPage from "./components/pages/LaporanAssigmentPage";
 import LaporanHandoverPage from "./components/pages/LaporanHandoverPage";
 import SelesaiAntarPage from "./components/pages/SelesaiAntarPage";
+import LaporanPickupPage from "./components/pages/LaporanPickupPage";
 
 const App = ({ location }) =>
   <Switch>
@@ -70,6 +71,7 @@ const App = ({ location }) =>
     <UserRoute location={location} path="/laporan/assigment" exact component={LaporanAssigmentPage} />
     <UserRoute location={location} path="/laporan/handover" exact component={LaporanHandoverPage} />
     <UserRoute location={location} path="/laporan/selesai_antar" exact component={SelesaiAntarPage} />
+    <UserRoute location={location} path="/laporan/pickup" exact component={LaporanPickupPage} />
     <UserRoute location={location} path="*" exact component={PageNotFound} />
   </Switch>;  
 
