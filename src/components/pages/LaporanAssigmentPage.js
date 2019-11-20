@@ -3,7 +3,7 @@ import Navbar from "../menu/Navbar";
 import PropTypes from "prop-types";
 import { connect } from "react-redux";
 import { fetchLapAssigment } from "../../actions/laporan";
-import { Message, Table } from "semantic-ui-react";
+import { Message, Table, Header, Divider } from "semantic-ui-react";
 import { setProgressBar } from "../../actions/progress";
 
 
@@ -15,6 +15,7 @@ const ListAssigment = ({ listdata }) => {
 		      <Table.Row>
 		        <Table.HeaderCell>No</Table.HeaderCell>
 		        <Table.HeaderCell>Nomor Pickup</Table.HeaderCell>
+		        <Table.HeaderCell>Tanggal Assign</Table.HeaderCell>
 		        <Table.HeaderCell>Id Order</Table.HeaderCell>
 		        <Table.HeaderCell>Perihal</Table.HeaderCell>
 		        <Table.HeaderCell>Dipickup</Table.HeaderCell>
@@ -26,6 +27,7 @@ const ListAssigment = ({ listdata }) => {
 		    	{ listdata.map((x, i) => <Table.Row key={i}>
 		    			<Table.Cell>{no++}</Table.Cell>
 		    			<Table.Cell>{x.no_pickup}</Table.Cell>
+		    			<Table.Cell>{x.tgl_assigment}</Table.Cell>
 		    			<Table.Cell>{x.id_order}</Table.Cell>
 		    			<Table.Cell>{x.contentdesc}</Table.Cell>
 		    			<Table.Cell>{x.namakantor}</Table.Cell>
@@ -74,6 +76,12 @@ class LaporanAssigmentPage extends React.Component{
 
 		return(
 			<Navbar>
+				 <Header
+				    as='h2'
+				    content='Assigment'
+				    subheader='Berikut adalah data order yang sudah di assign'
+				  />
+				  <Divider />
 				{ errors.global && <Message negative>
 					<Message.Header>Oppps!</Message.Header>
 					<p>{errors.global}</p>
