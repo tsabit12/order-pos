@@ -35,6 +35,15 @@ export default {
 		forgotPassword: (email) =>
 			axios.post(`${process.env.REACT_APP_API}/auth/forgotPassword`, {
 				email: email
+			}),
+		changePassword: (token) =>
+			axios.post(`${process.env.REACT_APP_API}/auth/validateToken`, {
+				token: token
+			}),
+		gantiPassword: (data) => 
+			axios.post(`${process.env.REACT_APP_API}/auth/lupaPasswordPost`,{
+				userid: data.userid,
+				password: data.password
 			})
 	},
 	order: {
