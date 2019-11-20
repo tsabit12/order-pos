@@ -1,7 +1,8 @@
-import { FETCH_LAP_ASSIGMENT } from "../types";
+import { FETCH_LAP_ASSIGMENT, FETCH_HANDOVER } from "../types";
 
 const initialState = {
-	assigment: []
+	assigment: [],
+	handover: []
 }
 
 export default function laporan(state=initialState, action={}){
@@ -10,6 +11,11 @@ export default function laporan(state=initialState, action={}){
 			return{
 				...state,
 				assigment: action.assigments
+			}
+		case FETCH_HANDOVER: 
+			return {
+				...state, 
+				handover: action.handover
 			}
 		default: return state;
 	}

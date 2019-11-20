@@ -192,6 +192,10 @@ export default {
 		get_assigment: (userid) =>
 			axios.post(`${process.env.REACT_APP_API}/laporan/getAssigment`, {
 				userid: userid
-			}).then(res => res.data.assigments)
+			}).then(res => res.data.assigments),
+		getHandover: (userid) =>
+			axios.post(`${process.env.REACT_APP_API}/laporan/getHandover`, {
+				userid: userid
+			}).then(res => res.data.handover)
 	}
 }

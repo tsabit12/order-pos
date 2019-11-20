@@ -34,6 +34,7 @@ import AddPetugasPickupPage from "./components/pages/AddPetugasPickupPage";
 import ForgotPasswordPage from "./components/pages/ForgotPasswordPage";
 import ForgotPasswordForm from "./components/forms/ForgotPasswordForm";
 import LaporanAssigmentPage from "./components/pages/LaporanAssigmentPage";
+import LaporanHandoverPage from "./components/pages/LaporanHandoverPage";
 
 const App = ({ location }) =>
   <Switch>
@@ -66,6 +67,7 @@ const App = ({ location }) =>
     <GuestRoute location={location} path="/forgot_password" exact component={ForgotPasswordPage} />
     <GuestRoute location={location} path="/change_password/:token" exact component={ForgotPasswordForm} />
     <UserRoute location={location} path="/laporan/assigment" exact component={LaporanAssigmentPage} />
+    <UserRoute location={location} path="/laporan/handover" exact component={LaporanHandoverPage} />
     <UserRoute location={location} path="*" exact component={PageNotFound} />
   </Switch>;  
 
