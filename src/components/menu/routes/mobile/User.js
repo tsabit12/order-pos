@@ -56,9 +56,9 @@ const User = () => (
               />
               <Menu.Item
                 style={{textAlign:"left"}}
-                name='Assigment'
+                name='Assignment'
                 as={NavLink}
-                to="/laporan/assigment"
+                to="/laporan/assignment"
               />
               <Menu.Item
                 style={{textAlign:"left"}}

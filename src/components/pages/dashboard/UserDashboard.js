@@ -16,7 +16,7 @@ const List = ({ listlimit }) => (
         </Label>
 		<Grid style={{paddingTop: '12px'}}>
 			{ listlimit.map(data => 
-				<Grid.Column mobile={8} tablet={8} computer={4} key={data.id_po}>
+				<Grid.Column mobile={16} tablet={8} computer={4} key={data.id_po}>
 					<Card fluid>
 				      <Card.Content>
 				        <Card.Header>{data.id_po}</Card.Header>
@@ -39,7 +39,7 @@ const ListCount = ({ list }) => (
           Highlight
         </Label>
 		<Grid style={{paddingTop: '12px'}}>
-			{ list.map(data => <Grid.Column mobile={8} tablet={4} computer={4} key={data.keterangan}>
+			{ list.map(data => <Grid.Column mobile={16} tablet={4} computer={4} key={data.keterangan}>
 				<Card fluid style={{textAlign: 'center'}}>
 			      <Card.Content>
 			        <Statistic>

@@ -4,7 +4,7 @@ import { Menu } from "semantic-ui-react";
 
 const Kurir = () => (
 	<React.Fragment>
-		<Menu.Item style={{textAlign: 'left'}} as={NavLink} to="/assigment">Assigment Pickup</Menu.Item>
+		<Menu.Item style={{textAlign: 'left'}} as={NavLink} to="/assigment">Assignment</Menu.Item>
 		<Menu.Item style={{textAlign: 'left'}} as={NavLink} to="/handover">Handover Pickup</Menu.Item>
 		<Menu.Item style={{textAlign: 'left'}} as={NavLink} to="/pickup/petugas">Petugas Pickup</Menu.Item>
 	</React.Fragment>

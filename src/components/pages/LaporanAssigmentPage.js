@@ -78,7 +78,7 @@ class LaporanAssigmentPage extends React.Component{
 			<Navbar>
 				 <Header
 				    as='h2'
-				    content='Assigment'
+				    content='Assignment'
 				    subheader='Berikut adalah data order yang sudah di assign'
 				  />
 				  <Divider />

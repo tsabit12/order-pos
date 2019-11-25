@@ -15,7 +15,7 @@ const Empty = () => (
 	<Message
 	    warning
 	    header='Kosong'
-	    content='Data assigment tidak ditemukan'
+	    content='Data assignment tidak ditemukan'
 	/>
 );
 

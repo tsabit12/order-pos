@@ -68,7 +68,7 @@ const App = ({ location }) =>
     <UserRoute location={location} path="/pickup/petugas/tambah" exact component={AddPetugasPickupPage} />
     <GuestRoute location={location} path="/forgot_password" exact component={ForgotPasswordPage} />
     <GuestRoute location={location} path="/change_password/:token" exact component={ForgotPasswordForm} />
-    <UserRoute location={location} path="/laporan/assigment" exact component={LaporanAssigmentPage} />
+    <UserRoute location={location} path="/laporan/assignment" exact component={LaporanAssigmentPage} />
     <UserRoute location={location} path="/laporan/handover" exact component={LaporanHandoverPage} />
     <UserRoute location={location} path="/laporan/selesai_antar" exact component={SelesaiAntarPage} />
     <UserRoute location={location} path="/laporan/pickup" exact component={LaporanPickupPage} />
