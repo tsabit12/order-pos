@@ -2,6 +2,7 @@ import React from 'react';
 import PropTypes from "prop-types";
 import { Route } from "react-router-dom";
 import { Switch } from "react-router-dom";
+import { connect } from "react-redux";
 import LoginPage from "./components/pages/LoginPage";
 import DashboardPage from "./components/pages/DashboardPage";
 import OrderPage from "./components/pages/OrderPage";
@@ -37,8 +38,9 @@ import LaporanAssigmentPage from "./components/pages/LaporanAssigmentPage";
 import LaporanHandoverPage from "./components/pages/LaporanHandoverPage";
 import SelesaiAntarPage from "./components/pages/SelesaiAntarPage";
 import LaporanPickupPage from "./components/pages/LaporanPickupPage";
+import EntriPickupPage from "./components/pages/EntriPickupPage";
 
-const App = ({ location }) =>
+const App = ({ location, level }) =>
   <Switch>
     <Route location={location} path="/" exact component={HomePage} />
     <GuestRoute location={location} path="/login" exact component={LoginPage} />
@@ -72,6 +74,7 @@ const App = ({ location }) =>
     <UserRoute location={location} path="/laporan/handover" exact component={LaporanHandoverPage} />
     <UserRoute location={location} path="/laporan/selesai_antar" exact component={SelesaiAntarPage} />
     <UserRoute location={location} path="/laporan/pickup" exact component={LaporanPickupPage} />
+    { level === '01' && <UserRoute location={location} path="/entri_pickup" exact component={EntriPickupPage} />}
     <UserRoute location={location} path="*" exact component={PageNotFound} />
   </Switch>;  
 
@@ -79,8 +82,14 @@ const App = ({ location }) =>
 App.propTypes = {
   location: PropTypes.shape({ 
     pathname: PropTypes.string.isRequired
-  }).isRequired
+  }).isRequired,
+  level: PropTypes.string.isRequired
 }
 
+function mapStateToProps(state) {
+    return{
+        level: state.user.level
+    }
+}
 
-export default App;
+export default connect(mapStateToProps, null)(App);

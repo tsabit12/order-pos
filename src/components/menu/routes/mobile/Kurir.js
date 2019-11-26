@@ -7,6 +7,7 @@ const Kurir = () => (
 		<Menu.Item style={{textAlign: 'left'}} as={NavLink} to="/assigment">Assignment</Menu.Item>
 		<Menu.Item style={{textAlign: 'left'}} as={NavLink} to="/handover">Handover Pickup</Menu.Item>
 		<Menu.Item style={{textAlign: 'left'}} as={NavLink} to="/pickup/petugas">Petugas Pickup</Menu.Item>
+		<Menu.Item style={{textAlign: 'left'}} as={NavLink} to="/entri_pickup">Biaya Pickup</Menu.Item>
 	</React.Fragment>
 );
 

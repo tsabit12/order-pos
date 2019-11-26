@@ -171,7 +171,16 @@ export default {
 				level: data.level,
 				kprk: data.kprk,
 				nohp: data.nohp
-			}).then(res => res.data.result)
+			}).then(res => res.data.result),
+		getExternalId: (extId) =>
+			axios.post(`${process.env.REACT_APP_API}/kurir/getExternalId`, {
+				extId: extId
+			}).then(res => res.data.result),
+		updateBiaya: (data) => 
+			axios.post(`${process.env.REACT_APP_API}/kurir/updateBiaya`, {
+				extId: data.no_barcode,
+				biaya: data.biaya_pickup
+			})
 	},
 	notifikasi: {
 		get_jumlah: () => 
