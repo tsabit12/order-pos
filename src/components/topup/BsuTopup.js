@@ -40,7 +40,7 @@ class BsuTopup extends React.Component {
 
 
 	onChangeMoney = (e) => {
-		var val = e.target.value.replace(/,/g, '');
+		var val = e.target.value.replace(/\D/g, '');
 		var x = Number(val);
 		const value = this.numberWithCommas(x);
 		this.setState({ data: {...this.state.data, jumlahView: value, jumlah: val } });
