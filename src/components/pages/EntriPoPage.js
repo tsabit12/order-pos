@@ -8,6 +8,7 @@ import axios from "axios";
 import FormEntriPo from "../forms/FormEntriPo";
 import { connect } from "react-redux";
 import PageNotFound from "./PageNotFound";
+import api from "../../api";
 
 class EntriPoPage extends React.Component {
 	state = {
@@ -18,7 +19,23 @@ class EntriPoPage extends React.Component {
 		loading: false,
 		success: false,
 		message: false,
-		errors: {}
+		errors: {},
+		refCompany: []
+	}
+
+	componentDidMount(){
+		api.po.getRefCompany()
+			.then(res => {
+				const refCompany = [{key: '0', value: '0', text: 'Pilih perusahaan'}];
+				res.forEach(x => {
+					refCompany.push({
+						key: x.companyId,
+						value: x.companyId,
+						text: x.companyName
+					});
+				});
+				this.setState({ refCompany });
+			})
 	}
 
 	handleInputChange = (e) => this.setState({ data: {...this.state.data, email: e.target.value }})
@@ -47,7 +64,7 @@ class EntriPoPage extends React.Component {
 	selesai = () => this.setState({ success: false, message: true });
 
 	render(){
-		const { data, loading, errors, success, message } = this.state;
+		const { data, loading, errors, success, message, refCompany } = this.state;
 		const { level } = this.props;
 		return(
 			<React.Fragment>
@@ -77,7 +94,12 @@ class EntriPoPage extends React.Component {
 						<Message.Header>Oppps!</Message.Header>
 						<p>{errors.global}</p>
 					</Message> }
-					{ success && <FormEntriPo email={data.userid} entriSuccess={this.selesai} />}
+					{ success && refCompany.length > 0 && <FormEntriPo 
+						email={data.userid} 
+						entriSuccess={this.selesai} 
+						emailAsli={data.email}
+						refCompany={refCompany}
+					/> }
 					{ message && <Message
 					    icon='check'
 					    header='Sukses'

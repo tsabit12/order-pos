@@ -128,7 +128,9 @@ export default {
 		getDetailPo: (id) => 
 			axios.post(`${process.env.REACT_APP_API}/PurchaseOrder/getDetailOrder`, {
 				nomor_po: id
-			}).then(res => res.data.result)
+			}).then(res => res.data.result),
+		getRefCompany: () =>
+			axios.post(`${process.env.REACT_APP_API}/entriPo/getRefCompany`).then(res => res.data.result)
 	},
 	invoice: {
 		cetak: (data) => 
