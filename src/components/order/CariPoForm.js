@@ -17,7 +17,14 @@ class CariPoForm extends React.Component {
 		}
 	}
 
-	onChange = (e) => this.setState({ nomorPo: e.target.value })
+	escapeRegExp = (string) => {
+		return string.replace(/[~`_/*+?^${}<>()'"|[\]\\]/g, '');
+	}
+
+	onChange = (e) => {
+		const val = this.escapeRegExp(e.target.value);
+		this.setState({ nomorPo: val })
+	}
 
 	submit = () => {
 		const errors = this.validate(this.state.nomorPo);

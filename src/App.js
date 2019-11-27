@@ -83,7 +83,7 @@ App.propTypes = {
   location: PropTypes.shape({ 
     pathname: PropTypes.string.isRequired
   }).isRequired,
-  level: PropTypes.string.isRequired
+  level: PropTypes.string
 }
 
 function mapStateToProps(state) {

@@ -71,7 +71,11 @@ export default {
 				nopend: data.nopend
 			}).then(response => response.data.result),
 		get_handover: (data) =>
-			axios.post(`${process.env.REACT_APP_API}/order/getHandover`, { data }).then(res => res.data.result)
+			axios.post(`${process.env.REACT_APP_API}/order/getHandover`, { data }).then(res => res.data.result),
+		getRefSender: (kantor) =>
+			axios.post(`${process.env.REACT_APP_API}/order/getRefSender`, {
+				kantorId: kantor
+			}).then(res => res.data.result)
 	},
 	petugas: {
 		fetc_petugas: () =>

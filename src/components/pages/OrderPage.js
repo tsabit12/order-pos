@@ -10,6 +10,7 @@ import { Message, Button } from "semantic-ui-react";
 import axios from "axios";
 import { connect } from "react-redux";
 import PropTypes from "prop-types";
+import { getKantor } from "../../actions/order";
 
 class OrderPage extends React.Component {
 	state = {
@@ -34,7 +35,19 @@ class OrderPage extends React.Component {
 			receiver: {
 				receiverPhone: ''
 			},
-			deskripsi: {}
+			deskripsi: {},
+			//data sender bisa berubah
+			//state ini dibutuhkan karena perlu data default sender dari login
+			loginSes: {
+				senderName: this.props.auth.nama,
+				senderAddres: this.props.auth.address,
+				senderCity: this.props.auth.city,
+				senderKec: this.props.auth.address2,
+				senderPos: this.props.auth.postalCode,
+				senderMail: '',
+				senderProv: this.props.auth.provinsi,
+				senderPhone: this.props.auth.nohp 
+			}
 		},
 		open: false,
 		idorder: '',
@@ -43,7 +56,16 @@ class OrderPage extends React.Component {
 			optionsKab: [],
 			optionsKec: [],
 			optionPostal: []
-		}
+		},
+		checkedForm: true,
+		checked: true,
+		emailPo: ''
+	}
+
+	componentDidMount(){
+		const nopend = '0';
+		this.props.getKantor(nopend)
+			.catch(() => alert("Something wrong"))
 	}
 
 	onClick = (step) => {
@@ -69,7 +91,9 @@ class OrderPage extends React.Component {
 							...this.state.data.sender,
 							senderMail: results.data.senderMail
 						}
-					}
+					},
+					//default
+					emailPo: results.data.senderMail
 				});
 				window.scrollTo(0, 0);
 			})
@@ -79,9 +103,17 @@ class OrderPage extends React.Component {
 			}))
 	}
 
-	submitSender = (data, step) => {
+	submitSender = (data, step, checkedForm, checked) => {
 		window.scrollTo(0, 0);
-		this.setState({ data: { ...this.state.data, sender: data }, loading: false, step: step+1 });
+		this.setState({ 
+			data: { 
+				...this.state.data, sender: data 
+			}, 
+			loading: false, 
+			step: step+1, 
+			checkedForm:  checkedForm,
+			checked: checked
+		});
 	}
 
 	submitReceiver = (data, step, dataOptions) => {
@@ -137,7 +169,15 @@ class OrderPage extends React.Component {
 				<div style={{marginTop: '10px'}}>
 					<StepOrder step={step} />
 					{ step === 1 && <CariPoForm submitPO={this.onClickPO} errors={ errors.po } loading={loading} nomorPo={data.nomorPo}/> }
-					{ step === 2 && <SenderForm submitSender={this.submitSender} onClickBack={this.onClickBack} dataSender={data.sender}/> }
+					{ step === 2 && <SenderForm 
+						submitSender={this.submitSender} 
+						onClickBack={this.onClickBack} 
+						dataSender={data.sender}
+						checkedForm={this.state.checkedForm}
+						loginSes={data.loginSes}
+						checked={this.state.checked}
+						emailPo={this.state.emailPo}
+					/> }
 					{ step === 3 && <ReceiverForm 
 						onClickBack={this.onClickBack} 
 						submitReceiver={this.submitReceiver} 
@@ -175,7 +215,8 @@ class OrderPage extends React.Component {
 
 OrderPage.propTypes = {
 	userid: PropTypes.string.isRequired,
-	auth: PropTypes.object.isRequired
+	auth: PropTypes.object.isRequired,
+	getKantor: PropTypes.func.isRequired
 }
 
 function mapStateToProps(state) {
@@ -185,4 +226,4 @@ function mapStateToProps(state) {
 	}
 }
 
-export default connect(mapStateToProps, null)(OrderPage);
+export default connect(mapStateToProps, { getKantor })(OrderPage);
