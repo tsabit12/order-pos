@@ -121,7 +121,6 @@ class SenderForm extends React.Component {
 		this.setState({ kantorasal: value });
 		api.order.getRefSender(value)
 			.then(res => {
-				console.log(res);
 				this.setState({
 					data: {
 						...this.state.data,

@@ -1,3 +1,11 @@
+//Dear developer:
+//If you are trying to optimize this routine
+//and it fails (most surely),
+//please increase this counter as 
+//a warning for the next person
+
+//total_hours_wasted_here = 134
+
 import React from "react";
 import Navbar from "../menu/Navbar";
 import StepOrder from "../order/StepOrder";
