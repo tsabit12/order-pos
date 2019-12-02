@@ -220,5 +220,23 @@ export default {
 			axios.post(`${process.env.REACT_APP_API}/laporan/getLapPickup`, {
 				userid: userid
 			}).then(res => res.data.pickup)
+	},
+	pickup: {
+		getTotalPage: (userid) => 
+			axios.post(`${process.env.REACT_APP_API}/pickup/getTotalPage`, {
+				userid: userid
+			}).then(res => res.data.result),
+		fetchItems: (pages, userid) => 
+			axios.get(`${process.env.REACT_APP_API}/pickup/fetchData`, {
+				params: {
+					offset: pages.offset,
+					limit: pages.limit,
+					userid: userid
+				}
+			}).then(res => res.data.result),
+		addToPickup: (items) =>
+			axios.post(`${process.env.REACT_APP_API}/pickup/addPickup`, {
+				extId: items //array
+			})
 	}
 }

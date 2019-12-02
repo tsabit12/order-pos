@@ -7,7 +7,7 @@ import LoginPage from "./components/pages/LoginPage";
 import DashboardPage from "./components/pages/DashboardPage";
 import OrderPage from "./components/pages/OrderPage";
 import LacakPage from "./components/pages/LacakPage";
-import ReqPickupPage from "./components/pages/ReqPickupPage";
+// import ReqPickupPage from "./components/pages/ReqPickupPage";
 import EntriPoPage from "./components/pages/EntriPoPage";
 import SignupPage from "./components/pages/SignupPage";
 import AssigmentPage from "./components/pages/AssigmentPage";
@@ -39,6 +39,7 @@ import LaporanHandoverPage from "./components/pages/LaporanHandoverPage";
 import SelesaiAntarPage from "./components/pages/SelesaiAntarPage";
 import LaporanPickupPage from "./components/pages/LaporanPickupPage";
 import EntriPickupPage from "./components/pages/EntriPickupPage";
+import PickupPage from "./components/pages/PickupPage";
 
 const App = ({ location, level }) =>
   <Switch>
@@ -48,7 +49,7 @@ const App = ({ location, level }) =>
     <UserRoute location={location} path="/dashboard" exact component={DashboardPage} />
     <UserRoute location={location} path="/order" exact component={OrderPage} />
     <UserRoute location={location} path="/lacak" exact component={LacakPage} />
-    <UserRoute location={location} path="/pickup" exact component={ReqPickupPage} />
+    <UserRoute location={location} path="/pickup" exact component={PickupPage} />
     <UserRoute location={location} path="/po" exact component={EntriPoPage} />
     <UserRoute location={location} path="/assigment" exact component={AssigmentPage} />
     <UserRoute location={location} path="/handover" exact component={HandOverPage} />

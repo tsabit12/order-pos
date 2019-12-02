@@ -21,7 +21,7 @@ class SenderForm extends React.Component {
 		errors: {},
 		checked: this.props.checked,
 		checkedForm: this.props.checkedForm,
-		kantorasal: ''
+		kantorasal: this.props.dataSender.kantor
 	}
 
 	escapeRegExp = (string, name) => {
@@ -45,7 +45,7 @@ class SenderForm extends React.Component {
 		const errors = this.validate(this.state.data);
 		this.setState({ errors });
 		if (Object.keys(errors).length === 0) {
-			this.props.submitSender(this.state.data, this.state.step, this.state.checkedForm, this.state.checked);
+			this.props.submitSender(this.state.data, this.state.step, this.state.checkedForm, this.state.checked, this.state.kantorasal);
 		}
 	}
 
@@ -97,7 +97,8 @@ class SenderForm extends React.Component {
 					senderAddres: '',
 					senderPhone: '',
 					senderPos: ''
-				} 
+				},
+				kantorasal: '' 
 			});
 		}else{
 			const { loginSes } = this.props;
@@ -112,7 +113,8 @@ class SenderForm extends React.Component {
 					senderAddres: loginSes.senderAddres,
 					senderPhone: loginSes.senderPhone,
 					senderPos: loginSes.senderPos
-				}
+				},
+				kantorasal: loginSes.kantor
 			})
 		}
 	}

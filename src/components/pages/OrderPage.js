@@ -38,7 +38,8 @@ class OrderPage extends React.Component {
 				senderPos: this.props.auth.postalCode,
 				senderMail: '',
 				senderProv: this.props.auth.provinsi,
-				senderPhone: this.props.auth.nohp 
+				senderPhone: this.props.auth.nohp,
+				kantor: this.props.auth.nopend
 			},
 			receiver: {
 				receiverPhone: ''
@@ -54,7 +55,8 @@ class OrderPage extends React.Component {
 				senderPos: this.props.auth.postalCode,
 				senderMail: '',
 				senderProv: this.props.auth.provinsi,
-				senderPhone: this.props.auth.nohp 
+				senderPhone: this.props.auth.nohp,
+				kantor: this.props.auth.nopend
 			}
 		},
 		open: false,
@@ -111,11 +113,23 @@ class OrderPage extends React.Component {
 			}))
 	}
 
-	submitSender = (data, step, checkedForm, checked) => {
+	submitSender = (data, step, checkedForm, checked, kantor) => {
 		window.scrollTo(0, 0);
 		this.setState({ 
 			data: { 
-				...this.state.data, sender: data 
+				...this.state.data, 
+				sender: {
+					...this.state.data.sender,
+					senderName: data.senderName,
+					senderAddres: data.senderAddres,
+					senderCity: data.senderCity,
+					senderKec: data.senderKec,
+					senderPos: data.senderPos,
+					senderMail: data.senderMail,
+					senderProv: data.senderProv,
+					senderPhone: data.senderPhone,
+					kantor: kantor 
+				} 
 			}, 
 			loading: false, 
 			step: step+1, 

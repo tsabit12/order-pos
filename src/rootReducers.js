@@ -11,6 +11,7 @@ import ui from "./reducers/ui";
 import invoice from "./reducers/invoice";
 import notifikasi from "./reducers/notifikasi";
 import laporan from "./reducers/laporan";
+import pickup from "./reducers/pickup";
 
 export default combineReducers({
 	ui,
@@ -24,5 +25,6 @@ export default combineReducers({
 	purchase,
 	pouser,
 	invoice,
-	notifikasi
+	notifikasi,
+	pickup
 }); 
