@@ -6,6 +6,7 @@ import { fetchAssigment, getTotalPage, addAssign } from "../../actions/assigment
 import { Pagination, Table, Button, Checkbox, Modal, Dimmer, Loader, Segment, Message, Dropdown } from "semantic-ui-react";
 import api from "../../api";
 import { Link } from "react-router-dom";
+import { setProgressBar } from "../../actions/progress";
 
 const ModalNotification = ({ open, close, result, submit, loading, getPetugas, petugas, onChange, petugasId, errors }) => (
 	<Modal size='large' open={open}>
@@ -66,7 +67,7 @@ const ModalNotification = ({ open, close, result, submit, loading, getPetugas, p
 
 const Empty = () => (
 	<Table.Row>
-		<Table.Cell colSpan='6'>Loading...</Table.Cell>
+		<Table.Cell colSpan='6'>Data tidak ditemukan</Table.Cell>
 	</Table.Row>
 );
 
@@ -119,6 +120,7 @@ class AssigmentPage extends React.Component {
 	componentDidMount(){
 		const { nopend } = this.props.auth;
 		const { pagination } = this.state;
+		this.props.setProgressBar(true);
 		
 		this.props.getTotalPage(nopend)
 			.then(res => {
@@ -132,7 +134,11 @@ class AssigmentPage extends React.Component {
 			.catch(err => console.log(err));
 
 		this.props.fetchAssigment(nopend, pagination)
-			.catch(err => console.log(err));
+			.then(() => this.props.setProgressBar(false))
+			.catch(err => {
+				this.props.setProgressBar(false);
+				console.log(err);
+			});
 
 		//set object on check all
 	}
@@ -160,31 +166,34 @@ class AssigmentPage extends React.Component {
 
 	handleCheckAll = () => {
 		const { page } = this.state.pagination;
-		if (this.state.checkAll[`page${page}`]) {
-			const { totalPage } = this.props;
-			const checkAll = {};
-			for (var i = 1; i <= totalPage; i++) {
-				checkAll[`page${i}`] = false;
-			}
-			this.setState({
-				checkAll,
-				assigned: []
-			})
-		}else{
-			const { items } = this.props;
-			const { page } = this.state.pagination;
-			const assigned = [];
-			items[`page${page}`].forEach(x => {
-				assigned.push(x.id_order);
-			});
+		//make sure data not empty
+		if (Object.keys(this.state.checkAll).length > 0) {
+			if (this.state.checkAll[`page${page}`]) {
+				const { totalPage } = this.props;
+				const checkAll = {};
+				for (var i = 1; i <= totalPage; i++) {
+					checkAll[`page${i}`] = false;
+				}
+				this.setState({
+					checkAll,
+					assigned: []
+				})
+			}else{
+				const { items } = this.props;
+				const { page } = this.state.pagination;
+				const assigned = [];
+				items[`page${page}`].forEach(x => {
+					assigned.push(x.id_order);
+				});
 
-			this.setState({ 
-				checkAll: {
-					...this.state.checkAll,
-					[`page${page}`]: true
-				},
-				assigned: [ ...this.state.assigned, ...assigned ]
-			})
+				this.setState({ 
+					checkAll: {
+						...this.state.checkAll,
+						[`page${page}`]: true
+					},
+					assigned: [ ...this.state.assigned, ...assigned ]
+				})
+			}
 		}
 	}
 
@@ -388,4 +397,4 @@ function mapStateToProps(state) {
 	}
 }
 
-export default connect(mapStateToProps, { fetchAssigment, getTotalPage, addAssign })(AssigmentPage);
+export default connect(mapStateToProps, { fetchAssigment, getTotalPage, addAssign, setProgressBar })(AssigmentPage);

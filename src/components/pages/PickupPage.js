@@ -7,6 +7,12 @@ import { getTotalPage, getItems, submitPickup } from "../../actions/pickup";
 import { setProgressBar } from "../../actions/progress";
 import { Table, Header, Icon, Divider, Checkbox, Button, Modal, Message } from "semantic-ui-react";
 
+const Empty = () => (
+	<Table.Row>
+		<Table.Cell colSpan='8'>Data tidak ditemukan</Table.Cell>
+	</Table.Row>
+);
+
 const ModalNotification = ({ open, close, choosed, submit, loading, errors }) => {
 	return(
 		<Modal size='tiny' open={open} centered={false}>
@@ -72,7 +78,8 @@ class PickupPage extends React.Component{
 		pickuped: [],
 		open: false,
 		loading: false,
-		errors: {}
+		errors: {},
+		errorsFetch: {}
 	}
 
 	componentDidMount(){
@@ -84,7 +91,10 @@ class PickupPage extends React.Component{
 
 		this.props.getItems(this.state.pagination, userid, page)
 			.then(() => this.props.setProgressBar(false))
-			.catch(err => console.log(err));
+			.catch(err => {
+				//this.setState({ errorsFetch: err.response.data.errors });
+				this.props.setProgressBar(false);
+			});
 	}
 
 
@@ -177,7 +187,7 @@ class PickupPage extends React.Component{
 					loading={this.state.loading}
 					errors={this.state.errors}
 				/>
-				{ Object.keys(pagination.pages).length > 0 && <Table celled>
+				<Table celled>
 				    <Table.Header>
 				      <Table.Row>
 				        <Table.HeaderCell>NO</Table.HeaderCell>
@@ -190,15 +200,14 @@ class PickupPage extends React.Component{
 				        <Table.HeaderCell style={{textAlign: 'center'}}>PICKUP</Table.HeaderCell>
 				      </Table.Row>
 				    </Table.Header> 
-				    	<Table.Body>
-    						<ListData 
-    							list={pagination.pages[pagenya]} 
-    							onClick={this.handleClickPickup}
-    							pickup={this.state.pickuped}
-    						/>
-    					</Table.Body>
-    					<Table.Footer>
-					      <Table.Row>
+				    <Table.Body>
+						{ Object.keys(pagination.pages).length > 0 ? <ListData 
+							list={pagination.pages[pagenya]} 
+							onClick={this.handleClickPickup}
+							pickup={this.state.pickuped} /> : <Empty />}
+					</Table.Body>
+					<Table.Footer>
+					    <Table.Row>
 					      	<Table.HeaderCell colSpan='5'>
 					      		<Pagination 
 									boundaryRange={1}
@@ -221,8 +230,8 @@ class PickupPage extends React.Component{
 					        	</Button>
 					        </Table.HeaderCell>
 					      </Table.Row>
-					    </Table.Footer>
-    				</Table> }
+					</Table.Footer>
+    			</Table> 
 			</Navbar>
 		);
 	}
