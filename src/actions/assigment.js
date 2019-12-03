@@ -1,20 +1,31 @@
 import api from "../api";
-import { FETCH_ASSIGMENT, ASSIGMENT_ADDED } from "../types";
+import { FETCH_ASSIGMENT, ASSIGMENT_ADDED, GET_TOTALPAGE_ASSIGMENT } from "../types";
 
-export const assigmentFetched = data => ({
+export const assigmentFetched = (items, page) => ({
 	type: FETCH_ASSIGMENT,
-	data
+	page: page,
+	items
 }) 
 
-export const assigmentAdded = data => ({
+export const assigmentAdded = (items, noPickup) => ({
 	type: ASSIGMENT_ADDED,
-	data
+	noPickup: noPickup,
+	items
 })
 
-export const fetchAssigment = (nopend) => dispatch =>
-	api.order.fetch_assigment(nopend)
-		.then(res => dispatch(assigmentFetched(res)))
+export const totalPageFetched = (total) => ({
+	type: GET_TOTALPAGE_ASSIGMENT,
+	total
+})
 
-export const addAssigment = (data) => dispatch =>
-	api.order.add_assigment(data)
-		.then(res => dispatch(assigmentAdded(res)))
+export const fetchAssigment = (nopend, pagination) => dispatch =>
+	api.order.fetch_assigment(nopend, pagination)
+		.then(res => dispatch(assigmentFetched(res, pagination.page)))
+
+export const getTotalPage = (nopend) => dispatch => 
+	api.order.getTotalPageAssign(nopend)
+		.then(res => dispatch(totalPageFetched(res)))
+
+export const addAssign = (assigned, newState, other) => dispatch =>
+	api.order.postAssigment(assigned, other)
+		.then(noPickup => dispatch(assigmentAdded(newState, noPickup)))

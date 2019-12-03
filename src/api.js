@@ -59,10 +59,14 @@ export default {
 			axios.post(`${process.env.REACT_APP_API}/order/getKantor`, {
 				nopend: nopend
 			}).then(res => res.data.result),
-		fetch_assigment: (nopend) =>
-			axios.post(`${process.env.REACT_APP_API}/order/getAssigment`, { 
-				nopend: nopend
-			}, config).then(res => res.data.result),
+		fetch_assigment: (nopend, pagination) =>
+			axios.get(`${process.env.REACT_APP_API}/order/getAssigment`, { 
+				params: {
+					nopend: nopend,
+					limit: pagination.limit,
+					offset: pagination.offset
+				}
+			}, config).then(res => res.data.items),
 		add_assigment: (data) => 
 			axios.post(`${process.env.REACT_APP_API}/postAssigment`,  {
 				noreq: data.noreq,
@@ -75,7 +79,29 @@ export default {
 		getRefSender: (kantor) =>
 			axios.post(`${process.env.REACT_APP_API}/order/getRefSender`, {
 				kantorId: kantor
-			}).then(res => res.data.result)
+			}).then(res => res.data.result),
+		getTotalPageAssign: (nopend) =>
+			axios.post(`${process.env.REACT_APP_API}/order/getTotalPageAssign`, {
+				nopend: nopend
+			}).then(res => res.data.total),
+		notifAssign: (assigned) =>
+			axios.post(`${process.env.REACT_APP_API}/order/getNotifAssign`, {
+				extId: assigned //array
+			}).then(res => res.data.result),
+		postAssigment: (assigned, other) =>
+			axios.post(`${process.env.REACT_APP_API}/postAssigment/generate`, {
+				extId: assigned,
+				nopend: other.nopend,
+				petugasId: other.petugasId
+			}).then(res => res.data.noPickup),
+		downloadTugas: (noPickup, nama) =>
+			axios.get(`${process.env.REACT_APP_API}/pdf/assigment`, {
+				params: { 
+					no_pickup: noPickup,
+					nama: nama
+				},
+				responseType: 'arraybuffer'
+			}).then(res => res.data)
 	},
 	petugas: {
 		fetc_petugas: () =>

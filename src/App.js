@@ -51,7 +51,7 @@ const App = ({ location, level }) =>
     <UserRoute location={location} path="/lacak" exact component={LacakPage} />
     <UserRoute location={location} path="/pickup" exact component={PickupPage} />
     <UserRoute location={location} path="/po" exact component={EntriPoPage} />
-    <UserRoute location={location} path="/assigment" exact component={AssigmentPage} />
+    { level === '01' && <UserRoute location={location} path="/assignment" exact component={AssigmentPage} />}
     <UserRoute location={location} path="/handover" exact component={HandOverPage} />
     <UserRoute location={location} path="/petugas" exact component={PetugasPage} />
     <UserRoute location={location} path="/topup/:id" exact component={TopupPage} />

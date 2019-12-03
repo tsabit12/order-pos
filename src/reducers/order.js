@@ -1,34 +1,69 @@
-import { PO_ADDED, KANTOR_FETCHED, FETCH_ASSIGMENT, ASSIGMENT_ADDED } from "../types";
+import { KANTOR_FETCHED, FETCH_ASSIGMENT, GET_TOTALPAGE_ASSIGMENT, ASSIGMENT_ADDED } from "../types";
 
 const initialState = {
-	entripo: [],
-	order: [],
 	kantor: [],
-	assigment: []
+	assigment: {
+		totalPage: 0,
+		pages: {},
+		items: [],
+		noPickup: 0 //number
+	}
 }
 
 export default function order( state = initialState, action={}){
 	switch(action.type){
-		case PO_ADDED:
-			return {
-				...state, entripo: [ action.data ], order: []
-			}
 		case KANTOR_FETCHED:
 			return {
-				entripo: [ ...state.entripo ], 
-				order: [], 
-				kantor: action.kantor, 
-				assigment: [ ...state.assigment ]
+				...state,
+				kantor: action.kantor
+			}
+		case GET_TOTALPAGE_ASSIGMENT:
+			return {
+				...state,
+				assigment: {
+					...state.assigment,
+					totalPage: Math.ceil(action.total / 10)
+				}
 			}
 		case FETCH_ASSIGMENT:
-			return {
-				...state,
-				assigment: action.data
+			let indexPage = `page${action.page}`;
+			const { pages } = state.assigment;
+			const index 	= Object.keys(pages).findIndex(x => x === indexPage);			
+			if (index > -1) {
+				return{
+					...state,
+					assigment: {
+						...state.assigment,
+						pages: {
+							...state.assigment.pages,
+							[indexPage] : action.items
+						},
+						items: pages[indexPage]
+					}
+				}
+			}else{ //state empty
+				return{
+					...state,
+					assigment: {
+						...state.assigment,
+						pages: {
+							...state.assigment.pages,
+							[indexPage] : action.items
+						},
+						items: action.items
+					}
+				}
 			}
 		case ASSIGMENT_ADDED:
-			return {
+			const oldState = state.assigment.pages;
+			return{
 				...state,
-				assigment: action.data.data
+				assigment: {
+					...state.assigment,
+					pages: Object.assign(oldState, action.items),
+					items: [],
+					noPickup: action.noPickup
+				}
 			}
 		default: return state;
 	}
