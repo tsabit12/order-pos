@@ -74,6 +74,10 @@ class FormEntriPo extends React.Component {
 				errors.money = "Maksimum top up Rp 10.000.000";
 			}
 		}
+
+		if (data.noPo !== '') {
+			if (data.noPo.length > 10) errors.noPo = "Tidak boleh lebih dari 10 karakter";
+		}
 		
 		return errors;
 	}
