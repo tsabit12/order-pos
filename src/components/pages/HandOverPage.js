@@ -3,39 +3,34 @@ import Navbar from "../menu/Navbar";
 import { connect } from "react-redux";
 import PropTypes from "prop-types";
 import FormHandOver from "../forms/FormHandOver";
-import ListHandOver from "../list/ListHandOver";
-import { getHandover } from "../../actions/handover";
+import api from "../../api";
 
 class HandOverPage extends React.Component {
-	state = {
-		nomorpickup: ''
-	}
-
-	submit = (data) => this.props.getHandover(data).then(() => this.setState({ nomorpickup: data.nopickup }));
+	submit = (data) => api.order.get_handover(data)
 
 	render(){
-		const { handoverisget, nopend } = this.props;
+		const { nopend } = this.props;
+		// console.log(data);
 		return(
 			<Navbar>
-				<FormHandOver submit={this.submit} nopend={nopend} />
-				{ handoverisget.length === 0 ? <React.Fragment /> : <ListHandOver listdata={this.props.handoverisget} nomorpickup={this.state.nomorpickup} /> }
+				<FormHandOver 
+					submit={this.submit} 
+					nopend={nopend} 
+				/>
 			</Navbar>
 		);
 	}
 }
 
 HandOverPage.propTypes = {
-	getHandover: PropTypes.func.isRequired,
-	handoverisget: PropTypes.array.isRequired,
 	nopend: PropTypes.string.isRequired
 }
 
 function mapStateToProps(state){
 	return {
-		handoverisget: state.gethandover,
 		nopend: state.user.nopend
 	}
 }
 
 
-export default connect(mapStateToProps, { getHandover })(HandOverPage);
+export default connect(mapStateToProps, null)(HandOverPage);

@@ -1,6 +1,39 @@
 import React from "react";
-import { Form, Button, Message } from "semantic-ui-react";
+import { Form, Button, Message, Table } from "semantic-ui-react";
 import PropTypes from "prop-types";
+
+const Result = ({ list }) => (
+	<React.Fragment>
+		<Message positive>
+			<Message.Header>Sukses!</Message.Header>
+			<p>Berikut adalah data order dengan status <strong>handover</strong></p>
+		</Message>
+		<Table celled>
+		    <Table.Header>
+		      <Table.Row>
+		        <Table.HeaderCell>ID ORDER</Table.HeaderCell>
+		        <Table.HeaderCell>NAMA PENGIRIM</Table.HeaderCell>
+		        <Table.HeaderCell>NAMA PENERIMA</Table.HeaderCell>
+		        <Table.HeaderCell>TANGGAL ORDER</Table.HeaderCell>
+		        <Table.HeaderCell>PETUGAS PICKUP</Table.HeaderCell>
+		        <Table.HeaderCell>KANTOR</Table.HeaderCell>
+		        <Table.HeaderCell>KOTA</Table.HeaderCell>
+		      </Table.Row>
+		    </Table.Header>
+	      	<Table.Body>
+		      { list.map(data => <Table.Row key={data.id_order}>
+		      		<Table.Cell>{data.id_order}</Table.Cell>
+		      		<Table.Cell>{data.nm_pengirim}</Table.Cell>
+		      		<Table.Cell>{data.nm_penerima}</Table.Cell>
+		      		<Table.Cell>{data.tgl}</Table.Cell>
+		      		<Table.Cell>{data.nama_petugas}</Table.Cell>
+		      		<Table.Cell>{data.namakantor}</Table.Cell>
+		      		<Table.Cell>{data.city}</Table.Cell>
+		      </Table.Row>)}
+		  	</Table.Body>
+		</Table>
+	</React.Fragment>
+);
 
 class FormHandOver extends React.Component{
 	state = {
@@ -8,7 +41,8 @@ class FormHandOver extends React.Component{
 		errors: {},
 		pin: '',
 		nopickup: '',
-		nopend: this.props.nopend
+		nopend: this.props.nopend,
+		data: []
 	}
 
 	onChange = e => this.setState({ [e.target.name]: e.target.value })
@@ -26,8 +60,12 @@ class FormHandOver extends React.Component{
 			};
 
 			this.props.submit(data)
-				.then(() => this.setState({ loading: false, errors: {} }))
-				.catch(err => this.setState({ errors: err.response.data.errors, loading: false }))
+				.then(res => {
+					this.setState({ loading: false, errors: {}, data: res });
+				})
+				.catch(err => {
+					this.setState({ errors: err.response.data.errors, loading: false, data: [] });
+				})
 		}
 	}
 
@@ -41,7 +79,7 @@ class FormHandOver extends React.Component{
 
 
 	render(){
-		const { errors, loading } = this.state;
+		const { errors, loading, data } = this.state;
 		
 		return(
 			<React.Fragment>
@@ -72,8 +110,9 @@ class FormHandOver extends React.Component{
 							error={errors.pin}
 						/>
 					</Form.Group>
-					<Button primary fluid>Submit</Button>
+					<Button primary fluid>Cari</Button>
 				</Form>
+				{ data.length > 0 && <Result list={data} /> }
 			</React.Fragment>
 		);
 	}
