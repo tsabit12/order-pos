@@ -43,7 +43,7 @@
     "lint": "eslint src"
   },
   "homepageDev": "http://10.32.41.90/order/",
-  "homepage": "https://order.posindonesia.co.id/app",
+  "homepage": "https://order.posindonesia.co.id",
   "eslintConfig": {
     "extends": "react-app"
   },
