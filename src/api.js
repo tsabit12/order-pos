@@ -167,11 +167,11 @@ export default {
 			axios.post(`${process.env.REACT_APP_API}/entriPo/getRefCompany`).then(res => res.data.result)
 	},
 	invoice: {
-		cetak: (data) => 
-			axios.post(`${process.env.REACT_APP_API}/invoice/cetak`, {
-				nopend: data.nopend,
-				periode: data.datesRange
-			}),
+		// cetak: (data) => 
+		// 	axios.post(`${process.env.REACT_APP_API}/invoice/cetak`, {
+		// 		nopend: data.nopend,
+		// 		periode: data.datesRange
+		// 	}),
 		download: (noinvoice) =>
 			axios.get(`${process.env.REACT_APP_API}/invoice/download`, {
 				params: {no_invoice: noinvoice},
@@ -189,7 +189,13 @@ export default {
 			axios.get(`${process.env.REACT_APP_API}/invoice/downloadDetail`, { 
 				params: { noinvoice: id },
 				responseType: 'arraybuffer'
-			})
+			}),
+		getData: (data) => 
+			axios.post(`${process.env.REACT_APP_API}/invoice/getDataInvoice`, {
+				nopend: data.nopend,
+				periode: data.datesRange,
+				nopo: data.nopo
+			}).then(res => res.data.result)
 	},
 	kurir: {
 		get_kurir: (data) =>
