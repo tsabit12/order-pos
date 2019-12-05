@@ -1,7 +1,7 @@
 import React from "react";
 import PropTypes from "prop-types";
 import Navbar from "../menu/Navbar";
-import { Input, Grid, Divider, Form, Message } from "semantic-ui-react";
+import { Input, Grid, Form, Message } from "semantic-ui-react";
 import Validator from "validator";
 import InlineError from "../InlineError";
 import axios from "axios";
@@ -44,7 +44,7 @@ class EntriPoPage extends React.Component {
 		const errors = this.validate(this.state.data);
 		this.setState({ errors });
 		if (Object.keys(errors).length === 0) {
-			this.setState({ loading: true });
+			this.setState({ loading: true, success: false });
 			axios.post(`${process.env.REACT_APP_API}/entriPo/getEmail`, {
 				email: this.state.data.email
 			}).then(res => {
@@ -89,7 +89,7 @@ class EntriPoPage extends React.Component {
 						</Form>
 				      </Grid.Column>
 					</Grid>
-					<Divider />
+					
 					{ errors.global && <Message negative>
 						<Message.Header>Oppps!</Message.Header>
 						<p>{errors.global}</p>

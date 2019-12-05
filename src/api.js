@@ -105,7 +105,15 @@ export default {
 					nama: nama
 				},
 				responseType: 'arraybuffer'
-			}).then(res => res.data)
+			}).then(res => res.data),
+		validatePo: (noPo) =>
+			axios.post(`${process.env.REACT_APP_API}/order/validatePo`, {
+				nomor_po: noPo
+			}),
+		sendingPo: (arr) =>
+			axios.post(`${process.env.REACT_APP_API}/order/sendPo`, {
+				payloadBody: arr
+			})
 	},
 	petugas: {
 		fetc_petugas: () =>

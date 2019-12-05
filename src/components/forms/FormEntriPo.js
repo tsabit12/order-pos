@@ -1,10 +1,48 @@
 import React from "react";
 import PropTypes from "prop-types";
-import { Form, Button, Segment, Message, Icon, Dropdown } from "semantic-ui-react";
+import { Form, Button, Segment, Message, Icon, Dropdown, Table } from "semantic-ui-react";
 import { DatesRangeInput } from 'semantic-ui-calendar-react';
 import { connect } from "react-redux";
-import { entriPo } from "../../actions/order";
+import { entriPo, deleteListPo, sendPo } from "../../actions/order";
 import Validator from "validator";
+
+const numberWithCommas = (number) => {
+	return number.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+}
+
+
+const ListPO = ({ list, batal, selesai }) => {
+	return(
+		<React.Fragment>
+			<Table singleLine>
+			    <Table.Header>
+			      <Table.Row>
+			        <Table.HeaderCell>Line PO</Table.HeaderCell>
+			        <Table.HeaderCell>Nomor PO</Table.HeaderCell>
+			        <Table.HeaderCell>Deskripsi</Table.HeaderCell>
+			        <Table.HeaderCell>PIC</Table.HeaderCell>
+			        <Table.HeaderCell>Periode</Table.HeaderCell>
+			        <Table.HeaderCell>Besar Uang</Table.HeaderCell>
+			      </Table.Row>
+			    </Table.Header>
+			    <Table.Body>
+			    	{ list.map((x, i) => <Table.Row key={x.line}>					
+						<Table.Cell>{x.line}</Table.Cell>
+						<Table.Cell>{x.noPo}</Table.Cell>
+						<Table.Cell>{x.desc}</Table.Cell>
+						<Table.Cell>{x.pic}</Table.Cell>
+						<Table.Cell>{x.datesRange}</Table.Cell>
+						<Table.Cell>{numberWithCommas(x.money)}</Table.Cell>
+					</Table.Row>) }
+			    </Table.Body>
+			</Table>
+			<Button.Group fluid>
+				<Button primary onClick={() => selesai()}>Selesai</Button>
+				<Button color='red' onClick={() => batal()}>Batal</Button>
+			</Button.Group>
+		</React.Fragment>
+	);
+}
 
 class FormEntriPo extends React.Component {
 	state = {
@@ -17,10 +55,28 @@ class FormEntriPo extends React.Component {
 			username: this.props.email,
 			email: this.props.emailAsli,
 			vendorname: '0',
-			pic: ''
+			pic: '',
+			line: 1
 		},
 		loading: false,
 		errors: {}
+	}
+
+	componentDidMount(){
+		const { listAdd } = this.props;
+		const jumlah = listAdd.length;
+		if (jumlah > 0) {
+			this.setState({ 
+				data: {
+					...this.state.data,
+					line: Number(jumlah) + 1,
+					noPo: listAdd[0].noPo,
+					vendorname: listAdd[0].vendorname,
+					datesRange: listAdd[0].datesRange,
+					pic: listAdd[0].pic
+				}
+			});
+		}
 	}
 
 	onChange = e => this.setState({ 
@@ -47,8 +103,18 @@ class FormEntriPo extends React.Component {
 			this.setState({ loading: true })
 			this.props.entriPo(this.state.data)
 				.then(() => {
-					this.setState({ loading: false });
-					this.props.entriSuccess(); 
+					const { line } = this.state.data;
+					this.setState({ 
+						loading: false, 
+						errors: {},
+						data: {
+							...this.state.data,
+							line: Number(line) + 1,
+							moneyView: '',
+							money: 0,
+							desc: ''
+						}
+					});
 				})
 				.catch(err => this.setState({ errors: err.response.data.errors, loading: false }))
 		}
@@ -91,9 +157,29 @@ class FormEntriPo extends React.Component {
 	handleDeletePo = () => this.setState({ data: { ...this.state.data, noPo: '' }})
 	handleChangeVendor = (e, data) => this.setState({ data: { ...this.state.data, vendorname: data.value }})
 
+	batal = () => {
+		this.props.deleteListPo();
+		this.setState({ data: { ...this.state.data, line: 1 }})
+	}
+
+	selesai = () => {
+		//send all data from redux store
+		//to api
+		const { listAdd } = this.props;
+		if (listAdd.length > 0) { //just make sure if store not empty
+			this.setState({ loading: true });
+			this.props.sendPo(listAdd)
+				.then(() => {
+					this.setState({ loading: false, errors: {} });
+					this.props.entriSuccess();
+				})
+				.catch(err => this.setState({ loading: false, errors: err.response.data.errors }));
+		}
+	}
+
 	render(){
 		const { loading, errors, data } = this.state;
-		
+		const { listAdd } = this.props;
 		return(
 			<React.Fragment>
 				<p style={{marginBottom: '-1em'}}>*Input nomor PO hanya bisa menggunakan (ctrl + v)</p>
@@ -104,7 +190,7 @@ class FormEntriPo extends React.Component {
 					</Message> }
 					<Form loading={loading} onSubmit={this.onSubmit}>
 				     	<Form.Group widths='equal'>
-				     		{ this.state.data.noPo === '' ? <Form.Input 
+				     		{ this.state.data.noPo === '' || listAdd.length > 0 ? <Form.Input 
 						    	type="text"
 						    	name="noPo"
 						    	id="noPo"
@@ -113,6 +199,7 @@ class FormEntriPo extends React.Component {
 						    	value={data.noPo}
 						    	error={errors.noPo}
 						    	autoComplete="off"
+						    	disabled={listAdd.length > 0 ? true : false }
 						    	onPaste={this.handleChangePo}
 						    /> : <Form.Input 
 						    	type="text"
@@ -129,13 +216,11 @@ class FormEntriPo extends React.Component {
 
 						    <Form.Input 
 						    	type="text"
-						    	name="email"
-						    	id="email"
-						    	label='Email' 
+						    	name="line"
+						    	id="line"
+						    	label='Line PO' 
 						    	placeholder='Masukan Email PIC' 
-						    	value={data.email}
-						    	onChange={this.onChange}
-						    	error={errors.email}
+						    	value={`Line ke ${data.line}`}
 						    	autoComplete="off"
 						    />
 					    </Form.Group>
@@ -147,6 +232,7 @@ class FormEntriPo extends React.Component {
 						    	 	options={this.props.refCompany} 
 						    	 	selection 
 						    	 	onChange={this.handleChangeVendor}
+						    	 	disabled={listAdd.length > 0 ? true : false }
 						    	 />
 						    	 { errors.vendorname && <span style={{color: "#ae5856"}}>{errors.vendorname}</span>}
 					    	</Form.Field>
@@ -160,6 +246,7 @@ class FormEntriPo extends React.Component {
 						    	onChange={this.onChange}
 						    	error={errors.pic}
 						    	autoComplete="off"
+						    	disabled={listAdd.length > 0 ? true : false }
 						    />
 					    </Form.Group>
 					    <Form.Field>
@@ -189,6 +276,7 @@ class FormEntriPo extends React.Component {
 						          dateFormat="YYYY/MM/DD"
 						          autoComplete="off"
 						          error={!!errors.datesRange}
+						          readOnly={listAdd.length > 0 ? true : false }
 						        />
 						        { errors.tglStart && <span style={{color: "#ae5856"}}>{errors.tglStart}</span>}
 						    </Form.Field>
@@ -205,7 +293,9 @@ class FormEntriPo extends React.Component {
 						    />
 					    </Form.Group>
 					    <Button secondary>Tambah</Button>
-					 </Form>
+					</Form>
+
+					{ listAdd.length > 0 && <ListPO list={listAdd} batal={this.batal} selesai={this.selesai} />}
 				</Segment>
 			</React.Fragment>
 		);
@@ -217,7 +307,16 @@ FormEntriPo.propTypes = {
 	entriPo: PropTypes.func.isRequired,
 	entriSuccess: PropTypes.func.isRequired,
 	emailAsli: PropTypes.string.isRequired,
-	refCompany: PropTypes.array.isRequired
+	refCompany: PropTypes.array.isRequired,
+	listAdd: PropTypes.array.isRequired,
+	deleteListPo: PropTypes.func.isRequired,
+	sendPo: PropTypes.func.isRequired
 }
 
-export default connect(null, { entriPo })(FormEntriPo);
+function mapStateToProps(state) {
+	return{
+		listAdd: state.order.po
+	}
+}
+
+export default connect(mapStateToProps, { entriPo, deleteListPo, sendPo })(FormEntriPo);

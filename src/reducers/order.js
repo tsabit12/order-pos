@@ -1,4 +1,11 @@
-import { KANTOR_FETCHED, FETCH_ASSIGMENT, GET_TOTALPAGE_ASSIGMENT, ASSIGMENT_ADDED } from "../types";
+import { 
+	KANTOR_FETCHED, 
+	FETCH_ASSIGMENT, 
+	GET_TOTALPAGE_ASSIGMENT, 
+	ASSIGMENT_ADDED, 
+	PO_ADDED,
+	DELETE_LIST_PO
+} from "../types";
 
 const initialState = {
 	kantor: [],
@@ -7,7 +14,8 @@ const initialState = {
 		pages: {},
 		items: [],
 		noPickup: 0 //number
-	}
+	},
+	po: []
 }
 
 export default function order( state = initialState, action={}){
@@ -64,6 +72,16 @@ export default function order( state = initialState, action={}){
 					items: [],
 					noPickup: action.noPickup
 				}
+			}
+		case PO_ADDED:
+			return{
+				...state,
+				po: [ ...state.po, action.data ]
+			}
+		case DELETE_LIST_PO:
+			return{
+				...state,
+				po: []
 			}
 		default: return state;
 	}
