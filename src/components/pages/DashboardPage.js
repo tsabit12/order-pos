@@ -6,8 +6,8 @@ import Navbar from "../menu/Navbar";
 import KurirDashboard from "./dashboard/KurirDashboard";
 import UserDashboard from "./dashboard/UserDashboard";
 import AdminDashboard from "./dashboard/AdminDashboard";
-import { getPurchase } from "../../actions/purchase";
-import { setProgressBar } from "../../actions/progress";
+// import { getPurchase } from "../../actions/purchase";
+// import { setProgressBar } from "../../actions/progress";
 import api from "../../api";
 
 const MenuDashboard = ({ user }) => (
@@ -46,14 +46,14 @@ class DashboardPage extends React.Component{
 		loading: false
 	}
 
-	componentDidMount(){
-		this.props.setProgressBar(true);
-		const data = {
-			level: this.props.user.level,
-			userid: this.props.user.userid
-		};
-		this.props.getPurchase(data).then(() => this.props.setProgressBar(false));
-	}
+	// componentDidMount(){
+	// 	this.props.setProgressBar(true);
+	// 	const data = {
+	// 		level: this.props.user.level,
+	// 		userid: this.props.user.userid
+	// 	};
+	// 	//this.props.getPurchase(data).then(() => this.props.setProgressBar(false));
+	// }
 
 	handleClick = () => {
 		const { username } = this.props.user;
@@ -80,7 +80,7 @@ class DashboardPage extends React.Component{
 }
 
 DashboardPage.propTypes = {
-	getPurchase: PropTypes.func.isRequired,
+	//getPurchase: PropTypes.func.isRequired,
 	user: PropTypes.object.isRequired,
 }
 
@@ -90,4 +90,4 @@ function mapStateToProps(state) {
 	}
 }
 
-export default connect(mapStateToProps, { getPurchase, setProgressBar })(DashboardPage);
+export default connect(mapStateToProps, null)(DashboardPage);

@@ -4,37 +4,37 @@ import { connect } from "react-redux";
 import PropTypes from "prop-types";
 import { Card, Button, Grid, Segment, Label, Statistic } from "semantic-ui-react";
 import { fetchCountForMitra } from "../../../actions/dashboard";
+import { setProgressBar } from "../../../actions/progress";
+// const Empty = () => (
+// 	<React.Fragment />
+// );
 
-const Empty = () => (
-	<React.Fragment />
-);
-
-const List = ({ listlimit }) => (
-	<React.Fragment>
-		<Label color='teal' ribbon>
-          Notifikasi Topup
-        </Label>
-		<Grid style={{paddingTop: '12px'}}>
-			{ listlimit.map(data => 
-				<Grid.Column mobile={16} tablet={8} computer={4} key={data.id_po}>
-					<Card fluid>
-				      <Card.Content>
-				        <Card.Header>{data.id_po}</Card.Header>
-				        <Card.Meta>Persentase {Math.round(data.persentase)}%</Card.Meta>
-				      </Card.Content>
-				      <Button color='red' fluid size='mini' as={Link} to={'/topup/'+data.id_po }>Topup</Button>
-				    </Card>
-			    </Grid.Column>) }
-    	</Grid>
-	</React.Fragment>
-);
+// const List = ({ listlimit }) => (
+// 	<React.Fragment>
+// 		<Label color='teal' ribbon>
+//           Notifikasi Topup
+//         </Label>
+// 		<Grid style={{paddingTop: '12px'}}>
+// 			{ listlimit.map(data => 
+// 				<Grid.Column mobile={16} tablet={8} computer={4} key={data.id_po}>
+// 					<Card fluid>
+// 				      <Card.Content>
+// 				        <Card.Header>{data.id_po}</Card.Header>
+// 				        <Card.Meta>Persentase {Math.round(data.persentase)}%</Card.Meta>
+// 				      </Card.Content>
+// 				      <Button color='red' fluid size='mini' as={Link} to={'/topup/'+data.id_po }>Topup</Button>
+// 				    </Card>
+// 			    </Grid.Column>) }
+//     	</Grid>
+// 	</React.Fragment>
+// );
 
 const numberWithCommas = (number) => {
 	return number.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
 }
 
 const ListCount = ({ list }) => (
-	<div style={{paddingTop: '12px'}}>
+	<div>
 		<Label color='teal' ribbon>
           Highlight
         </Label>
@@ -57,17 +57,21 @@ const ListCount = ({ list }) => (
 class UserDashboard extends React.Component{
 	componentDidMount(){
 		const { userid } = this.props;
+		this.props.setProgressBar(true);
  		this.props.fetchCountForMitra(userid)
- 			.catch(() => alert("Somtehing wrong!"));
+ 			.then(() => this.props.setProgressBar(false))
+ 			.catch(() => {
+ 				alert("Something wrong!");
+ 				this.props.setProgressBar(false);
+ 			});
 	}
 
 	render(){
-		const { listlimit, count } = this.props;
+		const { count } = this.props;
 
 		return(
 			<React.Fragment>
 				<Segment raised>
-					{ listlimit.length === 0 ? <Empty /> : <List listlimit={listlimit} /> }
 					{ count.length > 0 && <ListCount list={count} />}
 				</Segment>
 			</React.Fragment>
@@ -76,16 +80,17 @@ class UserDashboard extends React.Component{
 }
 
 UserDashboard.propTypes = {
-	listlimit: PropTypes.array.isRequired,
+	//listlimit: PropTypes.array.isRequired,
 	userid: PropTypes.string.isRequired,
-	count: PropTypes.array.isRequired
+	count: PropTypes.array.isRequired,
+	setProgressBar: PropTypes.func.isRequired
 }
 
 function mapStateToProps(state) {
 	return {
-		listlimit: state.purchase.filter(list => Math.round(list.persentase) <= 20),
+		//listlimit: state.purchase.filter(list => Math.round(list.persentase) <= 20),
 		count: state.dashboard.countHighlight
 	}
 }
 
-export default connect(mapStateToProps, { fetchCountForMitra })(UserDashboard);
+export default connect(mapStateToProps, { fetchCountForMitra, setProgressBar })(UserDashboard);

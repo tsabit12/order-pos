@@ -4,18 +4,6 @@ import { Menu } from "semantic-ui-react";
 
 const User = () => (
 	<React.Fragment>
-        <Menu.Item style={{textAlign: 'left'}}>
-          <Menu.Header>Purchase Order</Menu.Header>
-          <Menu.Menu>
-            <Menu.Item
-            	style={{textAlign:"left"}}
-              	name='Topup'
-              	as={NavLink}
-              	to="/topup"
-            />
-          </Menu.Menu>
-        </Menu.Item>
-
         <Menu.Item style={{textAlign:"left"}}>
           <Menu.Header>Order</Menu.Header>
           <Menu.Menu>

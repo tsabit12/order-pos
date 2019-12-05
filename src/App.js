@@ -13,8 +13,8 @@ import SignupPage from "./components/pages/SignupPage";
 import AssigmentPage from "./components/pages/AssigmentPage";
 import HandOverPage from "./components/pages/HandOverPage";
 import PetugasPage from "./components/pages/PetugasPage";
-import TopupPage from "./components/pages/TopupPage";
-import TopupForm from "./components/forms/TopupForm";
+// import TopupPage from "./components/pages/TopupPage";
+// import TopupForm from "./components/forms/TopupForm";
 import InvoicePage from "./components/pages/InvoicePage";
 import UserRoute from "./routes/UserRoute";
 import GuestRoute from "./routes/GuestRoute";
@@ -41,6 +41,9 @@ import LaporanPickupPage from "./components/pages/LaporanPickupPage";
 import EntriPickupPage from "./components/pages/EntriPickupPage";
 import PickupPage from "./components/pages/PickupPage";
 
+//<UserRoute location={location} path="/topup/:id" exact component={TopupPage} />
+//<UserRoute location={location} path="/topup" exact component={TopupForm} />
+
 const App = ({ location, level }) =>
   <Switch>
     <Route location={location} path="/" exact component={HomePage} />
@@ -54,8 +57,7 @@ const App = ({ location, level }) =>
     { level === '01' && <UserRoute location={location} path="/assignment" exact component={AssigmentPage} />}
     <UserRoute location={location} path="/handover" exact component={HandOverPage} />
     <UserRoute location={location} path="/petugas" exact component={PetugasPage} />
-    <UserRoute location={location} path="/topup/:id" exact component={TopupPage} />
-    <UserRoute location={location} path="/topup" exact component={TopupForm} />
+    
     <UserRoute location={location} path="/invoice" exact component={InvoicePage} />
     <UserRoute location={location} path="/list_po" exact component={PageListPo} />
     <UserRoute location={location} path="/list_po/:id" exact component={DetailPo} />

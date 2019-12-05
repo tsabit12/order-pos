@@ -16,7 +16,6 @@ const User = () => (
 		</Dropdown>
 		<Dropdown item simple text='Menu Lain'>
 	        <Dropdown.Menu>
-	          <Dropdown.Item as={NavLink} to="/topup">Topup</Dropdown.Item>
 	          <Dropdown.Item as={NavLink} to="/pickup">Request Pickup</Dropdown.Item>
 	          <Dropdown.Item as={NavLink} to="/lacak">Lacak Kiriman</Dropdown.Item>
 	        </Dropdown.Menu>
