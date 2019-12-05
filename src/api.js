@@ -172,7 +172,11 @@ export default {
 				nomor_po: id
 			}).then(res => res.data.result),
 		getRefCompany: () =>
-			axios.post(`${process.env.REACT_APP_API}/entriPo/getRefCompany`).then(res => res.data.result)
+			axios.post(`${process.env.REACT_APP_API}/entriPo/getRefCompany`).then(res => res.data.result),
+		getLine: (noPo) =>
+			axios.post(`${process.env.REACT_APP_API}/PurchaseOrder/getLinePo`, {
+				nomor_po: noPo
+			}).then(res => res.data.result)
 	},
 	invoice: {
 		// cetak: (data) => 

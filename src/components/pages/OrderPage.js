@@ -30,6 +30,7 @@ class OrderPage extends React.Component {
 		loading: false,
 		data: {
 			nomorPo: '',
+			line: '',
 			sender: {
 				senderName: this.props.auth.nama,
 				senderAddres: this.props.auth.address,
@@ -69,7 +70,8 @@ class OrderPage extends React.Component {
 		},
 		checkedForm: true,
 		checked: true,
-		emailPo: ''
+		emailPo: '',
+		optionsLine: []
 	}
 
 	componentDidMount(){
@@ -87,10 +89,21 @@ class OrderPage extends React.Component {
 	}
 
 	onClickPO = (data) => {
-		const { nomorPo, user } = data;
-		this.setState({ loading: true, data: { ...this.state.data, nomorPo: nomorPo } });
-		axios.post(`${process.env.REACT_APP_API}/order/searchPO`, { idpo: nomorPo, user: user })
-			.then(results => {
+		const { nomorPo } = data;
+		this.setState({ 
+			loading: true, 
+			data: { 
+				...this.state.data, 
+				nomorPo: nomorPo,
+				line: data.line,
+			},
+			optionsLine: data.optionsLine
+		});
+
+		axios.post(`${process.env.REACT_APP_API}/order/searchPO`, { 
+			idpo: nomorPo, 
+			line: data.line 
+		}).then(results => {
 				this.setState({ 
 					loading: false, 
 					step: 2, 
@@ -190,7 +203,14 @@ class OrderPage extends React.Component {
 			<Navbar>
 				<div style={{marginTop: '10px'}}>
 					<StepOrder step={step} />
-					{ step === 1 && <CariPoForm submitPO={this.onClickPO} errors={ errors.po } loading={loading} nomorPo={data.nomorPo}/> }
+					{ step === 1 && <CariPoForm 
+						submitPO={this.onClickPO} 
+						errors={ errors.po } 
+						loading={loading} 
+						nomorPo={data.nomorPo}
+						line={data.line}
+						optionsLine={this.state.optionsLine}
+					/> }
 					{ step === 2 && <SenderForm 
 						submitSender={this.submitSender} 
 						onClickBack={this.onClickBack} 
