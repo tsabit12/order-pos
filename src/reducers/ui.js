@@ -1,9 +1,17 @@
 import { SET_PROGRESS_BAR } from "../types";
 
-export default function ui(state=false, action={}){
+const initialState = {
+	loading: false,
+	version: 'version 1.0.1'
+}
+
+export default function ui(state=initialState, action={}){
 	switch(action.type){
 		case SET_PROGRESS_BAR:
-		 	return action.isOpen;
+		 	return {
+		 		...state,
+		 		loading: action.isOpen
+		 	}
 		default: return state;
 	}
 }	

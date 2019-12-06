@@ -1,23 +1,38 @@
 // import produce from "immer"; 
-import { FETCH_LIST_PO, FETCH_LAPORAN_ORDER } from "../types";
+import { FETCH_LIST_PO, FETCH_LAPORAN_ORDER, GET_TOTAL_PAGE_PO } from "../types";
 
 const initialState = {
-	po: [],
+	po: {
+		pages: {},
+		totalPage: 0
+	},
 	order: []
 }
 
 export default function pouser(state = initialState, action={}){
 	switch(action.type){
+		case GET_TOTAL_PAGE_PO:
+			return{
+				...state,
+				po: {
+					...state.po,
+					totalPage: Math.ceil(action.total / 10)
+				}
+			}
 		case FETCH_LIST_PO:
 			return {
-				...state, po: action.po
+				...state,
+				po: {
+					...state.po,
+					pages: {
+						...state.po.pages,
+						[`page${action.page}`] : action.po
+					}
+				}
 			}
 
-		//method is save all data wherever user search
-		//and then filter it with mapStateToProps
 		case FETCH_LAPORAN_ORDER:
 			const indexes = state.order.map((x, i) => x.tanggal_order === action.result[0].tanggal_order ? i : null).filter(i => i !== null);
-			//data alerady in state we should update
 			if (indexes.length > 0) {
 				const updatedOrder = state.order.filter(x => x.tanggal_order !== action.result[0].tanggal_order);
 				return {

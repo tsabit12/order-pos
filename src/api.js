@@ -163,9 +163,11 @@ export default {
 				id_po: data.id_po,
 				userid: data.userid
 			}, config).then(res => res.data.result),
-		fetch_listpo: (id) => 
+		fetch_listpo: (id, pagination) => 
 			axios.post(`${process.env.REACT_APP_API}/getPoUser`, { 
-				userid: id 
+				userid: id,
+				offset: pagination.offset,
+				limit: pagination.limit
 			}, config).then(res => res.data.result),
 		getDetailPo: (id) => 
 			axios.post(`${process.env.REACT_APP_API}/PurchaseOrder/getDetailOrder`, {
@@ -176,7 +178,11 @@ export default {
 		getLine: (noPo) =>
 			axios.post(`${process.env.REACT_APP_API}/PurchaseOrder/getLinePo`, {
 				nomor_po: noPo
-			}).then(res => res.data.result)
+			}).then(res => res.data.result),
+		getTotalPage: (id) =>
+			axios.post(`${process.env.REACT_APP_API}/getPoUser/getTotalPage`, {
+				userid: id
+			}).then(res => res.data.total)
 	},
 	invoice: {
 		// cetak: (data) => 

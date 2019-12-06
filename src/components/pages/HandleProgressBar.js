@@ -25,7 +25,7 @@ HandleProgressBar.propTypes = {
 
 function mapStateProps(state) {
 	return {
-		status: state.ui
+		status: state.ui.loading
 	}
 }
 
