@@ -1,5 +1,5 @@
 import React from "react";
-import { Form, Button, Checkbox, Dropdown } from "semantic-ui-react";
+import { Form, Button, Checkbox, Dropdown, Message } from "semantic-ui-react";
 import PropTypes from "prop-types";
 import { connect } from "react-redux";
 import api from "../../api";
@@ -21,7 +21,8 @@ class SenderForm extends React.Component {
 		errors: {},
 		checked: this.props.checked,
 		checkedForm: this.props.checkedForm,
-		kantorasal: this.props.dataSender.kantor
+		kantorasal: this.props.dataSender.kantor,
+		loading: false
 	}
 
 	escapeRegExp = (string, name) => {
@@ -43,9 +44,13 @@ class SenderForm extends React.Component {
 
 	onSubmit = () => {
 		const errors = this.validate(this.state.data);
-		this.setState({ errors });
+		this.setState({ errors, loading: true });
 		if (Object.keys(errors).length === 0) {
-			this.props.submitSender(this.state.data, this.state.step, this.state.checkedForm, this.state.checked, this.state.kantorasal);
+			api.order.validateKantor(this.state.kantorasal)
+				.then(() => {
+					this.props.submitSender(this.state.data, this.state.step, this.state.checkedForm, this.state.checked, this.state.kantorasal);
+					this.setState({ loading: false });
+				}).catch(err => this.setState({ errors: err.response.data.errors, loading: false }))
 		}
 	}
 
@@ -138,13 +143,17 @@ class SenderForm extends React.Component {
 
 
 	render(){
-		const { step, data, errors, checkedForm } = this.state;
+		const { step, data, errors, checkedForm, loading } = this.state;
 		const requied 		= {color: 'red'};
 		const notRequied 	= {color: ''}
 		const stylRequired 	= checkedForm ? notRequied : requied;
 		return(
 			<React.Fragment>
-				<Form onSubmit={this.onSubmit}>
+				{ errors.global && <Message negative>
+					<Message.Header>Oppps!</Message.Header>
+					<p>{errors.global}</p>
+				</Message> }
+				<Form onSubmit={this.onSubmit} loading={loading}>
 					<Form.Group widths="equal">
 						<Form.Field>
 							<label style={{fontWeight: 100}}>

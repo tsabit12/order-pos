@@ -113,6 +113,10 @@ export default {
 		sendingPo: (arr) =>
 			axios.post(`${process.env.REACT_APP_API}/order/sendPo`, {
 				payloadBody: arr
+			}),
+		validateKantor: (kantorid) =>
+			axios.post(`${process.env.REACT_APP_API}/order/validateKantor`, {
+				kantor: kantorid
 			})
 	},
 	petugas: {
