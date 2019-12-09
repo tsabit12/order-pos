@@ -1,10 +1,9 @@
 import React, { createRef } from "react";
 import PropTypes from "prop-types";
 import { Link, NavLink } from "react-router-dom";
-import { Sidebar, Menu, Icon, Image, Segment, Sticky, Ref, Dropdown, Label } from "semantic-ui-react";
+import { Sidebar, Menu, Icon, Image, Segment, Sticky, Ref, Dropdown } from "semantic-ui-react";
 import { connect } from "react-redux";
 import  * as actions from "../../actions/auth";
-import { removeNotif } from "../../actions/notifikasi";
 import Logo from "../../logosampoerna.jpg";
 
 import User from "./routes/mobile/User";
@@ -14,11 +13,10 @@ import Ae from "./routes/mobile/Ae";
 
 const contextRef = createRef();
 
-const NavbarMobile = ({ children, onPusherClick, onToggle, visible, logout, user, isAuthenticated, notif, show, topup, removeNotif }) => {
+const NavbarMobile = ({ children, onPusherClick, onToggle, visible, logout, user, isAuthenticated }) => {
 
 	const trigger = (
 	  <span>
-	  	{ notif && show && user.level === '04' && <Label circular color='red' empty /> }
 	    <Icon name='user' />
 	  </span>
 	);
@@ -38,17 +36,7 @@ const NavbarMobile = ({ children, onPusherClick, onToggle, visible, logout, user
 							<Dropdown trigger={trigger}>
 								<Dropdown.Menu>
 									<Dropdown.Item disabled><strong>{user.username}</strong></Dropdown.Item>
-									{ user.confirmed && <React.Fragment>
-										{ user.level === '04' && <React.Fragment>
-											<Dropdown.Item as={NavLink} to="/notifikasi/topup" >
-												Topup &nbsp;
-												{ notif && <Label color='red' circular size='mini'>{topup.total}</Label> }
-											</Dropdown.Item>
-										</React.Fragment> }
-
-										<Dropdown.Item as={NavLink} to="/changepassword">Ganti Password</Dropdown.Item>
-									</React.Fragment> }
-
+										{ user.confirmed && <Dropdown.Item as={NavLink} to="/changepassword">Ganti Password</Dropdown.Item>}
 									<Dropdown.Item onClick={() => logout() }>Sign Out</Dropdown.Item>
 								</Dropdown.Menu>
 							</Dropdown>
@@ -98,21 +86,14 @@ const NavbarMobile = ({ children, onPusherClick, onToggle, visible, logout, user
 NavbarMobile.propTypes = {
 	logout: PropTypes.func.isRequired,
 	user: PropTypes.object.isRequired,
-	isAuthenticated: PropTypes.bool.isRequired,
-	notif: PropTypes.bool.isRequired,
-	show: PropTypes.bool.isRequired,
-	topup: PropTypes.object.isRequired,
-	removeNotif: PropTypes.func.isRequired
+	isAuthenticated: PropTypes.bool.isRequired
 }
 
 function mapStateToProps(state) {
 	return{
 		user: state.user,
-		isAuthenticated: !!state.user.token,
-		notif: !!state.notifikasi.topup.total,
-		show: state.notifikasi.show,
-		topup: state.notifikasi.topup
+		isAuthenticated: !!state.user.token
 	}
 }
 
-export default connect(mapStateToProps, { logout: actions.logout, removeNotif })(NavbarMobile);
+export default connect(mapStateToProps, { logout: actions.logout })(NavbarMobile);

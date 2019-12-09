@@ -7,14 +7,11 @@ import LoginPage from "./components/pages/LoginPage";
 import DashboardPage from "./components/pages/DashboardPage";
 import OrderPage from "./components/pages/OrderPage";
 import LacakPage from "./components/pages/LacakPage";
-// import ReqPickupPage from "./components/pages/ReqPickupPage";
 import EntriPoPage from "./components/pages/EntriPoPage";
 import SignupPage from "./components/pages/SignupPage";
 import AssigmentPage from "./components/pages/AssigmentPage";
 import HandOverPage from "./components/pages/HandOverPage";
 import PetugasPage from "./components/pages/PetugasPage";
-// import TopupPage from "./components/pages/TopupPage";
-// import TopupForm from "./components/forms/TopupForm";
 import InvoicePage from "./components/pages/InvoicePage";
 import UserRoute from "./routes/UserRoute";
 import GuestRoute from "./routes/GuestRoute";
@@ -27,7 +24,6 @@ import DetailPo from "./components/po/DetailPo";
 import AddUserPage from "./components/pages/AddUserPage";
 import DetailInvoicePage from "./components/pages/DetailInvoicePage";
 import PageNotFound from "./components/pages/PageNotFound";
-import ConfirmTopupPage from "./components/pages/ConfirmTopupPage";
 import ConfirmationAkunPage from "./components/pages/ConfirmationAkunPage";
 import ChangePasswordPage from "./components/pages/ChangePasswordPage";
 import LaporanOrderPage from "./components/pages/LaporanOrderPage";
@@ -40,9 +36,7 @@ import SelesaiAntarPage from "./components/pages/SelesaiAntarPage";
 import LaporanPickupPage from "./components/pages/LaporanPickupPage";
 import EntriPickupPage from "./components/pages/EntriPickupPage";
 import PickupPage from "./components/pages/PickupPage";
-
-//<UserRoute location={location} path="/topup/:id" exact component={TopupPage} />
-//<UserRoute location={location} path="/topup" exact component={TopupForm} />
+import MappingKantorPage from "./components/pages/MappingKantorPage";
 
 const App = ({ location, level }) =>
   <Switch>
@@ -57,7 +51,6 @@ const App = ({ location, level }) =>
     { level === '01' && <UserRoute location={location} path="/assignment" exact component={AssigmentPage} />}
     <UserRoute location={location} path="/handover" exact component={HandOverPage} />
     <UserRoute location={location} path="/petugas" exact component={PetugasPage} />
-    
     <UserRoute location={location} path="/invoice" exact component={InvoicePage} />
     <UserRoute location={location} path="/list_po" exact component={PageListPo} />
     <UserRoute location={location} path="/list_po/:id" exact component={DetailPo} />
@@ -66,7 +59,6 @@ const App = ({ location, level }) =>
     <UserRoute location={location} path="/user/add" exact component={AddUserPage} />
     <UserRoute location={location} path="/pickup/petugas" exact component={PetugasPickupPage} />
     <UserRoute location={location} path="/detail_invoice/:noinvoice" exact component={DetailInvoicePage} />
-    <UserRoute location={location} path="/notifikasi/topup" exact component={ConfirmTopupPage} />
     <UserRoute location={location} path="/confirmation/akun/:token" exact component={ConfirmationAkunPage} />
     <UserRoute location={location} path="/changepassword" exact component={ChangePasswordPage} />
     <UserRoute location={location} path="/list_order" exact component={LaporanOrderPage} />
@@ -78,6 +70,7 @@ const App = ({ location, level }) =>
     <UserRoute location={location} path="/laporan/selesai_antar" exact component={SelesaiAntarPage} />
     <UserRoute location={location} path="/laporan/pickup" exact component={LaporanPickupPage} />
     { level === '01' && <UserRoute location={location} path="/entri_pickup" exact component={EntriPickupPage} />}
+    { level === '03' && <UserRoute location={location} path="/mapping" exact component={MappingKantorPage} />}
     <UserRoute location={location} path="*" exact component={PageNotFound} />
   </Switch>;  
 

@@ -1,11 +1,11 @@
 import React from "react";
-import PropTypes from "prop-types";
+// import PropTypes from "prop-types";
 import { Responsive, Container, Segment } from "semantic-ui-react";
 import NavbarDekstop from "./NavbarDekstop";
 import NavbarMobile from "./NavbarMobile";
 import Footer from "./Footer";
-import { connect } from "react-redux";
-import { getTopup } from "../../actions/notifikasi";
+// import { connect } from "react-redux";
+// import { getTopup } from "../../actions/notifikasi";
 
 const NavbarChildren = ({ children }) => (
 	<Container style={{paddingBottom: "3em", paddingTop: "1em" }}>{children}</Container>
@@ -16,9 +16,9 @@ class Navbar extends React.Component {
 		visible: false
 	}
 
-	componentDidMount(){
-		this.props.getTopup();
-	}
+	// componentDidMount(){
+	// 	this.props.getTopup();
+	// }
 
 	UNSAFE_componentWillUpdate(nextProps, nextState) {
 		if (nextState.visible === true) {
@@ -72,8 +72,8 @@ class Navbar extends React.Component {
 	}
 }
 
-Navbar.propTypes = {
-	getTopup: PropTypes.func.isRequired
-}
+// Navbar.propTypes = {
+// 	getTopup: PropTypes.func.isRequired
+// }
 
-export default connect(null, { getTopup })(Navbar);
+export default Navbar;

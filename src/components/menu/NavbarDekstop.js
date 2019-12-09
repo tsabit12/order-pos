@@ -1,7 +1,7 @@
 import React from "react";
 import PropTypes from "prop-types";
 import { Link, NavLink } from "react-router-dom";
-import { Menu, Image, Dropdown, Icon, Label } from "semantic-ui-react";
+import { Menu, Image, Dropdown, Icon } from "semantic-ui-react";
 import { connect } from "react-redux";
 import  * as actions from "../../actions/auth";
 import Logo from "../../logosampoerna.jpg";
@@ -9,14 +9,11 @@ import User from "./routes/dekstop/User";
 import Kurir from "./routes/dekstop/Kurir";
 import Admin from "./routes/dekstop/Admin";
 import Ae from "./routes/dekstop/Ae";
-import { removeNotif } from "../../actions/notifikasi";
 
-
-const NavbarDekstop = ({ isAuthenticated, logout, user, notif, topup, show, removeNotif }) => {
+const NavbarDekstop = ({ isAuthenticated, logout, user }) => {
 
 	const trigger = (
 	  <span>
-	  	{ notif && show && user.level === '04' && <Label circular color='red' empty /> }
 	    <Icon name='user' /> {user.nama}
 	  </span>
 	);
@@ -36,21 +33,11 @@ const NavbarDekstop = ({ isAuthenticated, logout, user, notif, topup, show, remo
 
 			<Menu.Menu position="right">
 				{ isAuthenticated && <Menu.Item>
-					<Dropdown trigger={trigger} onClick={() => removeNotif() }>
+					<Dropdown trigger={trigger}>
 						<Dropdown.Menu>
 							<Dropdown.Item disabled><strong>{user.username}</strong></Dropdown.Item>
 							<Dropdown.Divider />
-							{ user.confirmed && <React.Fragment>
-								{ user.level === '04' && <React.Fragment>
-									<Dropdown.Item as={NavLink} to="/notifikasi/topup" >
-										Topup &nbsp;
-										{ notif && <Label color='red' circular size='mini'>{topup.total}</Label> }
-									</Dropdown.Item>
-								</React.Fragment> }							
-						
-								<Dropdown.Item as={NavLink} to="/changepassword">Ganti Password</Dropdown.Item>
-							</React.Fragment> }
-
+								{ user.confirmed && <Dropdown.Item as={NavLink} to="/changepassword">Ganti Password</Dropdown.Item>}
 							<Dropdown.Item onClick={() => logout() }>Sign Out</Dropdown.Item>
 						</Dropdown.Menu>
 					</Dropdown> 
@@ -67,22 +54,15 @@ const NavbarDekstop = ({ isAuthenticated, logout, user, notif, topup, show, remo
 NavbarDekstop.propTypes = {
 	logout: PropTypes.func.isRequired,
 	isAuthenticated: PropTypes.bool.isRequired,
-	user: PropTypes.object.isRequired,
-	notif: PropTypes.bool.isRequired,
-	show: PropTypes.bool.isRequired,
-	topup: PropTypes.object.isRequired,
-	removeNotif: PropTypes.func.isRequired
+	user: PropTypes.object.isRequired
 }
 
 function mapStateToProps(state) {
 	return{
 		user: state.user,
-		isAuthenticated: !!state.user.token,
-		notif: !!state.notifikasi.topup.total,
-		show: state.notifikasi.show,
-		topup: state.notifikasi.topup
+		isAuthenticated: !!state.user.token
 	}
 }
 
 
-export default connect(mapStateToProps, { logout: actions.logout, removeNotif })(NavbarDekstop);
+export default connect(mapStateToProps, { logout: actions.logout })(NavbarDekstop);

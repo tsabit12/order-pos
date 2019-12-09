@@ -244,18 +244,6 @@ export default {
 				biaya: data.biaya_pickup
 			})
 	},
-	notifikasi: {
-		get_jumlah: () => 
-			axios.post(`${process.env.REACT_APP_API}/notifikasi/getJumlahTopup`).then(res => res.data.jumlah),
-		get_data_topup: () =>
-			axios.post(`${process.env.REACT_APP_API}/notifikasi/getDataToup`).then(res => res.data.result),
-		confirm_topup: (data, id) =>
-			axios.post(`${process.env.REACT_APP_API}/notifikasi/confirmTopup`, {
-				idpo: data.idpo,
-				nomor: data.nomor,
-				userid: id
-			}).then(res => res.data.result)
-	},
 	laporan: {
 		get_order: (tanggal, id) => 
 			axios.post(`${process.env.REACT_APP_API}/laporan/getOrder`, {
@@ -296,5 +284,31 @@ export default {
 			axios.post(`${process.env.REACT_APP_API}/pickup/addPickup`, {
 				extId: items //array
 			})
+	},
+	mapping: {
+		getTotalPage: () => 
+			axios.post(`${process.env.REACT_APP_API}/mapping/getTotalPage`).then(res => res.data.total),
+		fetchMapping: (paging) =>
+			axios.post(`${process.env.REACT_APP_API}/mapping/fetchData`, {
+				offset: paging.offset,
+				limit: paging.limit
+			}).then(res => res.data.result),
+		fetchOne: (payload) =>
+			axios.post(`${process.env.REACT_APP_API}/mapping/fetchOne`, {
+				kantorId: payload.kantorId,
+				no: payload.no
+			}).then(res => res.data.result),
+		getRegional: () => 
+			axios.post(`${process.env.REACT_APP_API}/mapping/getRegional`).then(res => res.data.reg),
+		getKprk: (wilayah) =>
+			axios.post(`${process.env.REACT_APP_API}/mapping/getKprk`, {
+				wilayah: wilayah
+			}).then(res => res.data.kprk),
+		updateMapping: (payload) =>
+			axios.post(`${process.env.REACT_APP_API}/mapping/updateMapping`, {
+				RowNum: payload.RowNum,
+				nopend: payload.nopend,
+				kantorId: payload.kantorId	
+			}).then(res => res.data.result)
 	}
 }

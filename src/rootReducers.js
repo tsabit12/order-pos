@@ -8,9 +8,9 @@ import purchase from "./reducers/purchase";
 import pouser from "./reducers/pouser";
 import ui from "./reducers/ui";
 import invoice from "./reducers/invoice";
-import notifikasi from "./reducers/notifikasi";
 import laporan from "./reducers/laporan";
 import pickup from "./reducers/pickup";
+import mapping from "./reducers/mapping";
 
 export default combineReducers({
 	ui,
@@ -23,6 +23,6 @@ export default combineReducers({
 	purchase,
 	pouser,
 	invoice,
-	notifikasi,
-	pickup
+	pickup,
+	mapping
 }); 
