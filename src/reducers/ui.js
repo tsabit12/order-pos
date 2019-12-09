@@ -2,7 +2,7 @@ import { SET_PROGRESS_BAR } from "../types";
 
 const initialState = {
 	loading: false,
-	version: 'version 1.0.1'
+	version: 'version 1.0.2'
 }
 
 export default function ui(state=initialState, action={}){
