@@ -16,7 +16,7 @@ import InvoicePage from "./components/pages/InvoicePage";
 import UserRoute from "./routes/UserRoute";
 import GuestRoute from "./routes/GuestRoute";
 import PageListPo from "./components/pages/PageListPo"; 
-import ListInvoicePage from "./components/pages/ListInvoicePage";
+// import ListInvoicePage from "./components/pages/ListInvoicePage";
 import HomePage from "./components/pages/HomePage";
 import UserPage from "./components/pages/UserPage";
 import PetugasPickupPage from "./components/pages/PetugasPickupPage";
@@ -51,10 +51,9 @@ const App = ({ location, level }) =>
     { level === '01' && <UserRoute location={location} path="/assignment" exact component={AssigmentPage} />}
     <UserRoute location={location} path="/handover" exact component={HandOverPage} />
     <UserRoute location={location} path="/petugas" exact component={PetugasPage} />
-    <UserRoute location={location} path="/invoice" exact component={InvoicePage} />
+    { level === '04' && <UserRoute location={location} path="/invoice" exact component={InvoicePage} /> }
     <UserRoute location={location} path="/list_po" exact component={PageListPo} />
     <UserRoute location={location} path="/list_po/:id" exact component={DetailPo} />
-    <UserRoute location={location} path="/laporan_invoice" exact component={ListInvoicePage} />
     <UserRoute location={location} path="/user" exact component={UserPage} />
     <UserRoute location={location} path="/user/add" exact component={AddUserPage} />
     <UserRoute location={location} path="/pickup/petugas" exact component={PetugasPickupPage} />

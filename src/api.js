@@ -189,35 +189,42 @@ export default {
 			}).then(res => res.data.total)
 	},
 	invoice: {
-		// cetak: (data) => 
-		// 	axios.post(`${process.env.REACT_APP_API}/invoice/cetak`, {
-		// 		nopend: data.nopend,
-		// 		periode: data.datesRange
+		getGenerate: (payload) =>
+			axios.post(`${process.env.REACT_APP_API}/invoice/getGenerate`, {
+				tglAwal: payload.tglAwal,
+				tglAkhir: payload.tglAkhir,
+				noPo: payload.nopo
+			}).then(res => res.data.result),
+		generate: (noPickup, nopo, userid) =>
+			axios.post(`${process.env.REACT_APP_API}/invoice/generate`, {
+				no_pickup: noPickup,
+				id_po: nopo,
+				userid: userid
+			}).then(res => res.data.noinvoice),
+		download: (noinvoice) => 
+			axios.get(`${process.env.REACT_APP_API}/pdf/invoice`, {
+				params: { noInvoice: noinvoice },
+				responseType: 'arraybuffer'
+			}).then(res => res.data)
+		// laporan: (values) => 
+		// 	axios.post(`${process.env.REACT_APP_API}/invoice/laporan`, {
+		// 		tanggal: values.tanggal
+		// 	}).then(res => res.data.result),
+		// detail: (id) => 
+		// 	axios.post(`${process.env.REACT_APP_API}/invoice/laporanDetail`, {
+		// 		noinvoice: id
+		// 	}).then(res => res.data.result),
+		// downloadDetail: (id) =>
+		// 	axios.get(`${process.env.REACT_APP_API}/invoice/downloadDetail`, { 
+		// 		params: { noinvoice: id },
+		// 		responseType: 'arraybuffer'
 		// 	}),
-		download: (noinvoice) =>
-			axios.get(`${process.env.REACT_APP_API}/invoice/download`, {
-				params: {no_invoice: noinvoice},
-				responseType: 'arraybuffer'
-			}),
-		laporan: (values) => 
-			axios.post(`${process.env.REACT_APP_API}/invoice/laporan`, {
-				tanggal: values.tanggal
-			}).then(res => res.data.result),
-		detail: (id) => 
-			axios.post(`${process.env.REACT_APP_API}/invoice/laporanDetail`, {
-				noinvoice: id
-			}).then(res => res.data.result),
-		downloadDetail: (id) =>
-			axios.get(`${process.env.REACT_APP_API}/invoice/downloadDetail`, { 
-				params: { noinvoice: id },
-				responseType: 'arraybuffer'
-			}),
-		getData: (data) => 
-			axios.post(`${process.env.REACT_APP_API}/invoice/getDataInvoice`, {
-				nopend: data.nopend,
-				periode: data.datesRange,
-				nopo: data.nopo
-			}).then(res => res.data.result)
+		// getData: (data) => 
+		// 	axios.post(`${process.env.REACT_APP_API}/invoice/getDataInvoice`, {
+		// 		nopend: data.nopend,
+		// 		periode: data.datesRange,
+		// 		nopo: data.nopo
+		// 	}).then(res => res.data.result)
 	},
 	kurir: {
 		get_kurir: (data) =>
