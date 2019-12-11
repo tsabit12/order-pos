@@ -27,17 +27,19 @@
   font-size: 1.2em;
   text-decoration: none;
   border: 1px solid #efefef;
-  padding: .5em;
+  padding: 1.5em;
   border-radius: 3px;
   float: left;
-  margin: 6em 0 0 -155px;
+  margin: 6em 0 0 -166px;
   left: 52%;
   position: relative;
   transition: all .3s linear;
+  background-color: #007aff;
+  cursor: pointer;
 }
 
 .back-button:hover {
-  background-color: #007aff;
+  background-color: #406ea0;
   color: #fff;
 }
 
