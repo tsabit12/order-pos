@@ -1,11 +1,25 @@
-import { FETCH_INVOICE, CLEAR_INVOICE } from "../types";
+import { GET_TOTAL_PAGE_INVOICE, FETCH_INVOICE } from "../types";
 
-export default function invoice(state=[], action={}){
+const initialState = {
+	totalPage: 0,
+	pages: {}
+}
+
+export default function invoice(state=initialState, action={}){
 	switch(action.type){
+		case GET_TOTAL_PAGE_INVOICE:
+			return{
+				...state,
+				totalPage: Math.ceil(Number(action.total) / 10) 
+			}
 		case FETCH_INVOICE:
-			return action.invoice;
-		case CLEAR_INVOICE:
-			return [];
+			return{
+				...state,
+				pages:{
+					...state.pages,
+					[`page${action.page}`]: action.result
+				}
+			}
 		default: return state;
 	}
 }

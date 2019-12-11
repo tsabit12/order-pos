@@ -205,26 +205,16 @@ export default {
 			axios.get(`${process.env.REACT_APP_API}/pdf/invoice`, {
 				params: { noInvoice: noinvoice },
 				responseType: 'arraybuffer'
-			}).then(res => res.data)
-		// laporan: (values) => 
-		// 	axios.post(`${process.env.REACT_APP_API}/invoice/laporan`, {
-		// 		tanggal: values.tanggal
-		// 	}).then(res => res.data.result),
-		// detail: (id) => 
-		// 	axios.post(`${process.env.REACT_APP_API}/invoice/laporanDetail`, {
-		// 		noinvoice: id
-		// 	}).then(res => res.data.result),
-		// downloadDetail: (id) =>
-		// 	axios.get(`${process.env.REACT_APP_API}/invoice/downloadDetail`, { 
-		// 		params: { noinvoice: id },
-		// 		responseType: 'arraybuffer'
-		// 	}),
-		// getData: (data) => 
-		// 	axios.post(`${process.env.REACT_APP_API}/invoice/getDataInvoice`, {
-		// 		nopend: data.nopend,
-		// 		periode: data.datesRange,
-		// 		nopo: data.nopo
-		// 	}).then(res => res.data.result)
+			}).then(res => res.data),
+		totalPage: () =>
+			axios.post(`${process.env.REACT_APP_API}/invoice/getTotalPage`).then(res => res.data.total),
+		fetchInvoice: (payload) =>
+			axios.get(`${process.env.REACT_APP_API}/invoice/fetchInvoice`, {
+				params: {
+					limit: payload.limit,
+					offset: payload.offset
+				}
+			}).then(res => res.data.result)
 	},
 	kurir: {
 		get_kurir: (data) =>

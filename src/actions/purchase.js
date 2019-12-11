@@ -1,5 +1,5 @@
 import api from "../api";
-import { GET_ID_PO, ADD_PO, FETCH_LIST_PO, FETCH_INVOICE, CLEAR_INVOICE, GET_TOTAL_PAGE_PO } from "../types";
+import { GET_ID_PO, ADD_PO, FETCH_LIST_PO, GET_TOTAL_PAGE_PO } from "../types";
 
 export const idpoFetched = (po) => ({
 	type: GET_ID_PO,
@@ -17,15 +17,6 @@ export const listPoFetched = (po, page) => ({
 	page
 })
 
-export const invoiceFetched = (invoice) => ({
-	type: FETCH_INVOICE,
-	invoice
-})
-
-export const cleared = () => ({
-	type: CLEAR_INVOICE
-})
-
 export const totalPageFetched = (total) => ({
 	type: GET_TOTAL_PAGE_PO,
 	total
@@ -39,11 +30,6 @@ export const addTopup = (data) => dispatch =>
 
 export const fetchListpo = (id, pagination) => dispatch =>
 	api.po.fetch_listpo(id, pagination).then(res => dispatch(listPoFetched(res, pagination.page)));
-
-export const getInvoice = (values) => dispatch =>
-	api.invoice.laporan(values).then(res => dispatch(invoiceFetched(res)));
-	
-export const clearInvoice = () => dispatch => dispatch(cleared());
 
 export const getTotalPage = (userid) => dispatch => 
 	api.po.getTotalPage(userid)

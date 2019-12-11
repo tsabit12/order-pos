@@ -16,6 +16,7 @@ import InvoicePage from "./components/pages/InvoicePage";
 import UserRoute from "./routes/UserRoute";
 import GuestRoute from "./routes/GuestRoute";
 import PageListPo from "./components/pages/PageListPo"; 
+import LaporanInvoice from "./components/pages/LaporanInvoice";
 // import ListInvoicePage from "./components/pages/ListInvoicePage";
 import HomePage from "./components/pages/HomePage";
 import UserPage from "./components/pages/UserPage";
@@ -52,6 +53,7 @@ const App = ({ location, level }) =>
     <UserRoute location={location} path="/handover" exact component={HandOverPage} />
     <UserRoute location={location} path="/petugas" exact component={PetugasPage} />
     { level === '04' && <UserRoute location={location} path="/invoice" exact component={InvoicePage} /> }
+    { level === '04' && <UserRoute location={location} path="/laporan_invoice" exact component={LaporanInvoice} /> }
     <UserRoute location={location} path="/list_po" exact component={PageListPo} />
     <UserRoute location={location} path="/list_po/:id" exact component={DetailPo} />
     <UserRoute location={location} path="/user" exact component={UserPage} />
