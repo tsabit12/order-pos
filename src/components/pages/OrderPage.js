@@ -176,7 +176,7 @@ class OrderPage extends React.Component {
 	}
 
 	backFromFinish = () => {
-		this.setState({ step: 2, 
+		this.setState({ step: 1, 
 			data: { 
 				...this.state.data, 
 					receiver:{},

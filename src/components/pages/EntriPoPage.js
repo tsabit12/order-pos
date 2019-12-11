@@ -42,7 +42,7 @@ class EntriPoPage extends React.Component {
 	
 	handleClick = () => {
 		const errors = this.validate(this.state.data);
-		this.setState({ errors });
+		this.setState({ errors, message: false });
 		if (Object.keys(errors).length === 0) {
 			this.setState({ loading: true, success: false });
 			axios.post(`${process.env.REACT_APP_API}/entriPo/getEmail`, {
