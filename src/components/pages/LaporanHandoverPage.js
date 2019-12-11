@@ -4,6 +4,7 @@ import { connect } from "react-redux";
 import PropTypes from "prop-types";
 import { getLaporanHandover } from "../../actions/laporan";
 import { Message, Header, Divider, Table } from "semantic-ui-react";
+import { setProgressBar } from "../../actions/progress";
 
 const numberWithCommas = (number) => {
 	return number.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
@@ -16,8 +17,9 @@ const ListHandover = ({ list }) => {
 		    <Table.Header>
 		      <Table.Row>
 		        <Table.HeaderCell>No</Table.HeaderCell>
+		        <Table.HeaderCell>Nomor PO</Table.HeaderCell>
 		        <Table.HeaderCell>Nomor Pickup</Table.HeaderCell>
-		        <Table.HeaderCell>Tanggal Request</Table.HeaderCell>
+		        <Table.HeaderCell>Tanggal Assign</Table.HeaderCell>
 		        <Table.HeaderCell>Id Order</Table.HeaderCell>
 		        <Table.HeaderCell>Perihal</Table.HeaderCell>
 		        <Table.HeaderCell>PIN</Table.HeaderCell>
@@ -27,8 +29,9 @@ const ListHandover = ({ list }) => {
 		    <Table.Body>
 		    	{ list.map((x, i) => <Table.Row key={i}> 
 		    		<Table.Cell>{no++}</Table.Cell>
+		    		<Table.Cell>{x.id_po}</Table.Cell>
 		    		<Table.Cell>{x.no_pickup}</Table.Cell>
-		    		<Table.Cell>{x.tgl_request}</Table.Cell>
+		    		<Table.Cell>{x.tgl_assigment}</Table.Cell>
 		    		<Table.Cell>{x.id_order}</Table.Cell>
 		    		<Table.Cell>{x.contentdesc}</Table.Cell>
 		    		<Table.Cell>{x.pin}</Table.Cell>
@@ -46,6 +49,7 @@ class LaporanHandoverPage extends React.Component{
 	}
 
 	componentDidMount(){
+		this.props.setProgressBar(true);
 		const { listdata } = this.props;
 		if (listdata.length > 0) {
 			this.setState({ data: listdata });
@@ -53,7 +57,11 @@ class LaporanHandoverPage extends React.Component{
 
 		const { userid } = this.props.auth;
 		this.props.getLaporanHandover(userid)
-			.catch(err => this.setState({ errors: err.response.data.errors }));
+			.then(() => this.props.setProgressBar(false))
+			.catch(err => {
+				this.props.setProgressBar(false);	
+				this.setState({ errors: err.response.data.errors });
+			});
 	}
 
 	UNSAFE_componentWillReceiveProps(nextProps){
@@ -84,7 +92,9 @@ class LaporanHandoverPage extends React.Component{
 
 LaporanHandoverPage.propTypes = {
 	auth: PropTypes.object.isRequired,
-	listdata: PropTypes.array.isRequired
+	listdata: PropTypes.array.isRequired,
+	getLaporanHandover: PropTypes.func.isRequired,
+	setProgressBar: PropTypes.func.isRequired
 }
 
 function mapStateToProps(state) {
@@ -94,4 +104,4 @@ function mapStateToProps(state) {
 	}
 }
 
-export default connect(mapStateToProps, { getLaporanHandover })(LaporanHandoverPage);
+export default connect(mapStateToProps, { getLaporanHandover, setProgressBar })(LaporanHandoverPage);
