@@ -214,7 +214,21 @@ export default {
 					limit: payload.limit,
 					offset: payload.offset
 				}
-			}).then(res => res.data.result)
+			}).then(res => res.data.result),
+		searchByDate: (payload) =>
+			axios.get(`${process.env.REACT_APP_API}/invoice/invoicePeriode`, {
+				params: {
+					tglAwal: payload.tglAwal,
+					tglAkhir: payload.tglAkhir,
+					limit: payload.limit,
+					offset: payload.offset
+				}
+			}).then(res => res.data.result),
+		getCountSearch: (payload) =>
+			axios.post(`${process.env.REACT_APP_API}/invoice/getCountSearch`, {
+				tglAwal: payload.tglAwal,
+				tglAkhir: payload.tglAkhir
+			}).then(res => res.data.total)
 	},
 	kurir: {
 		get_kurir: (data) =>
