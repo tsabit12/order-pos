@@ -232,8 +232,16 @@ export default {
 		detailInvoice: (noInvoice) =>
 			axios.get(`${process.env.REACT_APP_API}/invoice/getDetail`, {
 				params: {noInvoice: noInvoice}
-			}).then(res => res.data.result)
-
+			}).then(res => res.data.result),
+		downloadDetail: (noInvoice) =>
+			axios.get(`${process.env.REACT_APP_API}/pdf/detailInvoice`, {
+				params: { noInvoice: noInvoice },
+				responseType: 'arraybuffer'
+			}).then(res => res.data),
+		downloadDetailExcel: (noInvoice) =>
+			axios.get(`${process.env.REACT_APP_API}/pdf/detailInvoiceExcel`, {
+				params: { noInvoice: noInvoice }
+			}).then(res => res.data)
 	},
 	kurir: {
 		get_kurir: (data) =>
