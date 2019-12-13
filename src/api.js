@@ -228,7 +228,12 @@ export default {
 			axios.post(`${process.env.REACT_APP_API}/invoice/getCountSearch`, {
 				tglAwal: payload.tglAwal,
 				tglAkhir: payload.tglAkhir
-			}).then(res => res.data.total)
+			}).then(res => res.data.total),
+		detailInvoice: (noInvoice) =>
+			axios.get(`${process.env.REACT_APP_API}/invoice/getDetail`, {
+				params: {noInvoice: noInvoice}
+			}).then(res => res.data.result)
+
 	},
 	kurir: {
 		get_kurir: (data) =>

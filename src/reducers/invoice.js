@@ -3,7 +3,8 @@ import {
 	FETCH_INVOICE, 
 	SEARCH_PERIODE_INVOICE,
 	CLEAR_SEARCH_INVOICE,
-	GET_COUNT_SEARCH_INVOICE
+	GET_COUNT_SEARCH_INVOICE,
+	GET_DETAIL_INVOICE
 } from "../types";
 
 const initialState = {
@@ -14,7 +15,8 @@ const initialState = {
 		pages: {},
 		count: 0,
 		params: ''
-	}
+	},
+	detail: {}
 }
 
 export default function invoice(state=initialState, action={}){
@@ -63,6 +65,14 @@ export default function invoice(state=initialState, action={}){
 			return{
 				...state,
 				totalPage: Math.ceil(Number(action.total) / 8)
+			}
+		case GET_DETAIL_INVOICE:
+			return{
+				...state,
+				detail: {
+					...state.detail,
+					[action.param] : action.result
+				}
 			}
 		default: return state;
 	}

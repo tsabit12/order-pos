@@ -22,7 +22,7 @@ import UserPage from "./components/pages/UserPage";
 import PetugasPickupPage from "./components/pages/PetugasPickupPage";
 import DetailPo from "./components/po/DetailPo";
 import AddUserPage from "./components/pages/AddUserPage";
-import DetailInvoicePage from "./components/pages/DetailInvoicePage";
+import DetailInvoicePageNew from "./components/pages/DetailInvoicePageNew";
 import PageNotFound from "./components/pages/PageNotFound";
 import ConfirmationAkunPage from "./components/pages/ConfirmationAkunPage";
 import ChangePasswordPage from "./components/pages/ChangePasswordPage";
@@ -53,12 +53,12 @@ const App = ({ location, level }) =>
     <UserRoute location={location} path="/petugas" exact component={PetugasPage} />
     { level === '04' && <UserRoute location={location} path="/invoice" exact component={InvoicePage} /> }
     { level === '04' && <UserRoute location={location} path="/laporan_invoice" exact component={LaporanInvoice} /> }
+    { level === '04' && <UserRoute location={location} path="/laporan_invoice/detail/:id" exact component={DetailInvoicePageNew} /> }
     <UserRoute location={location} path="/list_po" exact component={PageListPo} />
     <UserRoute location={location} path="/list_po/:id" exact component={DetailPo} />
     <UserRoute location={location} path="/user" exact component={UserPage} />
     <UserRoute location={location} path="/user/add" exact component={AddUserPage} />
     <UserRoute location={location} path="/pickup/petugas" exact component={PetugasPickupPage} />
-    <UserRoute location={location} path="/detail_invoice/:noinvoice" exact component={DetailInvoicePage} />
     <UserRoute location={location} path="/confirmation/akun/:token" exact component={ConfirmationAkunPage} />
     <UserRoute location={location} path="/changepassword" exact component={ChangePasswordPage} />
     <UserRoute location={location} path="/list_order" exact component={LaporanOrderPage} />

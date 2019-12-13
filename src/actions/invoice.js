@@ -1,5 +1,12 @@
 import api from "../api";
-import { GET_TOTAL_PAGE_INVOICE, FETCH_INVOICE, SEARCH_PERIODE_INVOICE, CLEAR_SEARCH_INVOICE, GET_COUNT_SEARCH_INVOICE } from "../types";
+import { 
+	GET_TOTAL_PAGE_INVOICE, 
+	FETCH_INVOICE, 
+	SEARCH_PERIODE_INVOICE, 
+	CLEAR_SEARCH_INVOICE, 
+	GET_COUNT_SEARCH_INVOICE,
+	GET_DETAIL_INVOICE
+} from "../types";
 
 export const totalPageFetched = (total) => ({
 	type: GET_TOTAL_PAGE_INVOICE,
@@ -28,6 +35,12 @@ export const countSearchFetched = (total) => ({
 	total
 })
 
+export const detailFetched = (result, param) => ({
+	type: GET_DETAIL_INVOICE,
+	result,
+	param
+})
+
 export const getTotalPage = () => dispatch =>
 	api.invoice.totalPage()
 		.then(res => dispatch(totalPageFetched(res)))
@@ -47,3 +60,7 @@ export const searchByDate = (payload) => dispatch =>
 		})
 
 export const clearSearch = () => dispatch => dispatch(isClear())
+
+export const getDetail = (noInvoice) => dispatch => 
+	api.invoice.detailInvoice(noInvoice)
+		.then(res => dispatch(detailFetched(res, noInvoice)))
