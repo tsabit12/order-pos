@@ -21,7 +21,7 @@ import HomePage from "./components/pages/HomePage";
 import UserPage from "./components/pages/UserPage";
 import PetugasPickupPage from "./components/pages/PetugasPickupPage";
 import DetailPo from "./components/po/DetailPo";
-import AddUserPage from "./components/pages/AddUserPage";
+import AddUserPage from "./components/pages/AddUserPageNew";
 import DetailInvoicePageNew from "./components/pages/DetailInvoicePageNew";
 import PageNotFound from "./components/pages/PageNotFound";
 import ConfirmationAkunPage from "./components/pages/ConfirmationAkunPage";
@@ -56,8 +56,8 @@ const App = ({ location, level }) =>
     { level === '04' && <UserRoute location={location} path="/laporan_invoice/detail/:id" exact component={DetailInvoicePageNew} /> }
     <UserRoute location={location} path="/list_po" exact component={PageListPo} />
     <UserRoute location={location} path="/list_po/:id" exact component={DetailPo} />
-    <UserRoute location={location} path="/user" exact component={UserPage} />
-    <UserRoute location={location} path="/user/add" exact component={AddUserPage} />
+    { level === '03' && <UserRoute location={location} path="/user" exact component={UserPage} /> }
+    { level === '03' && <UserRoute location={location} path="/user/add" exact component={AddUserPage} /> }
     <UserRoute location={location} path="/pickup/petugas" exact component={PetugasPickupPage} />
     <UserRoute location={location} path="/confirmation/akun/:token" exact component={ConfirmationAkunPage} />
     <UserRoute location={location} path="/changepassword" exact component={ChangePasswordPage} />

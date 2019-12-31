@@ -44,6 +44,19 @@ export default {
 			axios.post(`${process.env.REACT_APP_API}/auth/lupaPasswordPost`,{
 				userid: data.userid,
 				password: data.password
+			}),
+		searchNippos: (nippos) =>
+			axios.post(`${process.env.REACT_APP_API}/user/searchNippos`,{
+				nippos: nippos
+			}).then(res => res.data.user),
+		add: (payload, nippos) => 
+			axios.post(`${process.env.REACT_APP_API}/user/add`, {
+				username: payload.nik_alias,
+				nohp: payload.Nomor_HP,
+				email: payload.email,
+				nopend: payload.nomor_dirian,
+				nama: payload.nama,
+				nippos: nippos
 			})
 	},
 	order: {
