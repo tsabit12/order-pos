@@ -37,6 +37,7 @@ import LaporanPickupPage from "./components/pages/LaporanPickupPage";
 import EntriPickupPage from "./components/pages/EntriPickupPage";
 import PickupPage from "./components/pages/PickupPage";
 import MappingKantorPage from "./components/pages/MappingKantorPage";
+import KelolaTarifPage from "./components/pages/KelolaTarifPage";
 
 const App = ({ location, level }) =>
   <Switch>
@@ -71,6 +72,7 @@ const App = ({ location, level }) =>
     <UserRoute location={location} path="/laporan/pickup" exact component={LaporanPickupPage} />
     { level === '01' && <UserRoute location={location} path="/entri_pickup" exact component={EntriPickupPage} />}
     { level === '03' && <UserRoute location={location} path="/mapping" exact component={MappingKantorPage} />}
+    { level === '01' && <UserRoute location={location} path="/tarif" exact component={KelolaTarifPage} />}
     <UserRoute location={location} path="*" exact component={PageNotFound} />
   </Switch>;  
 
