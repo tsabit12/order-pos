@@ -302,7 +302,14 @@ export default {
 		getPickup: (userid) =>
 			axios.post(`${process.env.REACT_APP_API}/laporan/getLapPickup`, {
 				userid: userid
-			}).then(res => res.data.pickup)
+			}).then(res => res.data.pickup),
+		getTarifLayanan: () => 
+			axios.post(`${process.env.REACT_APP_API}/laporan/getTarifLayanan`).then(res => res.data.result),
+		getDetailTarif: (nopendAsal, layanan) =>
+			axios.post(`${process.env.REACT_APP_API}/laporan/getDetailTarif`, {
+				nopendAsal: nopendAsal,
+				layanan: layanan
+			}).then(res => res.data.result)
 	},
 	pickup: {
 		getTotalPage: (userid) => 

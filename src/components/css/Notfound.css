@@ -46,3 +46,10 @@
 .label-required{
   color: red;
 }
+
+table.fixed-header thead tr:nth-child(1) th{
+    position: sticky;
+    top: 118px;
+    z-index: 101;
+    border-top: 1px solid #dededf;
+}
