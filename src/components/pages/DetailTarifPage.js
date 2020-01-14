@@ -1,10 +1,10 @@
 import React from "react";
 import Navbar from "../menu/Navbar";
-import { Breadcrumb, Message, Table, Sticky, Button } from "semantic-ui-react";
+import { Breadcrumb, Message, Table, Sticky, Button, Visibility } from "semantic-ui-react";
 import PropTypes from "prop-types";
 import { Link } from "react-router-dom";
 import { connect } from "react-redux";
-import { getDetailTarif } from "../../actions/tarif";
+import { getDetailTarif, onNextPage } from "../../actions/tarif";
 import "../css/Notfound.css";
 
 const MessageError = ({ text }) => (
@@ -15,11 +15,10 @@ const MessageError = ({ text }) => (
 )
 
 const RenderListDetail = ({ list }) => {
-	var no = 1;
 	return(
 		<React.Fragment>
 			{ list.map((x, i) => <Table.Row key={i}>
-				<Table.Cell>{no++}</Table.Cell>
+				<Table.Cell>{x.RowNum}</Table.Cell>
 				<Table.Cell>{x.KDKANTORT}</Table.Cell>
 				<Table.Cell>{x.kantor_tujuan}</Table.Cell>
 				<Table.Cell>{x.BRT_LAYANAN_PKS}</Table.Cell>
@@ -31,6 +30,12 @@ const RenderListDetail = ({ list }) => {
 	);
 }
 
+const LoadingRow = () => (
+	<Table.Row>
+		<Table.Cell colSpan='7'>Loading...</Table.Cell>
+	</Table.Row>
+);
+
 class DetailTarifPage extends React.Component{
 	contextRef = React.createRef();
 
@@ -41,7 +46,12 @@ class DetailTarifPage extends React.Component{
 			layanan: ''
 		},
 		errors: {},
-		stick: false
+		stick: false,
+		pagination: {
+			limit: 20,
+			offset: 1
+		},
+		loading: false
 	}
 
 	componentDidMount(){
@@ -54,12 +64,41 @@ class DetailTarifPage extends React.Component{
 		};
 
 		this.setState({ params });
-		this.props.getDetailTarif(parsing[0], parsing[2])
+		this.props.getDetailTarif(parsing[0], parsing[2], this.state.pagination)
 			.catch(err => this.setState({ errors: err.response.data.errors }))
 	}
 
+
+	handleBottomVisible = () => {
+		const { limit, offset } = this.state.pagination;
+		const { nopend, layanan } = this.state.params;
+		const payload = {
+			paging: {
+				limit: Number(limit) + 20,
+				offset: Number(offset) + 20,
+			},
+			nopend: nopend,
+			layanan: layanan
+		};
+		this.setState({ loading: true });
+		this.props.onNextPage(payload)
+			.then(() => this.setState({ 
+					pagination: {
+						limit: limit + 20,
+						offset: offset + 20
+					},
+					loading: false
+				})
+			)
+			.catch(err => {
+				this.setState({ loading: false });
+				alert("This is the last data");
+			});
+	}
+
+
 	render(){
-		const { params, errors, stick } = this.state;
+		const { params, errors, stick, loading } = this.state;
 		const { listdetail } = this.props;
 		return(
 			<Navbar>
@@ -100,11 +139,15 @@ class DetailTarifPage extends React.Component{
 							    <Table.HeaderCell>TANGGAL INSERT</Table.HeaderCell>
 							</Table.Row>
 						</Table.Header>
-						<Table.Body>
-							{ listdetail ? <RenderListDetail list={listdetail} /> : <Table.Row>
-								<Table.Cell colSpan='7'>Loading...</Table.Cell>
-							</Table.Row> }
-						</Table.Body>
+						<Visibility 
+							as='tbody'
+							continuous={false}
+            				once={false}
+							onBottomVisible={() => this.handleBottomVisible()}
+						>
+							{ listdetail ? <RenderListDetail list={listdetail} /> : <LoadingRow />}
+							{ loading && <LoadingRow /> }
+						</Visibility>
 					</Table>
 				</div>
 			</Navbar>
@@ -130,4 +173,4 @@ function mapStateToProps(state, props) {
 	}
 }
 
-export default connect(mapStateToProps, { getDetailTarif })(DetailTarifPage);
+export default connect(mapStateToProps, { getDetailTarif, onNextPage })(DetailTarifPage);

@@ -1,4 +1,12 @@
-import { FETCH_LAP_ASSIGMENT, FETCH_HANDOVER, FETCH_SELESAI_ANTAR, FETCH_LAP_PICKUP, GET_TARIF_LAYANAN, GET_DETAIL_TARIF } from "../types";
+import { 
+	FETCH_LAP_ASSIGMENT, 
+	FETCH_HANDOVER, 
+	FETCH_SELESAI_ANTAR, 
+	FETCH_LAP_PICKUP, 
+	GET_TARIF_LAYANAN, 
+	GET_DETAIL_TARIF, 
+	GET_NEXT_PAGE_DETAIL_TARIF
+} from "../types";
 
 const initialState = {
 	assigment: [],
@@ -51,6 +59,18 @@ export default function laporan(state=initialState, action={}){
 					detail:{
 						...state.tarif.detail,
 						[`${action.nopend}_${action.layanan}`] : action.res
+					}
+				}
+			}
+		case GET_NEXT_PAGE_DETAIL_TARIF:
+			const oldStateDetail = state.tarif.detail[`${action.payload.nopend}_${action.payload.layanan}`];
+			return{
+				...state,
+				tarif: {
+					...state.tarif,
+					detail: {
+						...state.tarif.detail,
+						[`${action.payload.nopend}_${action.payload.layanan}`] : oldStateDetail.concat(action.res)
 					}
 				}
 			}

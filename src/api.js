@@ -305,10 +305,12 @@ export default {
 			}).then(res => res.data.pickup),
 		getTarifLayanan: () => 
 			axios.post(`${process.env.REACT_APP_API}/laporan/getTarifLayanan`).then(res => res.data.result),
-		getDetailTarif: (nopendAsal, layanan) =>
+		getDetailTarif: (nopendAsal, layanan, paging) =>
 			axios.post(`${process.env.REACT_APP_API}/laporan/getDetailTarif`, {
 				nopendAsal: nopendAsal,
-				layanan: layanan
+				layanan: layanan,
+				limit: paging.limit,
+				offset: paging.offset
 			}).then(res => res.data.result)
 	},
 	pickup: {
