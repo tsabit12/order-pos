@@ -36,8 +36,8 @@ const ListTarif = ({ list }) => {
 						<Popup 
 							content='Lihat detail' 
 							trigger={
-								<Button icon size='tiny' primary as={Link} to={`/tarif/tambah/${nopend}-${item.namaProduk}-${item.KDLAYANAN}`}>
-					    			<Icon name='plus' />
+								<Button icon size='tiny' primary as={Link} to={`/tarif/detail/${nopend}-${item.namaProduk}-${item.KDLAYANAN}`}>
+					    			<Icon name='arrow right' />
 					  			</Button>
 					  		} 
 						/>
@@ -90,8 +90,8 @@ class KelolaTarifPage extends React.Component{
 			    			{ this.state.stick && <div style={{paddingBottom: '24px'}} /> }
 						    <Grid style={{paddingBottom: 10}}>
 								<Grid.Column floated='left' mobile={3} tablet={6} computer={4}>
-									<Button animated='vertical' primary fluid>
-								      <Button.Content hidden>Tambah Kantor Asal</Button.Content>
+									<Button animated='vertical' primary fluid as={Link} to="/tarif/tambah">
+								      <Button.Content hidden>Tambah Tarif</Button.Content>
 								      <Button.Content visible>
 								        <Icon name='plus' />
 								      </Button.Content>

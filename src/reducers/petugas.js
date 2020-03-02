@@ -1,9 +1,10 @@
-import { PETUGAS_FETCHED, FETCH_KURIR, CLEAR_KURIR, FETCH_PETUGAS_PICKUP, ADD_PETUGAS_PICKUP, ADD_KURIR } from "../types";
+import { PETUGAS_FETCHED, FETCH_KURIR, CLEAR_KURIR, FETCH_PETUGAS_PICKUP, ADD_PETUGAS_PICKUP, ADD_KURIR, GET_LIST_WILAYAH } from "../types";
 
 const initialState = {
 	petugas: [],
 	kurir: [],
-	pickup: []
+	pickup: [],
+	wilayah: []
 }
 
 export default function petugas(state=initialState, action={}){
@@ -31,6 +32,11 @@ export default function petugas(state=initialState, action={}){
 		case ADD_KURIR:
 			return {
 				...state, kurir: [ ...state.kurir, action.result ]
+			}
+		case GET_LIST_WILAYAH:
+			return{
+				...state,
+				wilayah: action.res
 			}
 		default: return state;
 	}

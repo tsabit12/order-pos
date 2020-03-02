@@ -1,5 +1,5 @@
 import React from "react";
-import { Form, Button, Select, Message, Segment } from "semantic-ui-react";
+import { Form, Button, Select, Message, Segment, Dropdown, Input } from "semantic-ui-react";
 import { connect } from "react-redux";
 import PropTypes from "prop-types";
 import { getKantor } from "../../actions/order";
@@ -8,6 +8,9 @@ import Validator from "validator";
 import { Link } from "react-router-dom";
 import passwordValidator from "password-validator";
 
+const options = [
+  { key: '1', text: '@sampoerna.com', value: '@sampoerna.com' }
+]
 
 class SignupForm extends React.Component {
 	state = {
@@ -41,14 +44,25 @@ class SignupForm extends React.Component {
 		})
 	}
 
+	onChangeEmail = e => {
+		const value = e.target.value;
+		this.setState({
+			data: { ...this.state.data, username: value }
+		})
+	}
+
 	handleChange = (e, { value }) => this.setState({ data: {...this.state.data, nopend: value} })
 
 	onSubmit = () => {
 		const errors = this.validate(this.state.data);
 		this.setState({ errors });
 		if (Object.keys(errors).length === 0) {
+			const payload = {
+				...this.state.data,
+				username: this.state.data.username+'@sampoerna.com'
+			}
 			this.setState({ loading: true });
-			this.props.submit(this.state.data)
+			this.props.submit(payload)
 				.catch(err => this.setState({ errors: err.response.data.errors, loading: false }));
 		}
 	}
@@ -63,7 +77,7 @@ class SignupForm extends React.Component {
 		if (!data.nopend) errors.nopend = "Kantor harap di pilih";
 		if (!data.password) errors.password = "Password tidak boleh kosong";
 		if (!data.nohp) errors.nohp = "Nomor handphone harap di isi";
-		if (!Validator.isEmail(data.username)) errors.username = "Email tidak valid";
+		if (!Validator.isEmail(data.username+'@sampoerna.com')) errors.username = "Email tidak valid";
 		if (data.password !== data.confPass) errors.confPass = "Password tidak sama";
 
 		if (data.password !== '') {
@@ -107,19 +121,21 @@ class SignupForm extends React.Component {
 					          autoComplete="off"
 					        />
 				        </Form.Field>
-				    	<Form.Field>
-					        <Form.Input
+				    	<Form.Field error={!!errors.username}>
+				    		<label>Email { data.username.length > 0 && <span style={{color: 'blue'}}>({data.username}@sampoerna.com)</span> }</label>
+					        <Input
 					          fluid
 					          type="text"
 					          name="username"
 					          id="username"
-					          label='Email'
+					          label={<Dropdown defaultValue='@sampoerna.com' options={options} />}
+					          labelPosition='right'
 					          autoComplete="off"
 					          value={data.username}
-					          onChange={this.onChange}
-					          placeholder='Masukan email, contoh example@example.com'
-					          error={errors.username}
+					          onChange={this.onChangeEmail}
+					          placeholder='Masukan email'
 					        />
+					        { errors.username && <span style={{color: '#9f3a38'}}>{errors.username}</span>}
 				        </Form.Field>
 				        <Form.Field error={!!errors.nopend}>
 				        	<label>Pilih Kantor</label>
