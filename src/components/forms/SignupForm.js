@@ -9,7 +9,8 @@ import { Link } from "react-router-dom";
 import passwordValidator from "password-validator";
 
 const options = [
-  { key: '1', text: '@sampoerna.com', value: '@sampoerna.com' }
+  { key: '1', text: '@sampoerna.com', value: '@sampoerna.com' },
+  { key: '2', text: '@pni.com', value: '@pni.com' }
 ]
 
 class SignupForm extends React.Component {
@@ -23,7 +24,8 @@ class SignupForm extends React.Component {
 			confPass: ''
 		},
 		loading: false,
-		errors: {}
+		errors: {},
+		lastEmail: '@sampoerna.com'
 	}
 
 	componentDidMount(){
@@ -54,12 +56,12 @@ class SignupForm extends React.Component {
 	handleChange = (e, { value }) => this.setState({ data: {...this.state.data, nopend: value} })
 
 	onSubmit = () => {
-		const errors = this.validate(this.state.data);
+		const errors = this.validate(this.state.data, this.state.lastEmail);
 		this.setState({ errors });
 		if (Object.keys(errors).length === 0) {
 			const payload = {
 				...this.state.data,
-				username: this.state.data.username+'@sampoerna.com'
+				username: `${this.state.data.username}${this.state.lastEmail}`
 			}
 			this.setState({ loading: true });
 			this.props.submit(payload)
@@ -67,7 +69,7 @@ class SignupForm extends React.Component {
 		}
 	}
 
-	validate = (data) => {
+	validate = (data, lastEmail) => {
 		const errors = {};
 		const schema = new passwordValidator();
 		var regex	 =/^[0-9]+$/;
@@ -77,7 +79,7 @@ class SignupForm extends React.Component {
 		if (!data.nopend) errors.nopend = "Kantor harap di pilih";
 		if (!data.password) errors.password = "Password tidak boleh kosong";
 		if (!data.nohp) errors.nohp = "Nomor handphone harap di isi";
-		if (!Validator.isEmail(data.username+'@sampoerna.com')) errors.username = "Email tidak valid";
+		if (!Validator.isEmail(data.username+lastEmail)) errors.username = "Email tidak valid";
 		if (data.password !== data.confPass) errors.confPass = "Password tidak sama";
 
 		if (data.password !== '') {
@@ -122,13 +124,17 @@ class SignupForm extends React.Component {
 					        />
 				        </Form.Field>
 				    	<Form.Field error={!!errors.username}>
-				    		<label>Email { data.username.length > 0 && <span style={{color: 'blue'}}>({data.username}@sampoerna.com)</span> }</label>
+				    		<label>Email { data.username.length > 0 && <span style={{color: 'blue'}}>({data.username}{this.state.lastEmail})</span> }</label>
 					        <Input
 					          fluid
 					          type="text"
 					          name="username"
 					          id="username"
-					          label={<Dropdown defaultValue='@sampoerna.com' options={options} />}
+					          label={<Dropdown 
+					          			options={options} 
+					          			value={this.state.lastEmail}
+					          			onChange={(e, { value }) => this.setState({ lastEmail: value })}
+					          		/>}
 					          labelPosition='right'
 					          autoComplete="off"
 					          value={data.username}
