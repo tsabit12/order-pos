@@ -311,7 +311,8 @@ export default {
 				layanan: layanan,
 				limit: paging.limit,
 				offset: paging.offset
-			}).then(res => res.data.result)
+			}).then(res => res.data.result),
+		getRefLayanan: () => axios.post(`${process.env.REACT_APP_API}/laporan/getRefLayanan`).then(res => res.data.result)
 	},
 	pickup: {
 		getTotalPage: (userid) => 
@@ -355,6 +356,12 @@ export default {
 				RowNum: payload.RowNum,
 				nopend: payload.nopend,
 				kantorId: payload.kantorId	
+			}).then(res => res.data.result)
+	},
+	tarif: {
+		addTarif: (payload) => 
+			axios.post(`${process.env.REACT_APP_API}/tarif/add`, {
+				...payload
 			}).then(res => res.data.result)
 	}
 }

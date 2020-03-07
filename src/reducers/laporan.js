@@ -5,7 +5,8 @@ import {
 	FETCH_LAP_PICKUP, 
 	GET_TARIF_LAYANAN, 
 	GET_DETAIL_TARIF, 
-	GET_NEXT_PAGE_DETAIL_TARIF
+	GET_NEXT_PAGE_DETAIL_TARIF,
+	GET_REF_LAYANAN
 } from "../types";
 
 const initialState = {
@@ -18,7 +19,8 @@ const initialState = {
 		detail: {
 			nopend_layanan: []
 		}
-	}
+	},
+	layanan: []
 }
 
 export default function laporan(state=initialState, action={}){
@@ -73,6 +75,11 @@ export default function laporan(state=initialState, action={}){
 						[`${action.payload.nopend}_${action.payload.layanan}`] : oldStateDetail.concat(action.res)
 					}
 				}
+			}
+		case GET_REF_LAYANAN:
+			return{
+				...state,
+				layanan: action.layanan
 			}
 		default: return state;
 	}

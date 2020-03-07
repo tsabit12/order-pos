@@ -22,9 +22,27 @@ const ListTarif = ({ list }) => {
 			no     = 1;
 			grouping = nopend;
 			tbodyContent.push(
-				<Table.Row key={key} active>
-					<Table.Cell colSpan='5' textAlign='center'>{nopend} {item.NamaKtr}</Table.Cell>
-				</Table.Row>);
+				<React.Fragment key={key}>
+					<Table.Row active>
+						<Table.Cell colSpan='5' textAlign='center'>{nopend} {item.NamaKtr}</Table.Cell>
+					</Table.Row>
+					<Table.Row>
+						<Table.Cell>{no++}</Table.Cell>
+						<Table.Cell>{item.KDLAYANAN}</Table.Cell>
+						<Table.Cell>{item.namaProduk}</Table.Cell>
+						<Table.Cell textAlign='right'>{numberWithCommas(item.jumlah_kantorT)} kantor</Table.Cell>
+						<Table.Cell textAlign='center'>
+							<Popup 
+								content='Lihat detail' 
+								trigger={
+									<Button icon size='tiny' primary as={Link} to={`/tarif/detail/${nopend}-${item.namaProduk}-${item.KDLAYANAN}`}>
+						    			<Icon name='arrow right' />
+						  			</Button>
+						  		} 
+							/>
+						</Table.Cell>
+					</Table.Row>
+				</React.Fragment>);
 		}else{
 			tbodyContent.push(
 				<Table.Row key={key}>

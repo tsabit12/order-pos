@@ -1,10 +1,10 @@
 import React from "react";
-// import PropTypes from "prop-types";
-import { Responsive, Container, Segment } from "semantic-ui-react";
+import PropTypes from "prop-types";
+import { Responsive, Container, Segment, Dimmer, Loader } from "semantic-ui-react";
 import NavbarDekstop from "./NavbarDekstop";
 import NavbarMobile from "./NavbarMobile";
 import Footer from "./Footer";
-// import { connect } from "react-redux";
+import { connect } from "react-redux";
 // import { getTopup } from "../../actions/notifikasi";
 
 const NavbarChildren = ({ children }) => (
@@ -41,11 +41,16 @@ class Navbar extends React.Component {
 		this.setState({ visible: !this.state.visible })
 	}
 
+	setLoading = () => alert("oke");
+
 	render(){
 		const { visible } = this.state;
 		const { children } = this.props;
 		return(
 			<React.Fragment>
+				<Dimmer active={this.props.isLoading} inverted>
+			      <Loader inverted>Loading</Loader>
+			    </Dimmer>
 				<div style={{minHeight: '92vh'}}>
 					<Responsive {...Responsive.onlyMobile}>
 						<NavbarMobile
@@ -72,8 +77,14 @@ class Navbar extends React.Component {
 	}
 }
 
-// Navbar.propTypes = {
-// 	getTopup: PropTypes.func.isRequired
-// }
+Navbar.propTypes = {
+	isLoading: PropTypes.bool.isRequired
+}
 
-export default Navbar;
+function mapStateToProp(state) {
+	return{
+		isLoading: state.ui.loader
+	}
+}
+
+export default connect(mapStateToProp, null)(Navbar);
