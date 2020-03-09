@@ -28,7 +28,8 @@ class FeeForm extends React.Component {
 			totalFee: 0
 		},
 		errors: {},
-		active: false
+		active: false,
+		messageErr: ''
 	}
 
 	componentDidMount(){
@@ -57,7 +58,13 @@ class FeeForm extends React.Component {
 		.then(result => {
 			this.setState({ loading: false, success: true, fee: result });
 		})
-		.catch(err => this.setState({ loading: false, success: false }));
+		.catch(err => {
+			if (!err.response) {
+				this.setState({ loading: false, success: false, messageErr: undefined });
+			}else{
+				this.setState({ loading: false, success: false, messageErr: err.response.data.errors.global });
+			}
+		});
 	}
 
 	accept = (name, total, code, fee, feeTax, insurance, insuranceTax, itemValue) => {
@@ -124,7 +131,8 @@ class FeeForm extends React.Component {
 
 				{ !loading && !success && <Message negative>
 				    <Message.Header>Oppps!</Message.Header>
-				    <p>Gagal memuat data tarif, klik <Link onClick={this.getFee}>disini</Link> untuk memuat ulang data</p>
+				    { this.state.messageErr ? 
+				    	<p>{this.state.messageErr}</p> : <p>Gagal memuat data tarif, klik <Link onClick={this.getFee}>disini</Link> untuk memuat ulang data</p> }
 				  </Message> }
 
 				{ !loading && success && <ListFee listdata={fee} accept={this.accept} /> }

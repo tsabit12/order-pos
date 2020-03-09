@@ -1,7 +1,7 @@
 import React from "react";
 import Navbar from "../menu/Navbar";
 import { Link } from "react-router-dom";
-import { Breadcrumb, Divider, Grid, Segment, List, Form, Button, Select, Modal, Message } from 'semantic-ui-react';
+import { Breadcrumb, Divider, Grid, Segment, List, Form, Button, Select, Modal, Message, Icon } from 'semantic-ui-react';
 import { connect } from "react-redux";
 import { getListWilayah, getRefLayanan, setLoading } from "../../actions/tarif";
 import PropTypes from "prop-types";
@@ -33,7 +33,7 @@ const RenderKprk = ({ list, value, onChange, name }) => {
 	)
 }
 
-const Description = ({ onReadMore, readMore }) => (
+const Description = () => (
   <Segment>
     <p style={{fontSize: '15px', fontWeight: 'bold', paddingBottom: '0'}}>Petunjuk Pengisian Tarif</p>	
     <List.Item as='li' style={{marginTop: '-8px'}}>
@@ -61,15 +61,7 @@ const Description = ({ onReadMore, readMore }) => (
      		&nbsp;berikutnya ditambahkan tarif <b>5000</b> Contohnya : untuk berat <b>2001 - 3000 gram</b> mendapatkan tarif <b>19500</b> + <b>5000</b>
      		&nbsp;= <b>24500</b> dan seterusnya seperti itu :)
      	</p>
-     	
-     		{ !readMore && <p>
-     			Sampai disini paham?&nbsp; 
-     				<span style={{color: '#4485d0', cursor: 'pointer'}} onClick={() => onReadMore()}>lanjut kak...</span>
-     		</p> }
      </div>
-     { readMore && <div style={{marginTop: 10}}>
-     	<p>Oke kita lanjut besok yaa :*</p> 
-     </div> }
   </Segment>
 );
 
@@ -95,7 +87,6 @@ const RenderModal = ({ visible, closeModal, simpan }) => (
 class TambahTarifPage extends React.Component{
 	regAsalRef = React.createRef();
 	state = {
-		readMore: false,
 		mount: false,
 		data: {
 			layanan: '0',
@@ -335,29 +326,43 @@ class TambahTarifPage extends React.Component{
 		const { data, tempTarif, tmpBerat, errors } = this.state;
 		return(
 			<Navbar>
-				<Breadcrumb size='large'>
-				    <Breadcrumb.Section link as={Link} to="/dashboard">Dashboard</Breadcrumb.Section>
-				    <Breadcrumb.Divider icon='right arrow' />
-				    <Breadcrumb.Section link as={Link} to="/tarif">Tarif</Breadcrumb.Section>
-				    <Breadcrumb.Divider icon='right arrow' />
-				    <Breadcrumb.Section active>Tambah</Breadcrumb.Section>
-				</Breadcrumb>
+				<Grid>
+					<Grid.Column floated='left' mobile={8} tablet={5} computer={6}>
+						<Breadcrumb size='large'>
+						    <Breadcrumb.Section link as={Link} to="/dashboard">Dashboard</Breadcrumb.Section>
+						    <Breadcrumb.Divider icon='right arrow' />
+						    <Breadcrumb.Section link as={Link} to="/tarif">Tarif</Breadcrumb.Section>
+						    <Breadcrumb.Divider icon='right arrow' />
+						    <Breadcrumb.Section active>Tambah</Breadcrumb.Section>
+						</Breadcrumb>
+					</Grid.Column>
+					<Grid.Column floated='right' mobile={6} tablet={8} computer={6}>
+						<div style={{float: 'right'}}>
+							<Button 
+								icon 
+								labelPosition='right' 
+								color='green'
+								onClick={() => alert("next features")}
+							>
+						      Import Excel
+						      <Icon name='file excel' />
+						    </Button>
+					    </div>
+					</Grid.Column>
+				</Grid>
+				<Divider style={{marginTop: 2}} />
 				<RenderModal 
 					visible={this.state.modal} 
 					closeModal={() => this.setState({ modal: false })}
 					simpan={this.onSubmit}
 				/>
-				<Divider />
 				{ errors.global &&  <Message negative>
 				    <Message.Header>Whooops!</Message.Header>
 				    <p>{errors.global}</p>
 				  </Message> }
 				<Grid stackable columns={2}>
 					<Grid.Column>
-						<Description 
-							onReadMore={() => this.setState({ readMore: true })}
-							readMore={this.state.readMore}
-						/>
+						<Description />
 					</Grid.Column>
 					<Grid.Column>
 				      <Segment>

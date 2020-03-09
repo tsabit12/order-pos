@@ -18,7 +18,6 @@ class ReceiverForm extends React.Component{
 		options: this.props.dataOptions.options,
 		optionsKab: this.props.dataOptions.optionsKab,
 		optionsKec: this.props.dataOptions.optionsKec,
-		optionPostal: this.props.dataOptions.optionPostal,
 		loadingsearch: false,
 		loadingsearchKab: false,
 		loadingsearchKec: false,
@@ -51,10 +50,9 @@ class ReceiverForm extends React.Component{
 				receiverPos: ''
 			},
 			optionsKab: [],
-			optionsKec: [],
-			optionPostal: []
+			optionsKec: []
 		});
-		this.timer = setTimeout(this.fetchProp, 500);
+		this.timer = setTimeout(this.fetchProp, 800);
 	}
 
 	fetchProp = () => {
@@ -89,8 +87,7 @@ class ReceiverForm extends React.Component{
 			}, 
 			provCode: key,
 			optionsKab: [],
-			optionsKec: [],
-			optionPostal: []
+			optionsKec: []
 		});
 	}
 
@@ -157,21 +154,14 @@ class ReceiverForm extends React.Component{
 	}
 
 	onChangeKec = (e, data) => {
-		this.setState({ data: {...this.state.data, receiverKec: data.value }, optionPostal: [] });	
+		this.setState({ data: {...this.state.data, receiverKec: data.value } });	
 		axios.post(`${process.env.REACT_APP_API}/Provinsi/getKodePos`, {
 			kecamatan: data.value,
 			kabupaten: this.state.kabCode
 		}).then(res => res.data.result)
 			.then(result => {
-				const optionPostal = [];
-				result.forEach(list => {
-					optionPostal.push({
-						key: list.kodepos,
-						value: list.kodepos,
-						text: list.kodepos
-					})
-				});
-				this.setState({ optionPostal });
+				const values = result[0].kodepos;
+				this.setState({ data: { ...this.state.data, receiverPos: values }})
 			})
 	}
 
@@ -181,12 +171,11 @@ class ReceiverForm extends React.Component{
 		const errors = this.validate(this.state.data);
 		this.setState({ errors });
 		if (Object.keys(errors).length === 0) {
-			const { options, optionsKab, optionsKec, optionPostal } = this.state;
+			const { options, optionsKab, optionsKec } = this.state;
 			const dataOption = {
 				options: options,
 				optionsKab: optionsKab,
-				optionsKec: optionsKec,
-				optionPostal: optionPostal
+				optionsKec: optionsKec
 			};
 
 			this.setState({ loading: true });
@@ -294,14 +283,11 @@ class ReceiverForm extends React.Component{
 					<Form.Group widths="equal">
 						<Form.Field error={!!errors.receiverPos}>
 							<label>Kode Pos</label>
-							<Dropdown 
-								clearable 
-								options={this.state.optionPostal} 
-								selection 
-								additionPosition='bottom'
+							<Form.Input 
+								focus
+								disabled
 								value={data.receiverPos}
-								placeholder="Pilih kode pos"
-								onChange={this.handleChangePos}
+								placeholder="Pilih kecamatan terlebih dahulu"
 							/>
 						</Form.Field>
 						<Form.Field>

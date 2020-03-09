@@ -2,16 +2,14 @@ import React from "react";
 import PropTypes from "prop-types";
 import { Form, Button, Message, Dropdown } from "semantic-ui-react";
 import { connect } from "react-redux";
-import api from "../../api";
 
 class CariPoForm extends React.Component {
 	state = {
 		nomorPo: this.props.nomorPo,
-		line: this.props.line,
 		step: 1,
 		loading: false,
 		errors: {},
-		options: this.props.optionsLine
+		saldo: this.props.saldo
 	}
 
 	UNSAFE_componentWillReceiveProps(nextprops){
@@ -26,34 +24,14 @@ class CariPoForm extends React.Component {
 
 	onChange = (e) => {
 		const val = this.escapeRegExp(e.target.value);
-		const options = [{key: 0, value: 0, text: 'Loading...'}]
+		// const options = [{key: 0, value: 0, text: 'Loading...'}]
 		clearTimeout(this.timer);
-		this.setState({ options, nomorPo: val, line: null })
-		this.timer = setTimeout(this.fetchLine, 1000);	
-	}
-
-	fetchLine = () => {
-		this.setState({ line: 0 });
-		api.po.getLine(this.state.nomorPo)
-			.then(res => {
-				const options = [{key: 'oke', value: 'oke', text: 'Pilih line'}];
-				res.forEach(x => {
-					options.push({
-						key: x.line,
-						value: x.line,
-						text: `Line ke ${x.line} - ${x.keterangan}`
-					});
-				});
-				this.setState({ options, line: 'oke' });
-			})
-			.catch(() => {
-				const options = [{key: 'err', value: 'err', text: 'Line not found'}]
-				this.setState({ options, line: 'err' })
-			})
+		this.setState({ nomorPo: val })
+		this.timer = setTimeout(() => this.props.fetchLine(val), 1000);	
 	}
 
 	submit = () => {
-		const errors = this.validate(this.state.nomorPo, this.state.line);
+		const errors = this.validate(this.state.nomorPo, this.props.line);
 		this.setState({ errors });
 		if (Object.keys(errors).length === 0) {
 			this.setState({ loading: true });
@@ -61,8 +39,6 @@ class CariPoForm extends React.Component {
 				step: this.state.step,
 				nomorPo: this.state.nomorPo,
 				user: this.props.user,
-				line: this.state.line,
-				optionsLine: this.state.options
 			};
 			this.props.submitPO(data);
 		}
@@ -79,7 +55,9 @@ class CariPoForm extends React.Component {
 		return errors;
 	}
 
-	handleChange = (e, { value }) => this.setState({ line: value })
+	handleChange = (e, data) =>  {
+		this.props.onChangeLine(data);
+	}
 	
 	render(){
 		const { errors, loading } = this.state;
@@ -111,8 +89,8 @@ class CariPoForm extends React.Component {
 				      			placeholder="Masukan nomor PO terlebih dahulu"
 				      			fluid 
 				      			selection
-				      			value={this.state.line}
-				      			options={this.state.options}
+				      			value={this.props.line}
+				      			options={this.props.optionsLine}
 				      			onChange={this.handleChange}
 				      		/>
 				      		{ errors.line && <span style={{color: "#ae5856"}}>{errors.line}</span>}

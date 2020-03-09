@@ -44,8 +44,9 @@ class SenderForm extends React.Component {
 
 	onSubmit = () => {
 		const errors = this.validate(this.state.data);
-		this.setState({ errors, loading: true });
+		this.setState({ errors });
 		if (Object.keys(errors).length === 0) {
+			this.setState({ loading: true });
 			api.order.validateKantor(this.state.kantorasal)
 				.then(() => {
 					this.props.submitSender(this.state.data, this.state.step, this.state.checkedForm, this.state.checked, this.state.kantorasal);
@@ -178,7 +179,7 @@ class SenderForm extends React.Component {
 						<Form.Field style={{textAlign: 'right'}}>
 					      <Checkbox 
 					      	toggle 
-					      	label='Gunakan data saya' 
+					      	label={`On Behalf`} 
 					      	checked={this.state.checkedForm}
 					      	onClick={this.handleReset}
 					      />

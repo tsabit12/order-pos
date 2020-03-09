@@ -19,6 +19,15 @@ import axios from "axios";
 import { connect } from "react-redux";
 import PropTypes from "prop-types";
 import { getKantor } from "../../actions/order";
+import api from "../../api";
+
+const numberWithCommas = (number) => {
+	return number.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ".");
+}
+
+const RenderSaldo = ({ saldo, bsuAwal }) => (
+	 <Message visible style={{marginTop: '-8px'}} info>Saldo saat ini ({numberWithCommas(saldo)}) dengan persentase {Math.round(Number(saldo) / Number(bsuAwal) * 100)}%</Message>
+)
 
 class OrderPage extends React.Component {
 	state = {
@@ -58,7 +67,8 @@ class OrderPage extends React.Component {
 				senderProv: this.props.auth.provinsi,
 				senderPhone: this.props.auth.nohp,
 				kantor: this.props.auth.nopend
-			}
+			},
+			saldo: null
 		},
 		open: false,
 		idorder: '',
@@ -95,14 +105,12 @@ class OrderPage extends React.Component {
 			data: { 
 				...this.state.data, 
 				nomorPo: nomorPo,
-				line: data.line,
-			},
-			optionsLine: data.optionsLine
+			}
 		});
 
 		axios.post(`${process.env.REACT_APP_API}/order/searchPO`, { 
 			idpo: nomorPo, 
-			line: data.line 
+			line: this.state.data.line
 		}).then(results => {
 				this.setState({ 
 					loading: false, 
@@ -196,6 +204,60 @@ class OrderPage extends React.Component {
 		this.setState({ step: step+1, data: {...this.state.data, deskripsi: data }});
 	}
 
+	onChangeLine = (data) => {
+		const choosed = data.options.find(x => x.value === data.value);
+		this.setState({ 
+			data: {
+				...this.state.data,
+				saldo: choosed.saldo,
+				line: data.value,
+				bsuAwal: choosed.bsuAwal
+			}
+		});
+	}
+
+	onFetchLine = (nomorPo) => {
+		if (nomorPo) {
+			this.setState({ 
+				data: { 
+					...this.state.data, 
+					line: 'oke'
+				},
+				optionsLine: [{key: 'oke', value: 'oke', text: 'Loading...'}]
+			});
+			api.po.getLine(nomorPo)
+				.then(res => {
+					const options = [{key: 'oke', value: 'oke', text: 'Pilih line'}];
+					res.forEach(x => {
+						options.push({
+							key: x.line,
+							value: x.line,
+							text: `Line ke ${x.line} - ${x.keterangan}`,
+							saldo: x.sisa_saldo,
+							bsuAwal: x.bsu_awal
+						});
+					});
+					this.setState({ 
+						optionsLine: options, 
+						data: {
+							...this.state.data,
+							line: 'oke'
+						}
+					});
+				})
+				.catch(() => {
+					const options = [{key: 'err', value: 'err', text: 'Line not found'}]
+					this.setState({ 
+						optionsLine: options, 
+						data: {
+							...this.state.data,
+							line: 'err'
+						}
+					})
+				})
+		}
+	}
+
 	render(){
 		const { step, errors, loading, data } = this.state;
 		
@@ -203,6 +265,7 @@ class OrderPage extends React.Component {
 			<Navbar>
 				<div style={{marginTop: '10px'}}>
 					<StepOrder step={step} />
+					{ data.saldo && <RenderSaldo saldo={data.saldo} bsuAwal={data.bsuAwal} />}
 					{ step === 1 && <CariPoForm 
 						submitPO={this.onClickPO} 
 						errors={ errors.po } 
@@ -210,6 +273,9 @@ class OrderPage extends React.Component {
 						nomorPo={data.nomorPo}
 						line={data.line}
 						optionsLine={this.state.optionsLine}
+						saldo={data.saldo}
+						onChangeLine={this.onChangeLine}
+						fetchLine={this.onFetchLine}
 					/> }
 					{ step === 2 && <SenderForm 
 						submitSender={this.submitSender} 
