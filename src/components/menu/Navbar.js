@@ -48,7 +48,7 @@ class Navbar extends React.Component {
 		const { children } = this.props;
 		return(
 			<React.Fragment>
-				<Dimmer active={this.props.isLoading} inverted>
+				<Dimmer active={this.props.isLoading} inverted page>
 			      <Loader inverted>Loading</Loader>
 			    </Dimmer>
 				<div style={{minHeight: '92vh'}}>

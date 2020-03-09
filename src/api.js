@@ -144,7 +144,9 @@ export default {
 				nama: data.nama,
 				status: data.status,
 				nopend: data.kprk,
-				nippos: data.idpetugas
+				nippos: data.idpetugas,
+				email: data.email,
+				password: 'AAaa123$'
 			}, config).then(res => res.data.petugas),
 		cariPetugas: (nippos, nopend) =>
 			axios.post(`${process.env.REACT_APP_API}/petugas/cariPetugas`, {

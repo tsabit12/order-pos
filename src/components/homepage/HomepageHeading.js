@@ -4,8 +4,8 @@ import { Container, Header } from "semantic-ui-react";
 
 const HomepageHeading = ({ mobile }) => (
   <Container text>
-  	 <Header
-      as='h1'
+     <Header
+      as='h2'
       content='Selamat datang'
       inverted
       style={{
@@ -19,7 +19,7 @@ const HomepageHeading = ({ mobile }) => (
 );
 
 HomepageHeading.propTypes = {
-  mobile: PropTypes.bool,
+  mobile: PropTypes.bool
 }
 
 export default HomepageHeading;

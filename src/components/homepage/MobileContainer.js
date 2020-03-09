@@ -64,7 +64,7 @@ class MobileContainer extends React.Component {
                 </Menu.Item>
               </Menu>
             </Container>
-            <HomepageHeading mobile />
+            <HomepageHeading mobile/>
           </Segment>
 
           {children}

@@ -65,7 +65,7 @@ class DesktopContainer extends React.Component {
 }
 
 DesktopContainer.propTypes = {
-  children: PropTypes.node,
+  children: PropTypes.node
 }
 
 export default DesktopContainer;

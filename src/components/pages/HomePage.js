@@ -5,7 +5,7 @@ import PropTypes from "prop-types";
 // import Poster from "../../poster.png";
 import DesktopContainer from "../homepage/DesktopContainer";
 import MobileContainer from "../homepage/MobileContainer";
-import { Segment, Grid, Header, Container, Divider, Image, Button, Icon } from "semantic-ui-react";
+import { Segment, Grid, Header, Container, Divider, Image, Button, Icon  } from "semantic-ui-react";
 import SampoernaIcon from "../../sampoerna.png";
 import LogoPos from "../../pos.png";
 import pdfjuknis from "../../juknis.pdf";
@@ -18,7 +18,7 @@ const ResponsiveContainer = ({ children }) => (
 )
 
 ResponsiveContainer.propTypes = {
-  children: PropTypes.node,
+  children: PropTypes.node
 }
 
 class HomePage extends React.Component{

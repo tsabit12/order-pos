@@ -43,6 +43,14 @@ class PetugasPickupPage extends React.Component {
 		}
 	}
 
+	convertEmail = (email) => {
+		if (email) {
+			return email;
+		}else{
+			return '-';
+		}
+	}
+
 	render(){
 		const { listPetugas } = this.props;
 		const columns = [{
@@ -60,6 +68,11 @@ class PetugasPickupPage extends React.Component {
 		    Header: 'TANGGAL INSERT',
 		    accessor: 'tgl'
 		  }, {
+		  	Header: 'Email',
+		  	Cell: row => (
+		  		<p>{this.convertEmail(row.original.email)}</p>
+		  	)
+		  },{
 		  	Header: 'STATUS',
 		  	Cell: row => (
 		  		<p>{this.convertStatus(row.original.status)}</p>
