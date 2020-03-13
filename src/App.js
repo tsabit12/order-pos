@@ -10,7 +10,7 @@ import LacakPage from "./components/pages/LacakPage";
 import EntriPoPage from "./components/pages/EntriPoPage";
 import SignupPage from "./components/pages/SignupPage";
 import AssigmentPage from "./components/pages/AssigmentPage";
-import HandOverPage from "./components/pages/HandOverPage";
+// import HandOverPage from "./components/pages/HandOverPage";
 import PetugasPage from "./components/pages/PetugasPage";
 import InvoicePage from "./components/pages/InvoicePage";
 import UserRoute from "./routes/UserRoute";
@@ -53,7 +53,7 @@ const App = ({ location, level }) =>
     <UserRoute location={location} path="/pickup" exact component={PickupPage} />
     <UserRoute location={location} path="/po" exact component={EntriPoPage} />
     { level === '01' && <UserRoute location={location} path="/assignment" exact component={AssigmentPage} />}
-    <UserRoute location={location} path="/handover" exact component={HandOverPage} />
+    { /* <UserRoute location={location} path="/handover" exact component={HandOverPage} /> */ }
     <UserRoute location={location} path="/petugas" exact component={PetugasPage} />
     { level === '04' && <UserRoute location={location} path="/invoice" exact component={InvoicePage} /> }
     { level === '04' && <UserRoute location={location} path="/laporan_invoice" exact component={LaporanInvoice} /> }
@@ -78,8 +78,8 @@ const App = ({ location, level }) =>
     { level === '01' && <UserRoute location={location} path="/tarif" exact component={KelolaTarifPage} />}
     { level === '01' && <UserRoute location={location} path="/tarif/detail/:id" exact component={DetailTarifPage} />}
     { level === '01' && <UserRoute location={location} path="/tarif/tambah/" exact component={TambahTarifPage} />}
-    <GuestRoute location={location} path="/pickuper" exact component={PickuperPage} />
-    <Route location={location} path="*" exact component={PageNotFound} />
+    { level === '05' && <UserRoute location={location} path="/pickuper" exact component={PickuperPage} />}
+    <UserRoute location={location} path="*" exact component={PageNotFound} />
   </Switch>;  
 
 

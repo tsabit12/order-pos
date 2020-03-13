@@ -30,6 +30,7 @@ const NavbarDekstop = ({ isAuthenticated, logout, user }) => {
 			{ user.level === '01' && user.confirmed && <Kurir /> } 
 			{ user.level === '03' && user.confirmed && <Admin /> }
 			{ user.level === '04' && user.confirmed && <Ae /> }
+			{ user.level === '05' && <Menu.Item as={NavLink} to="/pickuper">Pickup</Menu.Item> }
 
 			<Menu.Menu position="right">
 				{ isAuthenticated && <Menu.Item>

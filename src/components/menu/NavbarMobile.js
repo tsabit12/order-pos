@@ -67,6 +67,7 @@ const NavbarMobile = ({ children, onPusherClick, onToggle, visible, logout, user
 							{ user.level === '02' && user.confirmed && <User /> } 
 							{ user.level === '03' && user.confirmed && <Admin /> } 
 							{ user.level === '04' && user.confirmed && <Ae /> } 
+							{ user.level === '05' && user.confirmed && <Menu.Item style={{textAlign: 'left'}} as={NavLink} to="/pickuper">Pickup</Menu.Item> } 
 						</Sidebar>
 					</Sticky>
 					<Sidebar.Pusher

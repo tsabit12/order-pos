@@ -152,7 +152,22 @@ export default {
 			axios.post(`${process.env.REACT_APP_API}/petugas/cariPetugas`, {
 				nippos: nippos,
 				nopend: nopend
-			}).then(res => res.data.petugas)
+			}).then(res => res.data.petugas),
+		validasiPickup: (data) => 
+			axios.post(`${process.env.REACT_APP_API}/petugas/validasiPickup`, {
+				nomorpickup: data.nopickup,
+				pin: data.pin,
+				nopend: data.nopend,
+				userid: data.userid
+			}).then(res => res.data.result),
+		submitPickup: (data) => 
+			axios.post(`${process.env.REACT_APP_API}/petugas/submitPickup`, {
+				...data
+			}).then(res => res.data.result),
+		addPosting: (nopickup) =>
+			axios.post(`${process.env.REACT_APP_API}/petugas/addPosting`, {
+				nopickup
+			}).then(res => res.data.result)
 	},
 	dashboard: {
 		get_polimit: () =>
